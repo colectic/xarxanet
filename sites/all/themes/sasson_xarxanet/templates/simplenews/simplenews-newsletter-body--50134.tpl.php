@@ -178,7 +178,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 			</tr>
 			<?php if (!empty($monographicNode)) : ?>
 				<tr>
-					<td colspan="2" style="padding-left:15px; padding-right:15px;">
+					<td colspan="2" style="padding:0 15px;">
 						<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;">
 							<tbody>
 								<tr>
@@ -191,11 +191,11 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" style="padding-left: 15px; padding-right: 15px; padding-bottom:20px;">
+					<td colspan="2" style="padding:0 15px 20px 15px;">
 						<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%; background-color:#EDEDED; border-radius:15px;">
 							<tbody>
 								<tr>
-									<td colspan="2" style="padding-top: 10px; padding-right: 10px; padding-left: 10px; padding-bottom:10px;">
+									<td colspan="2" style="padding:10px;">
 										<a href="<?php print $monographicLink; ?>">
 											<img src="<?php print $monographicImage; ?>" width="600" alt="<?php print $monographicImageAlt; ?>" style="border-width:0;font-family:Fira Sans, Helvetica, Arial !important;width:100%;max-width:600px;height:auto; border-radius:15px;" />
 										</a>
@@ -203,12 +203,12 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 								</tr>
 								<tr>
 
-									<td style="padding-left: 20px; padding-right: 20px; padding-bottom:20px; width: 65%; padding-top: 10px;">
+									<td style="padding:10px 20px 20px 20px; width: 65%;">
 										<h3 style="margin-top:0; font-weight:600; font-size: 1.56em;"><?php echo $monographicTitle; ?></h3>
 										<span style="font-size: .95em; line-height: 1.35em;"><?php echo $monographicText; ?></span>
 									</td>
-									<td style="padding-top: 17px; padding-bottom: 20px; vertical-align:bottom;">
-										<a href="<?php echo $monographicLink; ?>" style="background-color:#BE1622; color:#ffffff; font-size:.93em; padding:14px 16px; float: left; border-radius: 5px; text-decoration:none;">
+									<td style="padding: 17px 15px 20px 0; vertical-align:bottom;">
+										<a href="<?php echo $monographicLink; ?>" style="background-color:#BE1622; color:#ffffff; font-size:.93em; padding:14px 16px; float: right; border-radius: 5px; text-decoration:none;">
 											Llegiu-ne més
 										</a>
 									</td>
@@ -222,7 +222,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 			<!-- SECTION  || L'entitat protagonista -->
 			<?php if (!empty($entityNode)) : ?>
 			<tr>
-				<td colspan="2" style="padding-left: 15px; padding-right:15px;">
+				<td colspan="2" style="padding: 0 15px;">
 					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;">
 						<tbody>
 							<tr>
@@ -235,20 +235,20 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" style="padding-left: 15px; padding-right: 15px; vertical-align: top; padding-bottom:20px;">
+				<td colspan="2" style="padding: 0 15px 20px 15px; vertical-align: top; ">
 					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;  background-color:#EDEDED; border-radius:15px;">
 						<tbody>
 							<tr>
 								<td style="width: 55%;">
 									<table colspan="2">
 										<tr>
-											<td style="padding-left: 20px; padding-right: 15px; padding-top: 20px;">
+											<td style="padding:20px 15px 0 20px;">
 												<h3 style="font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $entityTitle; ?></h3>
 												<span style="font-size: .95em; line-height: 1.35em;"><?php echo $entityText; ?></span>
 											</td>
 										</tr>
 										<tr>
-											<td style="padding-left: 20px; padding-top: 17px; padding-bottom: 20px;">
+											<td style="padding:17px 0 20px 20px;">
 												<a href="<?php echo $entityLink; ?>" style="background-color:#BE1622; color:#ffffff; font-size:.93em; padding:14px 16px;float: left; border-radius: 5px; text-decoration:none;">
 													Llegiu-ne més
 												</a>
@@ -256,7 +256,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 										</tr>
 									</table>
 								</td>
-								<td style="padding-top: 20px; padding-right: 20px; padding-bottom: 20px; border-radius: 10px; padding-left: 10px; vertical-align:top;">
+								<td style="padding:20px 20px 20px 10px; border-radius: 10px; vertical-align:top;">
 									<a href="<?php print $entityLink; ?>">
 										<img src="<?php print $entityImage; ?>" width="600" alt="<?php print $entityImageAlt; ?>" style="border-width:0;font-family:Fira Sans, Helvetica, Arial !important;width:100%;max-width:600px;height:auto; border-radius:15px;" />
 									</a>
@@ -270,7 +270,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 			<!-- SECTION  || Destaquem-->
 			<?php if (!empty($highlightNode)) : ?>
 			<tr>
-				<td colspan="2" style="padding-left: 15px; padding-right:15px;">
+				<td colspan="2" style="padding: 0 15px;">
 					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;">
 						<tbody>
 							<tr>
@@ -283,11 +283,11 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" style="padding-left: 15px; padding-right: 15px; vertical-align: top; padding-bottom:20px;">
+				<td colspan="2" style="padding:0 15px 20px 15px; vertical-align: top;">
 					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;  background-color:#EDEDED; border-radius:15px;">
 						<tbody>
 							<tr>
-								<td style="padding-top: 20px; padding-left: 20px; padding-bottom: 20px; border-radius: 10px; padding-right: 10px; vertical-align:top;">
+								<td style="padding:20px 10px 20px 20px; border-radius: 10px; vertical-align:top;">
 									<a href="<?php print $highlightLink; ?>">
 										<img src="<?php print $highlightImage; ?>" width="600" alt="<?php print $highlightImageAlt; ?>" style="border-width:0;font-family:Fira Sans, Helvetica, Arial !important;width:100%;max-width:600px;height:auto; border-radius:15px;" />
 									</a>
@@ -301,7 +301,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 											</td>
 										</tr>
 										<tr>
-											<td style="padding-left: 20px; padding-top: 17px; padding-bottom: 20px;">
+											<td style="padding:17px 0 20px 20px;">
 												<a href="<?php echo $highlightLink; ?>" style="background-color:#BE1622; color:#ffffff; font-size:.93em; padding:14px 16px;float: left; border-radius: 5px; text-decoration:none;">
 													Llegiu-ne més
 												</a>
@@ -318,7 +318,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 			<!-- SECTION  || El recurs de la setmana -->
 			<?php if (!empty($resourceNode)) : ?>
 			<tr>
-				<td colspan="2" style="padding-left: 15px; padding-right:15px;">
+				<td colspan="2" style="padding:0 15px;">
 					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;">
 						<tbody>
 							<tr>
@@ -331,20 +331,20 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" style="padding-left: 15px; padding-right: 15px; vertical-align: top; padding-bottom:20px;">
+				<td colspan="2" style="padding: 0 15px 20px 15px; vertical-align: top;">
 					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;  background-color:#EDEDED; border-radius:15px;">
 						<tbody>
 							<tr>
 								<td style="width: 55%;">
 									<table colspan="2">
 										<tr>
-											<td style="padding-left: 20px; padding-right: 15px; padding-top: 20px;">
+											<td style="padding: 20px 15px 0 20px;">
 												<h3 style="font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $resourceTitle; ?></h3>
 												<span style="font-size: .95em; line-height: 1.35em;"><?php echo $resourceText; ?></span>
 											</td>
 										</tr>
 										<tr>
-											<td style="padding-left: 20px; padding-top: 17px; padding-bottom: 20px;">
+											<td style="padding:17px 0 20px 20px;">
 												<a href="<?php echo $resourceLink; ?>" style="background-color:#BE1622; color:#ffffff; font-size:.93em; padding:14px 16px;float: left; border-radius: 5px; text-decoration:none;">
 													Llegiu-ne més
 												</a>
@@ -352,7 +352,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 										</tr>
 									</table>
 								</td>
-								<td style="padding-top: 20px; padding-right: 20px; padding-bottom: 20px; border-radius: 10px; padding-left: 10px; vertical-align:top;">
+								<td style="padding:20px 20px 20px 10px;border-radius: 10px; vertical-align:top;">
 									<a href="<?php print $resourceLink; ?>">
 										<img src="<?php print $resourceImage; ?>" width="600" alt="<?php print $resourceImageAlt; ?>" style="border-width:0;font-family:Fira Sans, Helvetica, Arial !important;width:100%;max-width:600px;height:auto; border-radius:15px;" />
 									</a>
@@ -366,7 +366,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 			<!-- SECTION  || Contrastos -->
 			<?php if (!empty($contrast1Node)) : ?>
 			<tr>
-				<td colspan="2" style="padding-left: 15px; padding-right:15px;">
+				<td colspan="2" style="padding: 0 15px;">
 					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;">
 						<tbody>
 							<tr>
@@ -379,7 +379,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 				</td>
 			</tr>
 			<tr>
-				<td style="width:50%; padding-left:15px; padding-right:8px;padding-bottom:40px;">
+				<td style="width:50%; padding:0 8px 40px 15px;">
 					<table style="font-size:16px; background-color:#ADF08F; border-radius:15px; min-height: 350px;">
 						<tr style="height:40%;">
 							<td colspan="2" style="padding:10px;">
@@ -389,7 +389,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2" style="padding-left: 10px; padding-right: 10px; vertical-align:top;">
+							<td colspan="2" style="padding: 0px 10px; vertical-align:top;">
 								<a href="<?php print $contrast1Link; ?>" style="text-decoration:none; color:#333333;">			
 									<h3 style="font-size:1.25em; line-height:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;color:#333333;"><?php echo $contrast1Title; ?></h3>
 								</a>
@@ -398,7 +398,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 					</table>
 				</td>
 				<?php if (!empty($contrast2Node)) : ?>
-				<td style="width:50%; padding-right:15px; padding-left:8px;padding-bottom:15px;">
+				<td style="width:50%; padding:0 15px 15px 8px;">
 					<table style="font-size:16px; background-color:#FF5561; border-radius:15px; min-height: 350px;">
 						<tr style="height:40%;">
 							<td colspan="2" style="padding:10px;">
@@ -408,7 +408,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2" style="padding-left: 10px; padding-right: 10px; vertical-align:top;">
+							<td colspan="2" style="padding:0 10px; vertical-align:top;">
 								<a href="<?php print $contrast2Link; ?>" style="text-decoration:none; color:#333333;">			
 									<h3 style="font-size:1.25em; line-height:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;color:#333333;"><?php echo $contrast2Title; ?></h3>
 								</a>
