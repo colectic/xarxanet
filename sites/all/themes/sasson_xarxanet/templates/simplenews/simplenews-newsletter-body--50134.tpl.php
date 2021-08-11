@@ -158,7 +158,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 			<tr style="background-color:#2f3031;">
 				<td>
 					<a href="http://www.xarxanet.org" style="text-decoration:none">
-						<img src="/sites/all/themes/xn17/logo.png" alt="logotip xarxanet" style="margin-left:5px; margin-top:20px" />
+						<img src="<?php print $pathroot; ?>/sites/all/themes/xn17/logo.png" alt="logotip xarxanet" style="margin-left:5px; margin-top:20px" />
 					</a>
 				</td>
 				<td>
@@ -203,8 +203,8 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 								</tr>
 								<tr>
 
-									<td style="padding:10px 20px 20px 20px; width: 65%;">
-										<h3 style="margin-top:0; font-weight:600; font-size: 1.56em;"><?php echo $monographicTitle; ?></h3>
+									<td style="padding:10px 20px 7px 20px; width: 65%;">
+										<h3 style="margin:0 0 17px 0; font-weight:600; font-size: 1.56em; line-height:1.3em;"><?php echo $monographicTitle; ?></h3>
 										<span style="font-size: .95em; line-height: 1.35em;"><?php echo $monographicText; ?></span>
 									</td>
 									<td style="padding: 17px 15px 20px 0; vertical-align:bottom;">
@@ -243,7 +243,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 									<table colspan="2">
 										<tr>
 											<td style="padding:20px 15px 0 20px;">
-												<h3 style="font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $entityTitle; ?></h3>
+												<h3 style="line-height:1.3em; font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $entityTitle; ?></h3>
 												<span style="font-size: .95em; line-height: 1.35em;"><?php echo $entityText; ?></span>
 											</td>
 										</tr>
@@ -295,8 +295,8 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 								<td style="width: 55%;">
 									<table colspan="2">
 										<tr>
-											<td style="padding-right: 20px; padding-left: 15px; padding-top: 20px;">
-												<h3 style="font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $highlightTitle; ?></h3>
+											<td style="padding:20px 20px 0 15px;">
+												<h3 style="line-height:1.3em; font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $highlightTitle; ?></h3>
 												<span style="font-size: .95em; line-height: 1.35em;"><?php echo $highlightText; ?></span>
 											</td>
 										</tr>
@@ -339,7 +339,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 									<table colspan="2">
 										<tr>
 											<td style="padding: 20px 15px 0 20px;">
-												<h3 style="font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $resourceTitle; ?></h3>
+												<h3 style="line-height:1.3em; font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $resourceTitle; ?></h3>
 												<span style="font-size: .95em; line-height: 1.35em;"><?php echo $resourceText; ?></span>
 											</td>
 										</tr>
@@ -398,7 +398,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 					</table>
 				</td>
 				<?php if (!empty($contrast2Node)) : ?>
-				<td style="width:50%; padding:0 15px 15px 8px;">
+				<td style="width:50%; padding:0 15px 40px 8px;">
 					<table style="font-size:16px; background-color:#FF5561; border-radius:15px; min-height: 350px;">
 						<tr style="height:40%;">
 							<td colspan="2" style="padding:10px;">
@@ -426,15 +426,15 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 				<td colspan="2" style="border-top: 3px solid #53544F; padding: 4px;">
 					<table class="butlleti" style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 13px; color:white;">
 						<tr class='body'>
-							<td colspan="2" style="padding-left:10px;">
+							<td colspan="2" style="padding: 0 0 0 10px;">
 								<strong>Xarxanet.org és un projecte de</strong>
 							</td>
-							<td colspan="2" style="padding-left:50px;">
+							<td colspan="2" style="padding: 0 0 0 10px;">
 								<strong>Entitats promotores</strong>
 							</td>
 						</tr>
 						<tr class='body'>
-							<td style="vertical-align:top; padding-left:10px; padding-top:15px">
+							<td style="vertical-align:top; padding:15px 0 0 10px;">
 								<table class="butlleti">
 									<tr class='body'>
 										<td>
@@ -457,7 +457,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 										<img alt="logo voluntariat" src="<?php echo $pathroot ?>/sites/default/files/butlletins/financament/logo_scv.png">
 									</a> -->
 							</td>
-							<td style="padding-left:50px;">
+							<td style="padding: 0 0 0 50px;">
 								<p>
 									<a href="https://suport.fundesplai.org/" style="color:white;  font-weight:normal">Suport Tercer Sector – Fundesplai</a><br />
 									<a href="http://www.peretarres.org" style="color:white;  font-weight:normal">Fundació Pere Tarrés</a><br />
@@ -466,7 +466,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 									<a href="http://voluntaris.cat/" style="color:white;  font-weight:normal">Federació Catalana del Voluntariat Social</a><br />
 								</p>
 							</td>
-							<td style="padding-left:15px">
+							<td style="padding:0 0 0 15px;">
 								<p>
 									<a href="https://www.escoltesiguies.cat/" style="color:white;  font-weight:normal">Minyons Escoltes i Guies de Catalunya</a><br />
 									<a href="http://www.tothomweb.com/" style="color:white;  font-weight:normal">TOTHOMweb</a><br />
