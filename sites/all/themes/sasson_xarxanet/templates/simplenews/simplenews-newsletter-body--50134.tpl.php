@@ -153,16 +153,16 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 <!-- @END CSS Styles from TOTHOMweb -->
 <center class="wrapper" style="width:100%;table-layout:fixed;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
 	<div class="webkit" style="max-width:602px;margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;">
-		<table class="butlleti" style="font-family: Fira Sans,Helvetica,Arial,sans-serif; border-spacing:0; margin:0 auto; width:100%;max-width:602px; font-size: 13px; border:1px solid #d3d3d2; border-bottom: 0px; width:100%;">
+		<table class="butlleti" style="font-family: Fira Sans,Helvetica,Arial,sans-serif; border-spacing:0; margin:0 auto; width:100%;max-width:602px; font-size: 13px; border-bottom: 0px; width:100%;">
 			<!-- CAPÇALERA -->
 			<tr style="background-color:#2f3031;">
-				<td>
+				<td style="padding: 0 0 0 5px;">
 					<a href="http://www.xarxanet.org" style="text-decoration:none">
 						<img src="<?php print $pathroot; ?>/sites/all/themes/xn17/logo.png" alt="logotip xarxanet" style="margin-left:5px; margin-top:20px" />
 					</a>
 				</td>
 				<td>
-					<p style="font-size:38px; color:#FFFFFF; text-align:right; font-weight:bold; margin:10px 5px">Actualitat</p>
+					<p style="font-size:30px; color:#FFFFFF; text-align:right; font-weight:bold; margin:10px 5px">Actualitat</p>
 				</td>
 			</tr>
 			<tr style="background-color:#2f3031; color:#878787; font-weight:bold;">
@@ -176,48 +176,54 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 					<a href="http://www.xarxanet.org/hemeroteca_actualitat" style=" color:#878787">Butlletins anteriors</a>
 				</td>
 			</tr>
+			<tr>
+				<td colspan="2" style="padding: 0 15px;">
+					<a href="<?php url('node/' . $node->nid, array('absolute' => TRUE)); ?>" style="background-color:#EDEDED; border-radius:5px; float: right; padding: 5px 10px;">
+						Obre al navegador
+					</a>		
+				</td>
+			</tr>
 			<?php if (!empty($monographicNode)) : ?>
-				<tr>
-					<td colspan="2" style="padding:0 15px;">
-						<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;">
-							<tbody>
-								<tr>
-									<td>
-										<h2 class="section-title" style="font-family:Fira Sans, Helvetica, Arial !important;font-weight:600;font-size:1.875em !important;color:#333333;margin-top:20px; margin-bottom:25px; "><?php echo $monographicSectTitle; ?></h2>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" style="padding:0 15px 20px 15px;">
-						<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%; background-color:#EDEDED; border-radius:15px;">
-							<tbody>
-								<tr>
-									<td colspan="2" style="padding:10px;">
-										<a href="<?php print $monographicLink; ?>">
-											<img src="<?php print $monographicImage; ?>" width="600" alt="<?php print $monographicImageAlt; ?>" style="border-width:0;font-family:Fira Sans, Helvetica, Arial !important;width:100%;max-width:600px;height:auto; border-radius:15px;" />
-										</a>
-									</td>
-								</tr>
-								<tr>
+			<tr>
+				<td colspan="2" style="padding:0 15px;">
+					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;">
+						<tbody>
+							<tr>
+								<td>
+									<h2 class="section-title" style="font-family:Fira Sans, Helvetica, Arial !important;font-weight:600;font-size:1.875em !important;color:#333333;margin-top:20px; margin-bottom:25px; "><?php echo $monographicSectTitle; ?></h2>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="padding:0 15px 20px 15px;">
+					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%; background-color:#EDEDED; border-radius:15px;">
+						<tbody>
+							<tr>
+								<td colspan="2" style="padding:10px;">
+									<a href="<?php print $monographicLink; ?>">
+										<img src="<?php print $monographicImage; ?>" width="600" alt="<?php print $monographicImageAlt; ?>" style="border-width:0;font-family:Fira Sans, Helvetica, Arial !important;width:100%;max-width:600px;height:auto; border-radius:15px;" />
+									</a>
+								</td>
+							</tr>
+							<tr>
 
-									<td style="padding:10px 20px 7px 20px; width: 65%; color:#333333;">
-										<h3 style="margin:0 0 17px 0; font-weight:600; font-size: 1.56em; line-height:1.3em;"><?php echo $monographicTitle; ?></h3>
-										<span style="font-size: .95em; line-height: 1.35em;"><?php echo $monographicText; ?></span>
-									</td>
-									<td style="padding: 17px 15px 20px 0; vertical-align:bottom;">
-										<a href="<?php echo $monographicLink; ?>" style="background-color:#BE1622; color:#ffffff; font-size:.93em; padding:14px 16px; float: right; border-radius: 5px; text-decoration:none;">
-											Llegiu-ne més
-										</a>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</td>
-				</tr>
-
+								<td style="padding:10px 20px 7px 20px; width: 65%; color:#333333;">
+									<h3 style="margin:0 0 17px 0; font-weight:600; font-size: 1.56em; line-height:1.3em;"><?php echo $monographicTitle; ?></h3>
+									<span style="font-size: .95em; line-height: 1.35em;"><?php echo $monographicText; ?></span>
+								</td>
+								<td style="padding: 17px 15px 20px 0; vertical-align:bottom;">
+									<a href="<?php echo $monographicLink; ?>" style="background-color:#BE1622; color:#ffffff; font-size:.93em; padding:14px 16px; float: right; border-radius: 5px; text-decoration:none;">
+										Llegiu-ne més
+									</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
 			<?php endif; ?>
 			<!-- SECTION  || L'entitat protagonista -->
 			<?php if (!empty($entityNode)) : ?>
@@ -422,14 +428,14 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 			<?php endif; ?>
 			<!-- END CONTENT -->
 			<!-- PEU -->
-			<tr style="background-color:#2f3031; border-top:3px solid #231f20;">
-				<td colspan="2" style="border-top: 3px solid #53544F; padding: 4px;">
+			<tr style="background-color:#2f3031;">
+				<td colspan="2" style="padding: 4px;">
 					<table class="butlleti" style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 13px; color:white;">
 						<tr class='body'>
-							<td colspan="2" style="padding: 0 0 0 10px;">
+							<td colspan="2" style="padding: 10px 0 0 10px;">
 								<strong>Xarxanet.org és un projecte de</strong>
 							</td>
-							<td colspan="2" style="padding: 0 0 0 10px;">
+							<td colspan="2" style="padding: 10px 0 0 10px;">
 								<strong>Entitats promotores</strong>
 							</td>
 						</tr>
