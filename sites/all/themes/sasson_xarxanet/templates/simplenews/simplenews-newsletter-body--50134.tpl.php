@@ -151,9 +151,9 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 	}
 </style>
 <!-- @END CSS Styles from TOTHOMweb -->
-<center id="newsletter" class="wrapper" style="width:100%;table-layout:fixed;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+<center class="wrapper" style="width:100%;table-layout:fixed;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
 	<div class="webkit" style="max-width:602px;margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;">
-		<table class="butlleti" style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 13px; border:1px solid #d3d3d2; border-bottom: 0px; width:100%;">
+		<table class="butlleti" style="font-family: Fira Sans,Helvetica,Arial,sans-serif; border-spacing:0; margin:0 auto; width:100%;max-width:602px; font-size: 13px; border:1px solid #d3d3d2; border-bottom: 0px; width:100%;">
 			<!-- CAPÇALERA -->
 			<tr style="background-color:#2f3031;">
 				<td>
@@ -203,7 +203,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 								</tr>
 								<tr>
 
-									<td style="padding:10px 20px 7px 20px; width: 65%;">
+									<td style="padding:10px 20px 7px 20px; width: 65%; color:#333333;">
 										<h3 style="margin:0 0 17px 0; font-weight:600; font-size: 1.56em; line-height:1.3em;"><?php echo $monographicTitle; ?></h3>
 										<span style="font-size: .95em; line-height: 1.35em;"><?php echo $monographicText; ?></span>
 									</td>
@@ -242,7 +242,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 								<td style="width: 55%;">
 									<table colspan="2">
 										<tr>
-											<td style="padding:20px 15px 0 20px;">
+											<td style="padding:20px 15px 0 20px; color:#333333;">
 												<h3 style="line-height:1.3em; font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $entityTitle; ?></h3>
 												<span style="font-size: .95em; line-height: 1.35em;"><?php echo $entityText; ?></span>
 											</td>
@@ -295,7 +295,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 								<td style="width: 55%;">
 									<table colspan="2">
 										<tr>
-											<td style="padding:20px 20px 0 15px;">
+											<td style="padding:20px 20px 0 15px; color:#333333;">
 												<h3 style="line-height:1.3em; font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $highlightTitle; ?></h3>
 												<span style="font-size: .95em; line-height: 1.35em;"><?php echo $highlightText; ?></span>
 											</td>
@@ -338,7 +338,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 								<td style="width: 55%;">
 									<table colspan="2">
 										<tr>
-											<td style="padding: 20px 15px 0 20px;">
+											<td style="padding: 20px 15px 0 20px; color:#333333;">
 												<h3 style="line-height:1.3em; font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $resourceTitle; ?></h3>
 												<span style="font-size: .95em; line-height: 1.35em;"><?php echo $resourceText; ?></span>
 											</td>
@@ -434,7 +434,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 							</td>
 						</tr>
 						<tr class='body'>
-							<td style="vertical-align:top; padding:15px 0 0 10px;">
+							<td style="vertical-align:top; padding:15px 0 0 15px;">
 								<table class="butlleti">
 									<tr class='body'>
 										<td>
@@ -457,7 +457,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 										<img alt="logo voluntariat" src="<?php echo $pathroot ?>/sites/default/files/butlletins/financament/logo_scv.png">
 									</a> -->
 							</td>
-							<td style="padding: 0 0 0 50px;">
+							<td style="padding: 0 0 0 15px;">
 								<p>
 									<a href="https://suport.fundesplai.org/" style="color:white;  font-weight:normal">Suport Tercer Sector – Fundesplai</a><br />
 									<a href="http://www.peretarres.org" style="color:white;  font-weight:normal">Fundació Pere Tarrés</a><br />
