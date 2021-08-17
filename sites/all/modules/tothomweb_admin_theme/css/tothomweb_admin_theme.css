@@ -113,3 +113,7 @@
   width: auto;
   float: left;
   margin-right: 3px; }
+
+/* line 195, ../sass/tothomweb_admin_theme.scss */
+.node-form.node-butllet_actualitat_21-form #edit-simplenews-token-help, .node-form.node-butllet_actualitat_21-form #edit-locations-0, .node-form.node-butlleti_financament_21-form #edit-simplenews-token-help, .node-form.node-butlleti_financament_21-form #edit-locations-0 {
+  display: none; }
