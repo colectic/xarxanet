@@ -380,8 +380,8 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 				</td>
 			</tr>
 			<tr>
-				<td style="width:50%; padding:0 8px 40px 15px;">
-					<table style="font-size:16px; background-color:#ADF08F; border-radius:15px; min-height: 350px;">
+				<td style="width:50%; padding:0 8px 40px 15px; vertical-align:top;">
+					<table style="font-size:16px; background-color:#ADF08F; border-radius:15px; min-height: 420px;">
 						<tr style="height:40%;">
 							<td colspan="2" style="padding:10px;">
 								<a href="<?php print $contrast1Link; ?>">
@@ -399,8 +399,8 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 					</table>
 				</td>
 				<?php if (!empty($contrast2Node)) : ?>
-				<td style="width:50%; padding:0 15px 40px 8px;">
-					<table style="font-size:16px; background-color:#FF5561; border-radius:15px; min-height: 350px; display:block;">
+				<td style="width:50%; padding:0 15px 40px 8px; vertical-align:top;">
+					<table style="font-size:16px; background-color:#FF5561; border-radius:15px; min-height: 420px; display:block;">
 						<tr style="height:40%;">
 							<td colspan="2" style="padding:10px;">
 								<a href="<?php print $contrast2Link; ?>">
