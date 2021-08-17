@@ -307,43 +307,45 @@ ksort($financ_nodes);
 			</tr>
 			<?php endif; ?>
 			<tr>
-				<td colspan="2" style="padding:40px 15px;">
-					<a href="https://xarxanet.org/financament">
-						<table style="background-color:#BE1622; border-radius:14px; width:100%;">
-							<tr>
-								<td style="font-weight:800; color: #ffffff; font-size:1.68em; padding:70px 0 14px 22px; vertical-align: bottom;">
+				<td colspan="2" style="padding:40px 15px;">			
+					<table style="background-color:#BE1622; border-radius:14px; width:100%;">
+						<tr>
+							<td style="vertical-align: bottom;">
+								<a href="https://xarxanet.org/financament" style="display:block; font-weight:800; color: #ffffff; font-size:1.68em; padding:70px 0 14px 22px; vertical-align: bottom;">
 									Cerca el teu finançament
-								</td>
-								<td style="color:#ffffff; padding:70px 22px 14px 0; text-align:right; vertical-align:bottom;">
-									<img width="50px" src="<?php echo $pathroot; ?>/sites/default/files/search-icon.png" alt="">
-								</td>
-							</tr>
-						</table>
-					</a>
+								</a>
+							</td>
+							<td style="color:#ffffff; padding:70px 22px 14px 0; text-align:right; vertical-align:bottom;">
+								<img width="50px" src="<?php echo $pathroot; ?>/sites/default/files/search-icon.png" alt="">
+							</td>
+						</tr>
+					</table>
 				</td>
 			</tr>
 			<tr>
-				<td style="padding:0 15px 30px 15px">
-					<a href="https://xarxanet.org/financaments/premis">
-						<table style="background-color:#252627; border-radius:14px; padding-right:7px; width:100%;">
-							<tr>
-								<td style="font-weight:800; color: #ffffff; font-size:1.68em; padding:70px 0 14px 22px;">
+				<td style="padding:0 15px 30px 15px">			
+					<table style="background-color:#252627; border-radius:14px; padding-right:7px; width:100%;">
+						<tr>
+							<td>
+								<a href="https://xarxanet.org/financaments/premis" style="display:block; font-weight:800; color: #ffffff; font-size:1.68em; padding:70px 0 14px 22px;">
 									Més premis
-								</td>
-							</tr>
-						</table>
-					</a>
+								</a>
+							</td>
+						</tr>
+					</table>		
 				</td>
 				<td style="padding:0 15px 30px 15px">
-					<a href="https://xarxanet.org/financaments/subvencions">
-						<table style="background-color:#252627; border-radius:14px; padding-left:7px; width:100%;">
-							<tr>
-								<td style="font-weight:800; color: #ffffff; font-size:1.68em; padding:70px 0 14px 22px;">
+					
+					<table style="background-color:#252627; border-radius:14px; padding-left:7px; width:100%;">
+						<tr>
+							<td>
+								<a href="https://xarxanet.org/financaments/subvencions" style="display:block; font-weight:800; color: #ffffff; font-size:1.68em; padding:70px 0 14px 22px;">
 									Més subvencions
-								</td>
-							</tr>
-						</table>
-					</a>
+								</a>
+							</td>
+						</tr>
+					</table>
+					
 				</td>
 			</tr>
 			<tr>
