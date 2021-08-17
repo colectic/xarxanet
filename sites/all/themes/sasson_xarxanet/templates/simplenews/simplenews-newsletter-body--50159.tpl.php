@@ -176,6 +176,13 @@ ksort($financ_nodes);
 					<a href="http://www.xarxanet.org/hemeroteca_actualitat" style=" color:#878787">Butlletins anteriors</a>
 				</td>
 			</tr>
+			<tr>
+				<td colspan="2" style="padding: 0 15px;">
+					<a href="<?php print url('node/' . $node->nid, array('absolute' => TRUE)); ?>" style="background-color:#EDEDED; border-radius:5px; float: right; padding: 5px 10px;">
+						Obre al navegador
+					</a>		
+				</td>
+			</tr>
 			<?php if (!empty($highlightnew1Node)) : ?>
 			<tr>
 				<td colspan="2" style="padding: 30px 15px 30px 15px; vertical-align: top; ">
