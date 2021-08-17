@@ -186,7 +186,7 @@ ksort($financ_nodes);
 			<?php if (!empty($highlightnew1Node)) : ?>
 			<tr>
 				<td colspan="2" style="padding: 30px 15px 30px 15px; vertical-align: top; ">
-					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 17px; width:100%;  background-color:#EDEDED; border-radius:15px;">
+					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 17px; width:100%;  background-color:#EDEDED; border-radius:15px; color:#252627;">
 						<tbody>
 							<tr>
 								<td style="width: 55%;">
@@ -220,7 +220,7 @@ ksort($financ_nodes);
 			<?php if (!empty($highlightnew2Node)) : ?>
 			<tr>
 				<td colspan="2" style="padding: 0 15px 50px 15px; vertical-align: top; ">
-					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 17px; width:100%;  background-color:#EDEDED; border-radius:15px;">
+					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 17px; width:100%;  background-color:#EDEDED; border-radius:15px; color:#252627;">
 						<tbody>
 							<tr>
 								<td style="width: 55%;">
@@ -265,7 +265,7 @@ ksort($financ_nodes);
 						<?php foreach ($financ_nodes as $financ_node) : ?>
 							<tr>
 								<td>
-									<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;  background-color:#FFFFFF; border-radius:15px; margin-bottom:25px;">
+									<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;  background-color:#FFFFFF; border-radius:15px; margin-bottom:25px; color:#252627;">
 										<tbody>
 											<tr>
 												<td style="width: 100%;">
@@ -311,7 +311,7 @@ ksort($financ_nodes);
 					<table style="background-color:#BE1622; border-radius:14px; width:100%;">
 						<tr>
 							<td style="vertical-align: bottom;">
-								<a href="https://xarxanet.org/financament" style="display:block; font-weight:800; color: #ffffff; font-size:1.68em; padding:70px 0 14px 22px; vertical-align: bottom;">
+								<a href="https://xarxanet.org/financament" style="display:block; font-weight:800; color: #ffffff; font-size:1.68em; padding:70px 0 14px 22px; text-decoration:none;">
 									Cerca el teu finançament
 								</a>
 							</td>
@@ -327,7 +327,7 @@ ksort($financ_nodes);
 					<table style="background-color:#252627; border-radius:14px; padding-right:7px; width:100%;">
 						<tr>
 							<td>
-								<a href="https://xarxanet.org/financaments/premis" style="display:block; font-weight:800; color: #ffffff; font-size:1.68em; padding:70px 0 14px 22px;">
+								<a href="https://xarxanet.org/financaments/premis" style="display:block; font-weight:800; color: #ffffff; font-size:1.68em; padding:70px 0 14px 22px; text-decoration:none;">
 									Més premis
 								</a>
 							</td>
@@ -339,7 +339,7 @@ ksort($financ_nodes);
 					<table style="background-color:#252627; border-radius:14px; padding-left:7px; width:100%;">
 						<tr>
 							<td>
-								<a href="https://xarxanet.org/financaments/subvencions" style="display:block; font-weight:800; color: #ffffff; font-size:1.68em; padding:70px 0 14px 22px;">
+								<a href="https://xarxanet.org/financaments/subvencions" style="display:block; font-weight:800; color: #ffffff; font-size:1.68em; padding:70px 0 14px 22px; text-decoration:none;">
 									Més subvencions
 								</a>
 							</td>
