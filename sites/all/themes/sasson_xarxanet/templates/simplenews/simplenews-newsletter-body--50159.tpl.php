@@ -72,7 +72,7 @@ if (empty($highlightnew1Node->field_imatges['und'][0]['uri'])) :
 	$highlightnew1Image = image_style_url('butlleti_quadrada', $highlightnew1Node->field_agenda_imatge['und'][0]['uri']);
 	$highlightnew1ImageAlt = $highlightnew1Node->field_imatges['und'][0]['field_file_image_alt_text']['und'][0]['value'];
 endif;
-$highlightnew1Text = $highlightnew1Node->field_resum['und'][0]['value'];
+$highlightnew1Text = strip_tags($highlightnew1Node->field_resum['und'][0]['value']);
 $highlightnew1Link = url('node/' . $highlightnew1Node->nid, array('absolute' => TRUE));
 
 //$Highlight new 1 Section
@@ -85,7 +85,7 @@ if (empty($highlightnew2Node->field_imatges['und'][0]['uri'])) :
 	$highlightnew2Image = image_style_url('butlleti_quadrada', $highlightnew2Node->field_agenda_imatge['und'][0]['uri']);
 	$highlightnew2ImageAlt = $highlightnew2Node->field_imatges['und'][0]['field_file_image_alt_text']['und'][0]['value'];
 endif;
-$highlightnew2Text = $highlightnew2Node->field_resum['und'][0]['value'];
+$highlightnew2Text = strip_tags($highlightnew2Node->field_resum['und'][0]['value']);
 $highlightnew2Link = url('node/' . $highlightnew2Node->nid, array('absolute' => TRUE));
 
 
@@ -194,7 +194,7 @@ ksort($financ_nodes);
 										<tr>
 											<td style="padding:20px 15px 0 20px;">
 												<h3 style="font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $highlightnew1Title; ?></h3>
-												<span style="font-size: .95em; line-height: 1.35em;"><?php echo $highlightnew1Text; ?></span>
+												<p style="font-size: .874em; line-height: 1.22em; margin-bottom:0;"><?php echo $highlightnew1Text; ?></p>
 											</td>
 										</tr>
 										<tr>
@@ -223,12 +223,17 @@ ksort($financ_nodes);
 					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 17px; width:100%;  background-color:#EDEDED; border-radius:15px; color:#252627;">
 						<tbody>
 							<tr>
+							<td style="padding:20px 10px 20px 20px; border-radius: 10px; vertical-align:top;">
+									<a href="<?php print $highlightnew2Link; ?>">
+										<img src="<?php print $highlightnew2Image; ?>" width="600" alt="<?php print $highlightnew2ImageAlt; ?>" style="border-width:0;font-family:Fira Sans, Helvetica, Arial !important;width:100%;max-width:600px;height:auto; border-radius:15px;" />
+									</a>
+								</td>
 								<td style="width: 55%;">
 									<table colspan="2">
 										<tr>
 											<td style="padding:20px 15px 0 20px;">
 												<h3 style="font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $highlightnew2Title; ?></h3>
-												<span style="font-size: .95em; line-height: 1.35em;"><?php echo $highlightnew2Text; ?></span>
+												<p style="font-size: .874em; line-height: 1.22em; margin-bottom:0;"><?php echo $highlightnew2Text; ?></p>
 											</td>
 										</tr>
 										<tr>
@@ -239,11 +244,6 @@ ksort($financ_nodes);
 											</td>
 										</tr>
 									</table>
-								</td>
-								<td style="padding:20px 20px 20px 10px; border-radius: 10px; vertical-align:top;">
-									<a href="<?php print $highlightnew2Link; ?>">
-										<img src="<?php print $highlightnew2Image; ?>" width="600" alt="<?php print $highlightnew2ImageAlt; ?>" style="border-width:0;font-family:Fira Sans, Helvetica, Arial !important;width:100%;max-width:600px;height:auto; border-radius:15px;" />
-									</a>
 								</td>
 							</tr>
 						</tbody>
@@ -273,7 +273,7 @@ ksort($financ_nodes);
 														<tr>
 															<td style="padding:20px 15px 0 20px;">
 																<h3 style="font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $financ_node['title']; ?></h3>
-																<span style="font-size: .95em; line-height: 1.35em; font-style:italic;"><?php echo $financ_node['teaser']; ?></span>				
+																<p style="font-size: .874em; line-height: 1.28em; margin-bottom:0;font-style:italic;"><?php echo $financ_node['teaser']; ?></p>				
 															</td>
 														</tr>
 														<tr>

@@ -61,10 +61,8 @@ $node = $build['#node'];
 
 // Data Preprocessing
 
-
 //$Monographic Section
-$monographicSectTitle = $node->field_actualitat21_mono_epigraf['und'][0]['value'];
-$monographicTitle = $node->field_actualitat21_mono_titular['und'][0]['value'];
+$monographicSectTitle = $node->field__actualitat21_mono_epigraf['und'][0]['value'];
 $monographicImage = image_style_url('large', $node->field_actualitat21_mono_imatge['und'][0]['uri']);
 $monographicImageAlt = $node->field_actualitat21_mono_imatge['und'][0]['field_file_image_alt_text']['und'][0]['value'];
 $monographicText = $node->field_actualitat21_mono_cos['und'][0]['value'];
@@ -76,7 +74,7 @@ $entityNode = node_load($entityID);
 $entityTitle = $entityNode->title;
 $entityImage = image_style_url('butlleti_quadrada', $entityNode->field_imatges['und'][0]['uri']);
 $entityImageAlt = $entityNode->field_imatges['und'][0]['field_file_image_alt_text']['und'][0]['value'];
-$entityText = $entityNode->field_resum['und'][0]['value'];
+$entityText = strip_tags($entityNode->field_resum['und'][0]['value']);
 $entityLink = url('node/' . $entityNode->nid, array('absolute' => TRUE));
 
 //$highlight Section
@@ -85,7 +83,7 @@ $highlightNode = node_load($highlightID);
 $highlightTitle = $highlightNode->title;
 $highlightImage = image_style_url('butlleti_quadrada', $highlightNode->field_imatges['und'][0]['uri']);
 $highlightImageAlt = $highlightNode->field_imatges['und'][0]['field_file_image_alt_text']['und'][0]['value'];
-$highlightText = $highlightNode->field_resum['und'][0]['value'];
+$highlightText = strip_tags($highlightNode->field_resum['und'][0]['value']);
 $highlightLink = url('node/' . $highlightNode->nid, array('absolute' => TRUE));
 
 //Resource Section
@@ -94,7 +92,7 @@ $resourceNode = node_load($resourceID);
 $resourceTitle = $resourceNode->title;
 $resourceImage = image_style_url('butlleti_quadrada', $resourceNode->field_imatges['und'][0]['uri']);
 $resourceImageAlt = $resourceNode->field_imatges['und'][0]['field_file_image_alt_text']['und'][0]['value'];
-$resourceText = $resourceNode->field_resum['und'][0]['value'];
+$resourceText = strip_tags($resourceNode->field_resum['und'][0]['value']);
 $resourceLink = url('node/' . $resourceNode->nid, array('absolute' => TRUE));
 
 //contrast1 Section
@@ -114,7 +112,6 @@ $contrast2Image = image_style_url('butlleti_quadrada', $contrast2Node->field_ima
 $contrast2ImageAlt = $contrast2Node->field_imatges['und'][0]['field_file_image_alt_text']['und'][0]['value'];
 $contrast2Text = $contrast2Node->field_resum['und'][0]['value'];
 $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
-
 
 // echo '<pre>';
 // echo var_dump($monographicNode);
@@ -178,7 +175,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 					</a>		
 				</td>
 			</tr>
-			<?php if (!empty($monographicTitle)) : ?>
+			<?php if (!empty($monographicSectTitle)) : ?>
 			<tr>
 				<td colspan="2" style="padding:0 15px;">
 					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;">
@@ -207,7 +204,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 
 								<td style="padding:10px 20px 7px 20px; width: 65%; color:#333333;">
 									<h3 style="margin:0 0 17px 0; font-weight:600; font-size: 1.56em; line-height:1.3em;"><?php echo $monographicTitle; ?></h3>
-									<span style="font-size: .95em; line-height: 1.35em;"><?php echo $monographicText; ?></span>
+									<p style="font-size: .874em; line-height: 1.22em; margin-bottom:0;"><?php echo $monographicText; ?></p>
 								</td>
 								<td style="padding: 17px 15px 20px 0; vertical-align:bottom;">
 									<a href="<?php echo $monographicLink; ?>" style="background-color:#BE1622; color:#ffffff; font-size:.93em; padding:14px 16px; float: right; border-radius: 5px; text-decoration:none;">
@@ -245,7 +242,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 										<tr>
 											<td style="padding:20px 15px 0 20px; color:#333333;">
 												<h3 style="line-height:1.3em; font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $entityTitle; ?></h3>
-												<span style="font-size: .95em; line-height: 1.35em;"><?php echo $entityText; ?></span>
+												<p style="font-size: .874em; line-height: 1.22em; margin-bottom:0;"><?php echo $entityText; ?></p>
 											</td>
 										</tr>
 										<tr>
@@ -298,7 +295,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 										<tr>
 											<td style="padding:20px 20px 0 15px; color:#333333;">
 												<h3 style="line-height:1.3em; font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $highlightTitle; ?></h3>
-												<span style="font-size: .95em; line-height: 1.35em;"><?php echo $highlightText; ?></span>
+												<p style="font-size: .874em; line-height: 1.22em; margin-bottom:0;"><?php echo $highlightText; ?></p>
 											</td>
 										</tr>
 										<tr>
@@ -341,7 +338,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 										<tr>
 											<td style="padding: 20px 15px 0 20px; color:#333333;">
 												<h3 style="line-height:1.3em; font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $resourceTitle; ?></h3>
-												<span style="font-size: .95em; line-height: 1.35em;"><?php echo $resourceText; ?></span>
+												<p style="font-size: .874em; line-height: 1.22em; margin-bottom:0;"><?php echo $resourceText; ?></p>
 											</td>
 										</tr>
 										<tr>
