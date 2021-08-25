@@ -153,6 +153,15 @@ ksort($financ_nodes);
 <!-- @END CSS Styles from TOTHOMweb -->
 <center id="newsletter" class="wrapper" style="width:100%;table-layout:fixed;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
 	<div class="webkit" style="max-width:602px;margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;">
+		<table>
+			<tr>
+				<td colspan="2" style="text-align:center; padding:0 0 10px 0;">
+					<a href="<?php print url('node/' . $node->nid, array('absolute' => TRUE)); ?>" style="color:#000000;">
+						Obre al navegador
+					</a>
+				</td>
+			</tr>
+		</table>	
 		<table class="butlleti" style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 13px; border:1px solid #d3d3d2; border-bottom: 0px; width:100%;">
 			<!-- CAPÇALERA -->
 			<tr style="background-color:#2f3031;">
@@ -176,13 +185,6 @@ ksort($financ_nodes);
 					<a href="http://www.xarxanet.org/hemeroteca_actualitat" style=" color:#878787">Butlletins anteriors</a>
 				</td>
 			</tr>
-			<tr>
-				<td colspan="2" style="padding: 0 15px;">
-					<a href="<?php print url('node/' . $node->nid, array('absolute' => TRUE)); ?>" style="background-color:#EDEDED; border-radius:5px; float: right; padding: 5px 10px;">
-						Obre al navegador
-					</a>		
-				</td>
-			</tr>
 			<?php if (!empty($highlightnew1Node)) : ?>
 			<tr>
 				<td colspan="2" style="padding: 30px 15px 30px 15px; vertical-align: top; ">
@@ -199,7 +201,7 @@ ksort($financ_nodes);
 										</tr>
 										<tr>
 											<td style="padding:17px 0 20px 20px;">
-												<a href="<?php echo $highlightnew1Link; ?>" style="background-color:#BE1622; color:#ffffff; font-size:.93em; padding:14px 16px;float: left; border-radius: 5px; text-decoration:none;">
+												<a href="<?php echo $highlightnew1Link; ?>" style="background-color:#BE1622; color:#ffffff; font-size:14px; padding:14px 16px;float: left; border-radius: 5px; text-decoration:none;">
 													Llegiu-ne més
 												</a>
 											</td>
@@ -238,7 +240,7 @@ ksort($financ_nodes);
 										</tr>
 										<tr>
 											<td style="padding:17px 0 20px 20px;">
-												<a href="<?php echo $highlightnew2Link; ?>" style="background-color:#BE1622; color:#ffffff; font-size:.93em; padding:14px 16px;float: left; border-radius: 5px; text-decoration:none;">
+												<a href="<?php echo $highlightnew2Link; ?>" style="background-color:#BE1622; color:#ffffff; font-size:14px; padding:14px 16px;float: left; border-radius: 5px; text-decoration:none;">
 													Llegiu-ne més
 												</a>
 											</td>
@@ -269,26 +271,25 @@ ksort($financ_nodes);
 										<tbody>
 											<tr>
 												<td style="width: 100%;">
-													<table colspan="2">
+													<table>
 														<tr>
-															<td style="padding:20px 15px 0 20px;">
+															<td style="padding:20px 20px 0 20px;" colspan="2">
 																<h3 style="font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $financ_node['title']; ?></h3>
 																<p style="font-size: .874em; line-height: 1.28em; margin-bottom:0;font-style:italic;"><?php echo $financ_node['teaser']; ?></p>				
 															</td>
 														</tr>
 														<tr>
-															<td style="padding:5px 15px 0 20px;">
-																<span style="font-size: .95em; line-height: 1.35em; font-weight:800;">Convocant: <?php echo $financ_node['convocant']; ?></span>
+															<td style="padding:5px 20px 0 20px;" colspan="2">
+																
 															</td>
 														</tr>
 														<tr>
-															<td style="padding:5px 15px 0 20px;">
-																<span style="font-size: .95em; line-height: 1.35em; font-weight:800;">Termini: <?php echo $financ_node['termini']; ?></span>
+															<td style="padding:5px 10px 20px 20px;">
+																<p style="font-size: .95em; line-height: 1.35em; font-weight:800; margin-bottom:0;">Convocant: <?php echo $financ_node['convocant']; ?></p>
+																<p style="font-size: .95em; line-height: 1.35em; font-weight:800; margin-bottom:0;">Termini: <?php echo $financ_node['termini']; ?></p>
 															</td>
-														</tr>
-														<tr>
-															<td style="padding:17px 0 20px 20px;">
-																<a href="<?php echo $financ_node['link']; ?>" style="background-color:#BE1622; color:#ffffff; font-size:.93em; padding:14px 16px;float: left; border-radius: 5px; text-decoration:none;">
+															<td style="padding:5px 20px 20px 5px; vertical-align:bottom;">
+																<a href="<?php echo $financ_node['link']; ?>" style="background-color:#BE1622; color:#ffffff; font-size:14px; padding:14px 16px;float: right; border-radius: 5px; text-decoration:none; white-space:nowrap;">
 																	Llegiu-ne més
 																</a>
 															</td>
