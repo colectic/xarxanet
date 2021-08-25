@@ -196,11 +196,11 @@ ksort($financ_nodes);
 										<tr>
 											<td style="padding:20px 15px 0 20px;">
 												<h3 style="font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px; line-height:1.2em;"><?php echo $highlightnew1Title; ?></h3>
-												<p style="font-size: .874em; line-height: 1.22em; margin-bottom:0;"><?php echo $highlightnew1Text; ?></p>
+												<p style="font-size: .874em; line-height: 1.22em; margin:15px 0 0 0;"><?php echo $highlightnew1Text; ?></p>
 											</td>
 										</tr>
 										<tr>
-											<td style="padding:0 0 20px 20px;">
+											<td style="padding:17px 0 20px 20px;">
 												<a href="<?php echo $highlightnew1Link; ?>" style="background-color:#BE1622; color:#ffffff; font-size:14px; padding:14px 16px;float: left; border-radius: 5px; text-decoration:none;">
 													Llegiu-ne més
 												</a>
@@ -235,11 +235,11 @@ ksort($financ_nodes);
 										<tr>
 											<td style="padding:20px 15px 0 20px;">
 												<h3 style="font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px; line-height:1.2em;"><?php echo $highlightnew2Title; ?></h3>
-												<p style="font-size: .874em; line-height: 1.22em; margin-bottom:0;"><?php echo $highlightnew2Text; ?></p>
+												<p style="font-size: .874em; line-height: 1.22em; margin:15px 0 0 0;"><?php echo $highlightnew2Text; ?></p>
 											</td>
 										</tr>
 										<tr>
-											<td style="padding:0 0 20px 20px;">
+											<td style="padding:17px 0 20px 20px;">
 												<a href="<?php echo $highlightnew2Link; ?>" style="background-color:#BE1622; color:#ffffff; font-size:14px; padding:14px 16px;float: left; border-radius: 5px; text-decoration:none;">
 													Llegiu-ne més
 												</a>
@@ -275,12 +275,12 @@ ksort($financ_nodes);
 														<tr>
 															<td style="padding:20px 20px 0 20px;" colspan="2">
 																<h3 style="font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $financ_node['title']; ?></h3>
-																<p style="font-size: .874em; line-height: 1.28em; margin-bottom:0;font-style:italic; margin:0;"><?php echo $financ_node['teaser']; ?></p>				
+																<p style="font-size: .874em; line-height: 1.28em; margin:15px 0 0 0;font-style:italic; margin:0;"><?php echo $financ_node['teaser']; ?></p>				
 															</td>
 														</tr>
 														<tr>
 															<td style="padding:5px 10px 20px 20px;">
-																<p style="font-size: .95em; line-height: 1.35em; font-weight:800; margin-bottom:0;">Convocant: <?php echo $financ_node['convocant']; ?></p>
+																<p style="font-size: .95em; line-height: 1.35em; font-weight:800; margin:15px 0 0 0;">Convocant: <?php echo $financ_node['convocant']; ?></p>
 																<p style="font-size: .95em; line-height: 1.35em; font-weight:800; margin:0;">Termini: <?php echo $financ_node['termini']; ?></p>
 															</td>
 															<td style="padding:5px 20px 20px 5px; vertical-align:bottom;">
