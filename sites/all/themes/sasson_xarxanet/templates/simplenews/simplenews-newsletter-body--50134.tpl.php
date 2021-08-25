@@ -207,8 +207,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 							<tr>
 
 								<td style="padding:10px 20px 7px 20px; width: 65%; color:#333333;">
-									<h3 style="margin:0 0 17px 0; font-weight:600; font-size: 1.56em; line-height:1.3em;"><?php echo $monographicTitle; ?></h3>
-									<p style="font-size: .874em; line-height: 1.22em; margin-bottom:0;"><?php echo $monographicText; ?></p>
+									<p style="font-size: .874em; line-height: 1.22em; margin:0;"><?php echo $monographicText; ?></p>
 								</td>
 								<td style="padding: 17px 15px 20px 0; vertical-align:bottom;">
 									<a href="<?php echo $monographicLink; ?>" style="background-color:#BE1622; color:#ffffff; font-size:.93em; padding:14px 16px; float: right; border-radius: 5px; text-decoration:none;">
@@ -250,7 +249,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 											</td>
 										</tr>
 										<tr>
-											<td style="padding:17px 0 20px 20px;">
+											<td style="padding:0 0 20px 20px;">
 												<a href="<?php echo $entityLink; ?>" style="background-color:#BE1622; color:#ffffff; font-size:.93em; padding:14px 16px;float: left; border-radius: 5px; text-decoration:none;">
 													Llegiu-ne més
 												</a>
@@ -303,7 +302,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 											</td>
 										</tr>
 										<tr>
-											<td style="padding:17px 0 20px 20px;">
+											<td style="padding:0 0 20px 20px;">
 												<a href="<?php echo $highlightLink; ?>" style="background-color:#BE1622; color:#ffffff; font-size:.93em; padding:14px 16px;float: left; border-radius: 5px; text-decoration:none;">
 													Llegiu-ne més
 												</a>
@@ -346,7 +345,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 											</td>
 										</tr>
 										<tr>
-											<td style="padding:17px 0 20px 20px;">
+											<td style="padding:0 0 20px 20px;">
 												<a href="<?php echo $resourceLink; ?>" style="background-color:#BE1622; color:#ffffff; font-size:.93em; padding:14px 16px;float: left; border-radius: 5px; text-decoration:none;">
 													Llegiu-ne més
 												</a>
