@@ -281,7 +281,7 @@ ksort($financ_nodes);
 														<tr>
 															<td style="padding:5px 10px 20px 20px;">
 																<p style="font-size: .95em; line-height: 1.35em; font-weight:800; margin:15px 0 0 0;">Convocant: <?php echo $financ_node['convocant']; ?></p>
-																<p style="font-size: .95em; line-height: 1.35em; font-weight:800; margin:0;">Termini: <?php echo $financ_node['termini']; ?></p>
+																<p style="font-size: .95em; line-height: 1.35em; font-weight:800; margin:0 0 0 0;">Termini: <?php echo $financ_node['termini']; ?></p>
 															</td>
 															<td style="padding:5px 20px 20px 5px; vertical-align:bottom;">
 																<a href="<?php echo $financ_node['link']; ?>" style="background-color:#BE1622; color:#ffffff; font-size:14px; padding:14px 16px;float: right; border-radius: 5px; text-decoration:none; white-space:nowrap;">
