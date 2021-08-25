@@ -145,10 +145,20 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 <!-- @END CSS Styles from TOTHOMweb -->
 <center class="wrapper" style="width:100%;table-layout:fixed;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
 	<div class="webkit" style="max-width:602px;margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;">
+		<table>
+			<tr>
+				<td colspan="2" style="text-align:center; padding:0 0 10px 0;">
+					<a href="<?php print url('node/' . $node->nid, array('absolute' => TRUE)); ?>" style="color:#000000;">
+						Obre al navegador
+					</a>
+				</td>
+			</tr>
+		</table>		
+			
 		<table class="butlleti" style="font-family: Fira Sans,Helvetica,Arial,sans-serif; border-spacing:0; margin:0 auto; width:100%;max-width:602px; font-size: 13px; border-bottom: 0px; width:100%;">
 			<!-- CAPÇALERA -->
 			<tr style="background-color:#2f3031;">
-				<td style="padding: 0 0 0 5px;">
+				<td style="padding: 0 0 0 5px; min-height:40%;">
 					<a href="http://www.xarxanet.org" style="text-decoration:none">
 						<img src="<?php print $pathroot; ?>/sites/all/themes/xn17/logo.png" alt="logotip xarxanet" style="margin-left:5px; margin-top:20px" />
 					</a>
@@ -168,13 +178,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 					<a href="http://www.xarxanet.org/hemeroteca_actualitat" style=" color:#878787">Butlletins anteriors</a>
 				</td>
 			</tr>
-			<tr>
-				<td colspan="2" style="padding: 0 15px;">
-					<a href="<?php print url('node/' . $node->nid, array('absolute' => TRUE)); ?>" style="background-color:#EDEDED; border-radius:5px; float: right; padding: 5px 10px;">
-						Obre al navegador
-					</a>		
-				</td>
-			</tr>
+			
 			<?php if (!empty($monographicSectTitle)) : ?>
 			<tr>
 				<td colspan="2" style="padding:0 15px;">
@@ -378,17 +382,17 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 			</tr>
 			<tr>
 				<td style="width:50%; padding:0 8px 40px 15px; vertical-align:top;">
-					<table style="font-size:16px; background-color:#ADF08F; border-radius:15px; min-height: 420px;">
-						<tr style="height:40%;">
-							<td colspan="2" style="padding:10px;">
-								<a href="<?php print $contrast1Link; ?>">
-									<img src="<?php print $contrast1Image; ?>" width="600" alt="<?php print $contrast1ImageAlt; ?>" style="border-width:0;font-family:Fira Sans, Helvetica, Arial !important;width:100%;max-width:600px;height:auto; border-radius:15px;" />
+					<table style="font-size:16px; background-color:#ADF08F; border-radius:15px; min-height: 420px; display:block;">
+						<tr>
+							<td colspan="2" style="padding:10px; vertical-align:top;">
+								<a href="<?php print $contrast1Link; ?>" style="display:block;">
+									<img src="<?php print $contrast1Image; ?>" width="600" alt="<?php print $contrast1ImageAlt; ?>" style="border-width:0;font-family:Fira Sans, Helvetica, Arial !important;width:100%;height:auto; border-radius:15px;" />
 								</a>
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2" style="padding: 0px 10px; vertical-align:top;">
-								<a href="<?php print $contrast1Link; ?>" style="text-decoration:none; color:#333333;">			
+							<td colspan="2" style="padding: 0 10px; vertical-align:top;">
+								<a href="<?php print $contrast1Link; ?>" style="text-decoration:none; color:#333333; display:block;">			
 									<h3 style="font-size:1.25em; line-height:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;color:#333333;"><?php echo $contrast1Title; ?></h3>
 								</a>
 							</td>
@@ -398,10 +402,10 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 				<?php if (!empty($contrast2Node)) : ?>
 				<td style="width:50%; padding:0 15px 40px 8px; vertical-align:top;">
 					<table style="font-size:16px; background-color:#FF5561; border-radius:15px; min-height: 420px; display:block;">
-						<tr style="height:40%;">
-							<td colspan="2" style="padding:10px;">
-								<a href="<?php print $contrast2Link; ?>">
-									<img src="<?php print $contrast2Image; ?>" width="600" alt="<?php print $contrast2ImageAlt; ?>" style="border-width:0;font-family:Fira Sans, Helvetica, Arial !important;width:100%;max-width:600px;height:auto; border-radius:15px;" />
+						<tr>
+							<td colspan="2" style="padding:10px; vertical-align:top;">
+								<a href="<?php print $contrast2Link; ?>" style="display:block;">
+									<img src="<?php print $contrast2Image; ?>" width="600" alt="<?php print $contrast2ImageAlt; ?>" style="border-width:0;font-family:Fira Sans, Helvetica, Arial !important;width:100%;;height:auto; border-radius:15px;" />
 								</a>
 							</td>
 						</tr>
