@@ -141,6 +141,12 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 	table td {
 		border-top: 0px;
 	}
+
+	@media (max-width: 414px) {
+		.noticia-hznt td{
+			width:100%;
+		}
+	}
 </style>
 <!-- @END CSS Styles from TOTHOMweb -->
 <center class="wrapper" style="width:100%;table-layout:fixed;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
@@ -237,7 +243,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 			</tr>
 			<tr>
 				<td colspan="2" style="padding: 0 15px 20px 15px; vertical-align: top; ">
-					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;  background-color:#EDEDED; border-radius:15px;">
+					<table class="noticia-hznt" style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;  background-color:#EDEDED; border-radius:15px;">
 						<tbody>
 							<tr>
 								<td style="width: 55%;">
@@ -276,7 +282,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 						<tbody>
 							<tr>
 								<td>
-									<h2 class="section-title" style="font-family:Fira Sans, Helvetica, Arial !important;font-weight:600;font-size:1.875em !important;Margin:0px;color:#333333; margin-top:20px; margin-bottom:25px;">Destaquem</h2>
+									<h2 class="section-title" style="font-family:Fira Sans, Helvetica, Arial !important;font-weight:600;font-size:1.875em !important;color:#333333; margin-top:20px; margin-bottom:25px;">Destaquem</h2>
 								</td>
 							</tr>
 						</tbody>
@@ -285,7 +291,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 			</tr>
 			<tr>
 				<td colspan="2" style="padding:0 15px 20px 15px; vertical-align: top;">
-					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;  background-color:#EDEDED; border-radius:15px;">
+					<table class="noticia-hznt" style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;  background-color:#EDEDED; border-radius:15px;">
 						<tbody>
 							<tr>
 								<td style="padding:20px 10px 20px 20px; border-radius: 10px; vertical-align:top;">
@@ -333,7 +339,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 			</tr>
 			<tr>
 				<td colspan="2" style="padding: 0 15px 20px 15px; vertical-align: top;">
-					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;  background-color:#EDEDED; border-radius:15px;">
+					<table class="noticia-hznt" style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 16px; width:100%;  background-color:#EDEDED; border-radius:15px;">
 						<tbody>
 							<tr>
 								<td style="width: 55%;">
@@ -380,7 +386,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 				</td>
 			</tr>
 			<tr>
-				<td style="width:50%; padding:0 8px 40px 15px; vertical-align:top;">
+				<td style="width:50%; max-width:50%; padding:0 8px 40px 15px; vertical-align:top;">
 					<table style="font-size:16px; background-color:#ADF08F; border-radius:15px; min-height: 420px; display:block;">
 						<tr>
 							<td colspan="2" style="padding:10px; vertical-align:top;">
@@ -399,8 +405,8 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 					</table>
 				</td>
 				<?php if (!empty($contrast2Node)) : ?>
-				<td style="width:50%; padding:0 15px 40px 8px; vertical-align:top;">
-					<table style="font-size:16px; background-color:#FF5561; border-radius:15px; min-height: 420px; display:block;">
+				<td style="width:50%; max-width:50%; padding:0 15px 40px 8px; vertical-align:top;">
+					<table style="font-size:16px; background-color:#FF5561; border-radius:15px; min-height: 420px; display:block; min-width:217px;">
 						<tr>
 							<td colspan="2" style="padding:10px; vertical-align:top;">
 								<a href="<?php print $contrast2Link; ?>" style="display:block;">
