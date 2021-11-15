@@ -151,8 +151,8 @@ ksort($financ_nodes);
 </style>
 <!-- @END CSS Styles from TOTHOMweb -->
 <!-- @END CSS Styles from TOTHOMweb -->
-<center id="newsletter" class="wrapper" style="width:100%;table-layout:fixed;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
-	<div class="webkit" style="max-width:602px;margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;">
+<table id="newsletter" class="wrapper" style="width:100%;table-layout:fixed;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+	<table class="webkit" style="max-width:602px;margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;">
 		<table>
 			<tr>
 				<td colspan="2" style="text-align:center; padding:0 0 10px 0;">
@@ -434,5 +434,5 @@ ksort($financ_nodes);
 				</td>
 			</tr>
 		</table>
-	</div>
-</center>
+	</table>
+</table>
