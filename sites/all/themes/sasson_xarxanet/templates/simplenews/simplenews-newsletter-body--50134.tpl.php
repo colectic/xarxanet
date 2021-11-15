@@ -150,7 +150,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 </style>
 <!-- @END CSS Styles from TOTHOMweb -->
 <center class="wrapper" style="width:100%;table-layout:fixed;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
-	<div class="webkit" style="max-width:602px;margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;">
+	<div class="webkit" width="602px" style="max-width:602px;margin-top:0;margin-bottom:0;margin-right:auto;margin-left:auto;">
 		<table>
 			<tr>
 				<td colspan="2" style="text-align:center; padding:0 0 10px 0;">
