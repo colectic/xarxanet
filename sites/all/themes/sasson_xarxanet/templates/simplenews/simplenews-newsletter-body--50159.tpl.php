@@ -148,6 +148,18 @@ ksort($financ_nodes);
 	table td a:hover{
 		text-decoration:none;
 	}
+	@media (max-width: 500px) {
+		tr.capcalera-top td{
+			display:block;
+            
+		}
+        tr.capcalera-top td p{
+			text-align:left!important;
+            padding-left:5px;
+            
+		}
+           
+	}
 </style>
 <!-- @END CSS Styles from TOTHOMweb -->
 <!-- @END CSS Styles from TOTHOMweb -->
@@ -169,7 +181,7 @@ ksort($financ_nodes);
 		</table>	
 		<table class="butlleti" style="background-color:#2f3031;font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 13px; border:1px solid #d3d3d2; border-bottom: 0px; width:100%;">
 			<!-- CAPÇALERA -->
-			<tr>
+			<tr class="capcalera-top">
 				<td style="padding: 0 0 0 5px;">
 					<a href="http://www.xarxanet.org" style="text-decoration:none">
 						<img src="<?php print $pathroot; ?>/sites/all/themes/xn17/logo.png" alt="Xarxanet" style="margin-left:5px; margin-top:20px" />

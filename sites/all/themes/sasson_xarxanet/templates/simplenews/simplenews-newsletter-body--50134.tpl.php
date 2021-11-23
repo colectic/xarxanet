@@ -147,6 +147,18 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 			width:100%;
 		}
 	}
+	@media (max-width: 500px) {
+		tr.capcalera-top td{
+			display:block;
+            
+		}
+        tr.capcalera-top td p{
+			text-align:left!important;
+            padding-left:5px;
+            
+		}
+           
+	}
 </style>
 <!--[if gte mso 7]><xml>
   <o:OfficeDocumentSettings>
@@ -179,7 +191,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 			<td>
 				<table class="butlleti" style="background-color:#2f3031;font-family: Fira Sans,Helvetica,Arial,sans-serif; border-spacing:0; margin:0 auto; width:100%;max-width:602px; font-size: 13px; border-bottom: 0px; width:100%;">
 					<!-- CAPÇALERA -->
-					<tr>
+					<tr class="capcalera-top">
 						<td style="padding: 0 0 0 5px; min-height:40%;">
 							<a href="http://www.xarxanet.org" style="text-decoration:none">
 								<img src="<?php print $pathroot; ?>/sites/all/themes/xn17/logo.png" alt="Xarxanet" style="margin-left:5px; margin-top:20px" />
