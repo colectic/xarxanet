@@ -458,7 +458,7 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 						</td>
 						<?php if (!empty($contrast2Node)) : ?>
 						<td style="width:50%; max-width:50%; padding:0 15px 40px 8px; vertical-align:top;">
-							<table style="font-size:16px; background-color:#FF5561; border-radius:15px; min-height: 420px; display:block; min-width:217px;">
+							<table style="font-size:16px; background-color:#FF5561; border-radius:15px; min-height: 420px; display:block;">
 								<tr>
 									<td colspan="2" style="padding:12px; vertical-align:top;">
 										<a href="<?php print $contrast2Link; ?>" style="display:block;">
