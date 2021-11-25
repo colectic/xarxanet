@@ -375,7 +375,18 @@
   color: #666;
   margin-top: 1rem;
   font-size: 0.875em; }
+/* line 510, ../sass/tothomweb_jobs.scss */
+.node-type-job-offer .back-button {
+  display: table;
+  background-color: #be1622;
+  color: #ffffff !important;
+  padding: 1rem 2rem;
+  text-transform: uppercase;
+  font-family: "Fira Sans SemiBold", Helvetica, Arial, sans-serif;
+  border-radius: 2px;
+  min-width: 230px;
+  margin: 1.5rem 0; }
 
-/* line 514, ../sass/tothomweb_jobs.scss */
+/* line 526, ../sass/tothomweb_jobs.scss */
 .field-name-field-job-offer-approval {
   margin-bottom: 2rem; }

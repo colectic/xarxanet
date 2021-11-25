@@ -2,6 +2,7 @@
 
 // Set some helper constants.
 define('JOB_OFFER_URL', 'add/oferta-feina');
+define('JOB_OFFER_LIST', 'ofertes-feina');
 
 /**
  * Implements hook_init().
@@ -11,11 +12,22 @@ function tothomweb_jobs_init() {
 	drupal_add_js(drupal_get_path('module', 'tothomweb_jobs') . '/js/tothomweb_jobs.js');
 }
 
+/**
+ * Implements hook_preprocess_html().
+ */
 function tothomweb_jobs_preprocess_html(&$vars) {
 	if (current_path() == JOB_OFFER_URL) {
 		$vars['head_title'] = 'Publica la teva oferta';
 		$vars['classes_array'][] = 'page-add-job-offer';
 	}
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function tothomweb_jobs_preprocess_node(&$vars) {
+  $job_offers_list_url = JOB_OFFER_LIST;
+  $vars['job_offers_list_url'] = $job_offers_list_url;
 }
 
 /**
@@ -273,7 +285,7 @@ function tothomweb_jobs_form_submit($form, &$form_state) {
     '22' => 'Entitat administradora',
   );
   // Set the node status value depending on the current user role
-  $status = (user_has_roles($skip_moderation_roles)) ? 1 : 0;
+  $status = (tothomweb_jobs_user_has_roles($skip_moderation_roles)) ? 1 : 0;
   // Format 'job_offer_date' as datetime
   $timestamp = strtotime($values['job_offer_date']);
   $job_offer_datetime = date('Y-m-d H:i:s', $timestamp);
@@ -324,6 +336,20 @@ function tothomweb_jobs_form_submit($form, &$form_state) {
  *
  * @return  boolean
  */
-function user_has_roles($roles) {
+function tothomweb_jobs_user_has_roles($roles) {
   return !!count(array_intersect(is_array($roles) ? $roles : array($roles), array_values($GLOBALS['user']->roles)));
+}
+
+/**
+ * Implements hook_theme().
+ */
+function tothomweb_jobs_theme($existing, $type, $theme, $path) {
+  $theme = array();
+  $theme['node__job_offer'] = array(
+    'render element' => 'content',
+    'base hook' => 'node',
+    'template' => 'node--job_offer',
+    'path' => drupal_get_path('module', 'tothomweb_jobs') . '/templates',
+  );
+  return $theme;
 }
