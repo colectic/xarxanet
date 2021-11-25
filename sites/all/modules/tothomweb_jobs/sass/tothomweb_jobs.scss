@@ -506,6 +506,18 @@ $regular:       'Fira Sans', Helvetica, Arial, sans-serif;
       }
     }
   }
+
+  .back-button {
+    display: table;
+    background-color: $red;
+    color: $white !important;
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+    font-family: $semibold;
+    border-radius: 2px;
+    min-width: 230px;
+    margin: 1.5rem 0;
+  }
 }
 
 
