@@ -1,5 +1,31 @@
+
 /**
- * christmas2019 CSS Styles 
+ * Hotfixes for the new 2021 homepage
+ */
+
+.christmas2019.front .destacat-text {
+  background-color: #fff;
+}
+
+.christmas2019.front .pane-content .view-content .views-row {
+  background-color: #fff;
+}
+
+.christmas2019.front .pane-content .view-nou-xn17-opinio .view-content .views-row {
+  background-color: #f4f4f4;
+}
+
+.christmas2019.front .pane-content .view-nou-xn17-opinio .view-content .views-row .views-field {
+  background-color: #fff;
+}
+
+.christmas2019.front .pane-nou-xn17-opinio .view-nou-xn17-opinio .home-button {
+  z-index: 1;
+  position: relative;
+}
+
+/**
+ * christmas2019 CSS Styles
  */
 
 .christmas {
@@ -154,7 +180,7 @@ body.christmas:after {
 /*------------------------------- TEMA 2019 ----------------------*/
 
 /**
- * Christmas CSS Styles 
+ * Christmas CSS Styles
  */
 
  .christmas2019 {

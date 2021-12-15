@@ -16,3 +16,4 @@ sites/nonprofit.xarxanet.local
 .vscode
 node_modules
 .sass-cache
+.ddev
