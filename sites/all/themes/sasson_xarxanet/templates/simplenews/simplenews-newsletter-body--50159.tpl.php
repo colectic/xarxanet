@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * @file node.tpl.php
@@ -49,7 +49,7 @@
  * @see template_preprocess()
  * @see template_preprocess_node()
  * @see genesis_preprocess_node()
- * 
+ *
  */
 
 $pathroot = 'http://www.xarxanet.org';
@@ -151,14 +151,14 @@ ksort($financ_nodes);
 	@media (max-width: 500px) {
 		tr.capcalera-top td{
 			display:block;
-            
+
 		}
         tr.capcalera-top td p{
 			text-align:left!important;
             padding-left:5px;
-            
+
 		}
-           
+
 	}
 </style>
 <!-- @END CSS Styles from TOTHOMweb -->
@@ -178,7 +178,7 @@ ksort($financ_nodes);
 					</a>
 				</td>
 			</tr>
-		</table>	
+		</table>
 		<table class="butlleti" style="background-color:#2f3031;font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 13px; border:1px solid #d3d3d2; border-bottom: 0px; width:100%;">
 			<!-- CAPÇALERA -->
 			<tr class="capcalera-top">
@@ -232,7 +232,7 @@ ksort($financ_nodes);
 									<!--[if (gte mso 9)|(IE)]>
 										<img src="<?php print $highlightnew1Image; ?>" width="250" alt="<?php print $highlightnew1ImageAlt; ?>" style="border-width:0;font-family:Fira Sans, Helvetica, Arial !important;width:100%;max-width:600px;height:auto; border-radius:15px;" />
 										<div style="display:none">
-										<![endif]-->																					
+										<![endif]-->
 										<img src="<?php print $highlightnew1Image; ?>" width="600" alt="<?php print $highlightnew1ImageAlt; ?>" style="border-width:0;font-family:Fira Sans, Helvetica, Arial !important;width:100%;max-width:600px;height:auto; border-radius:15px;" />
 									<!--[if mso]>
                                         </div>
@@ -256,7 +256,7 @@ ksort($financ_nodes);
 									<!--[if (gte mso 9)|(IE)]>
 										<img src="<?php print $highlightnew2Image; ?>" width="250" alt="<?php print $highlightnew2ImageAlt; ?>" style="border-width:0;font-family:Fira Sans, Helvetica, Arial !important;width:100%;max-width:600px;height:auto; border-radius:15px;" />
 										<div style="display:none">
-										<![endif]-->												
+										<![endif]-->
 										<img src="<?php print $highlightnew2Image; ?>" width="600" alt="<?php print $highlightnew2ImageAlt; ?>" style="border-width:0;font-family:Fira Sans, Helvetica, Arial !important;width:100%;max-width:600px;height:auto; border-radius:15px;" />
 									<!--[if mso]>
                                         </div>
@@ -292,9 +292,9 @@ ksort($financ_nodes);
 					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 17px; width:100%;">
 						<tr>
 							<td colspan="2">
-								
+
 								<h2 class="section-title" style="font-family:Fira Sans, Helvetica, Arial !important;font-weight:800;font-size:1.875em !important;color:#333333; margin-top:20px; margin-bottom:25px; color:#BE1622;">Últimes convocatòries</h2>
-										
+
 							</td>
 						</tr>
 						<?php foreach ($financ_nodes as $financ_node) : ?>
@@ -308,7 +308,7 @@ ksort($financ_nodes);
 														<tr>
 															<td style="padding:20px 20px 0 20px;" colspan="2">
 																<h3 style="font-family:Fira Sans,Helvetica,Arial,sans-serif!important; font-size:1.25em; font-weight:600; margin-top: 0; margin-bottom:17px;"><?php echo $financ_node['title']; ?></h3>
-																<p style="font-family:Fira Sans,Helvetica,Arial,sans-serif!important; font-size: .874em; line-height: 1.28em; margin:15px 0 0 0;font-style:italic; margin:0;"><?php echo $financ_node['teaser']; ?></p>				
+																<p style="font-family:Fira Sans,Helvetica,Arial,sans-serif!important; font-size: .874em; line-height: 1.28em; margin:15px 0 0 0;font-style:italic; margin:0;"><?php echo $financ_node['teaser']; ?></p>
 															</td>
 														</tr>
 														<tr>
@@ -336,7 +336,7 @@ ksort($financ_nodes);
 			</tr>
 			<?php endif; ?>
 			<tr>
-				<td colspan="2" style="padding:40px 15px;">			
+				<td colspan="2" style="padding:40px 15px;">
 					<table style="background-color:#BE1622; border-radius:14px; width:100%;">
 						<tr>
 							<td style="vertical-align: bottom;">
@@ -347,8 +347,8 @@ ksort($financ_nodes);
 									Cerca el teu finançament
 									<!--[if (gte mso 9)|(IE)]>
 									</span>
-                                    <![endif]-->	
-							
+                                    <![endif]-->
+
 								</a>
 							</td>
 							<td style="color:#ffffff; padding:70px 22px 14px 0; text-align:right; vertical-align:bottom;">
@@ -359,7 +359,7 @@ ksort($financ_nodes);
 				</td>
 			</tr>
 			<tr>
-				<td style="padding:0 15px 30px 15px">			
+				<td style="padding:0 15px 30px 15px">
 					<table style="background-color:#252627; border-radius:14px; padding-right:7px; width:100%;">
 						<tr>
 							<td>
@@ -374,10 +374,10 @@ ksort($financ_nodes);
 								</a>
 							</td>
 						</tr>
-					</table>		
+					</table>
 				</td>
 				<td style="padding:0 15px 30px 15px">
-					
+
 					<table style="background-color:#252627; border-radius:14px; padding-left:7px; width:100%;">
 						<tr>
 							<td>
@@ -393,7 +393,7 @@ ksort($financ_nodes);
 							</td>
 						</tr>
 					</table>
-					
+
 				</td>
 			</tr>
 			<tr>
@@ -408,12 +408,12 @@ ksort($financ_nodes);
 					</a>
 				</td>
 			</tr>
-			
 
 
 
 
-			
+
+
 			<!-- END CONTENT -->
 			<!-- PEU -->
 			<tr style="background-color:#2f3031;">
@@ -472,8 +472,8 @@ ksort($financ_nodes);
 			</tr>
 			<tr class='body'>
 				<td colspan="2" style="background-color:#231f20; color:white; text-align:right; padding:5px 10px;">
-					<a style=" color:white" href="http://www.xarxanet.org/alta_actualitat">Alta</a> |
-					<a style=" color:white;" href="http://www.xarxanet.org/baixa_actualitat">Baixa</a> |
+					<a style=" color:white" href="http://www.xarxanet.org/alta_financament">Alta</a> |
+					<a style=" color:white;" href="http://www.xarxanet.org/baixa_financament">Baixa</a> |
 					<a style=" color:white;" href="mailto:butlleti@xarxanet.org?Subject=Consulta%20butlletí">Contacte</a> |
 					<a style=" color:white;" href="http://web.gencat.cat/ca/menu-ajuda/ajuda/avis_legal/">Avís legal</a>
 				</td>
