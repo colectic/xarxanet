@@ -203,15 +203,15 @@ ksort($financ_nodes);
 				</td>
 			</tr>
 		</table>
-		<table class="butlleti" style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 13px; border:1px solid #d3d3d2; border-bottom: 0px; width:100%;">
+		<table class="butlleti" style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 13px; border:1px solid #d3d3d2;border-top:0px; border-bottom: 0px; width:100%;">
 			<tr>
 				<td colspan="2" style="padding:0 10px;vertical-align: top; text-align:right">
-					<p style="margin:0;font-size:14px;color:#2f3031;;">ISSN 2696-9742</p>
+					<p style="Margin:0px;font-size:14px;color:#2f3031;;">ISSN 2696-9742</p>
 				</td>
 			</tr>
 			<?php if (!empty($highlightnew1Node)) : ?>
 			<tr>
-				<td colspan="2" style="padding: 30px 15px 30px 15px; vertical-align: top; ">
+				<td colspan="2" style="padding: 15px 15px 30px 15px; vertical-align: top; ">
 					<table style="font-family: Fira Sans,Helvetica,Arial,sans-serif; font-size: 17px; width:100%;  background-color:#EDEDED; border-radius:15px; color:#252627;">
 						<tbody>
 							<tr>
