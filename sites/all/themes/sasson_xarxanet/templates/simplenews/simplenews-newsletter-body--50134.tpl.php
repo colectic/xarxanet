@@ -214,7 +214,11 @@ $contrast2Link = url('node/' . $contrast2Node->nid, array('absolute' => TRUE));
 					</tr>
 				</table>
 				<table class="butlleti" style="font-family: Fira Sans,Helvetica,Arial,sans-serif; border-spacing:0; margin:0 auto; width:100%;max-width:602px; font-size: 13px; border-bottom: 0px; width:100%;">
-
+					<tr>
+						<td colspan="2" style="padding:0 10px;vertical-align: top; text-align:right">
+							<p style="margin:0;font-size:14px;color:#2f3031;;">ISSN 2696-9750</p>
+						</td>
+					</tr>
 					<?php if (!empty($monographicSectTitle)) : ?>
 					<tr>
 						<td colspan="2" style="padding:0 15px;">
