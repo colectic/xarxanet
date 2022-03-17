@@ -451,6 +451,11 @@ if ($node_ =  node_load($node->field_opinio_tercer_xarxanet['und'][0]['nid'])) {
 			    </td>
 			</tr>
 			<tr>
+				<td colspan="2" style="padding:0 10px;vertical-align: top; text-align:right">
+					<p style="margin:0;font-size:14px;color:#2f3031;;">ISSN 2696-9734</p>
+				</td>
+			</tr>
+			<tr>
 				<td class="one-column">
 					<table width="100%" class="contents">
 						<tr>
