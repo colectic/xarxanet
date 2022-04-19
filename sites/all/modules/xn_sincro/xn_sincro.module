@@ -1,0 +1,39 @@
+<?php
+
+function xn_sincro_node_insert ($node) {
+    register_shutdown_function('_xn_sincro',$node);
+}
+
+function xn_sincro_node_update ($node) {
+    register_shutdown_function('_xn_sincro',$node);
+}
+
+function _xn_sincro($node) {
+
+    if($node->type != 'job_offer') {
+        return true;
+    }
+
+    //Això evita que s'exporti aquesta oferta si ha estat creada remotament, es a dir, iportada previament desde professionals tercer sector.
+    if (!empty($node->field_remote_nid['und'][0]['value'])) {
+        return true;
+    }
+
+    $site_url = 'https://professionals.tercersector.cat/ts-sincro/import-node';
+    $site_api_key = '9ef9d725762c87eb466c40781084e5d5';
+
+    $data = array(
+      'api_key' => $site_api_key,
+      'nid' => $node->nid,
+    );
+
+    $options = array(
+            'method' => 'POST',
+            'data' => drupal_http_build_query($data),
+            'timeout' => 15,
+            'headers' => array('Content-Type' => 'application/x-www-form-urlencoded'),
+            );
+
+    $result = drupal_http_request($site_url, $options);
+
+}
