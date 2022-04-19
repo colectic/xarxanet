@@ -1,0 +1,8 @@
+name = Sincronització de Contingut
+description = Sincronització de contingut amb Tercer Sector
+package = default
+author = Punt Zero
+version = 0.1
+core = 7.x
+files[] = xn_sincro.module
+dependencies[] = services
