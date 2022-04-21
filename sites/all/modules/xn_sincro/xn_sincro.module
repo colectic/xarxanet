@@ -1,11 +1,15 @@
 <?php
 
 function xn_sincro_node_insert ($node) {
-    register_shutdown_function('_xn_sincro',$node);
+    //No funciona
+    //register_shutdown_function('_xn_sincro',$node);
+    _xn_sincro($node);
 }
 
 function xn_sincro_node_update ($node) {
+    //No funciona
     register_shutdown_function('_xn_sincro',$node);
+    _xn_sincro($node);
 }
 
 function _xn_sincro($node) {
