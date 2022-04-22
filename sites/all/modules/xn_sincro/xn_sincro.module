@@ -12,7 +12,10 @@ function xn_sincro_node_insert ($node) {
 function xn_sincro_node_update ($node) {
     //No funciona
     //register_shutdown_function('_xn_sincro',$node);
-    _xn_sincro($node);
+    //_xn_sincro($node);
+    if($node->type == 'job_offer') {
+      drupal_register_shutdown_function('_xn_sincro', $node);
+  }
 }
 
 function _xn_sincro($node) {
@@ -24,6 +27,9 @@ function _xn_sincro($node) {
     if (!empty($node->field_remote_nid['und'][0]['value'])) {
         return true;
     }
+
+    // View Clear cache.
+    cache_clear_all('ofertes_de_feina', 'cache_views_data', TRUE);
 
     $site_url = 'https://professionals.tercersector.cat/ts-sincro/import-node';
     $site_api_key = '9ef9d725762c87eb466c40781084e5d5';
