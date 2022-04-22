@@ -8,12 +8,11 @@ function xn_sincro_node_insert ($node) {
 
 function xn_sincro_node_update ($node) {
     //No funciona
-    register_shutdown_function('_xn_sincro',$node);
+    //register_shutdown_function('_xn_sincro',$node);
     _xn_sincro($node);
 }
 
 function _xn_sincro($node) {
-
     if($node->type != 'job_offer') {
         return true;
     }
@@ -26,6 +25,8 @@ function _xn_sincro($node) {
     $site_url = 'https://professionals.tercersector.cat/ts-sincro/import-node';
     $site_api_key = '9ef9d725762c87eb466c40781084e5d5';
 
+    // drupal_http_request SSL fails: https://www.drupal.org/project/drupal/issues/1879970
+    /*
     $data = array(
       'api_key' => $site_api_key,
       'nid' => $node->nid,
@@ -39,5 +40,41 @@ function _xn_sincro($node) {
             );
 
     $result = drupal_http_request($site_url, $options);
+    */
+
+    $data = array(
+      'api_key' => $site_api_key,
+      'nid' => $node->nid,
+    );
+
+    // cURL
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $site_url.'?api_key='.$site_api_key.'&nid='.$node->nid);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json')); // Accept
+    curl_setopt($curl, CURLOPT_POSTFIELDS, drupal_http_build_query($data)); // Set POST data
+    curl_setopt($curl, CURLOPT_HEADER, TRUE);  // Ask to not return Header
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($curl, CURLOPT_FAILONERROR, FALSE); //True in prod, false for debugging
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+    $response = curl_exec($curl);
+
+    $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+    // Check if login was successful
+    if ($http_code == 200) {
+    	//watchdog('xn_sincro', '_xn_sincro response: '.print_r($response, true), [], WATCHDOG_ERROR);
+      // Convert json response as array
+      //@debug: no hi ha res aqui...
+      //$nodeResponse = json_decode($response);
+    } else {
+      $error_msg = curl_error($curl);
+      error_log('CATCH ERROR 2');
+    	//watchdog('xn_sincro', '_xn_sincro error: '.print_r($http_code, true), [], WATCHDOG_ERROR);
+    	//watchdog('xn_sincro', '_xn_sincro error msg: '.print_r($error_msg, true), [], WATCHDOG_ERROR);
+    }
 
 }
