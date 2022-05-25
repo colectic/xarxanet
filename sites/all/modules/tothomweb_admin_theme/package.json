@@ -4,7 +4,7 @@
   "author": "TOTHOMweb",
   "homepage": "http://xarxanet.org/tothomweb_admin_theme",
   "dependencies": {
-    "grunt": "^1.0.4",
+    "grunt": "^1.5.3",
     "grunt-contrib-compass": "~1.0.1",
     "grunt-contrib-watch": "^1.1.0"
   },
