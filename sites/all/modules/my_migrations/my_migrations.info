@@ -1,0 +1,4 @@
+name = My Migrations
+description = Mòdul custom per a la ajuda a la exportació de certes entitats de Drupal.
+core = 7.x
+package = XARXANET
