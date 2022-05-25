@@ -26,6 +26,7 @@ function my_migrations_taxonomy() {
 	$query->addField('t', 'vid', 'vid');
 	$query->addField('v', 'name', 'vname');
 	$query->addField('h', 'parent', 'parent');
+	$query->orderBy('h.parent', 'ASC');
 	$query->orderBy('t.tid', 'ASC');
   // Filter by vocabuloary ID
   if (isset($_GET['vid'])) {
