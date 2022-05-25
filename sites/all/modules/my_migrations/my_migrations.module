@@ -21,11 +21,14 @@ function my_migrations_taxonomy() {
 	$query = db_select('taxonomy_term_data', 't');
 	$query->leftJoin('taxonomy_term_hierarchy', 'h', 'h.tid = t.tid');
 	$query->leftJoin('taxonomy_vocabulary', 'v', 'v.vid = t.vid');
-	$query->addField('t', 'tid', 'tid');
-	$query->addField('t', 'name', 'tname');
-	$query->addField('t', 'vid', 'vid');
-	$query->addField('v', 'name', 'vname');
-	$query->addField('h', 'parent', 'parent');
+	$query->addField('t', 'tid', 't_tid');
+	$query->addField('t', 'name', 't_name');
+	$query->addField('t', 'vid', 't_vid');
+	$query->addField('v', 'vid', 'v_vid');
+	$query->addField('v', 'name', 'v_name');
+	$query->addField('v', 'machine_name', 'v_machine_name');
+	$query->addField('v', 'name', 'v_description');
+	$query->addField('h', 'parent', 't_parent');
 	$query->orderBy('h.parent', 'ASC');
 	$query->orderBy('t.tid', 'ASC');
   // Filter by vocabuloary ID
@@ -41,8 +44,21 @@ function my_migrations_taxonomy() {
   }
 	$results = $query->execute();
   // Build an array with the retrieved data
-  foreach ($results as $item) {
-    array_push($data, $item);
+  foreach ($results as $row) {
+    $item = [
+      'term' => [
+        'tid' => $row->t_tid,
+        'name' => $row->t_name,
+        'vid' => $row->t_vid,
+        'parent' => $row->t_parent,
+      ],
+      'vocabulary' => [
+        'vid' => $row->v_vid,
+        'name' => $row->v_name,
+        'machine_name' => $row->v_machine_name,
+      ],
+    ];
+    array_push($data, (object)$item);
   }
   // Return data in JSON format
   drupal_json_output($data);
