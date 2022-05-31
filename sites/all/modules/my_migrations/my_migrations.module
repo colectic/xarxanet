@@ -159,7 +159,7 @@ function my_migrations_user() {
         'created' => $row->created,
         'access' => $row->access,
         'login' => $row->login,
-        'logo' => $row->logo,
+        'logo' => file_create_url($row->logo),
         'nif' => $row->nif,
         'contact_person' => $row->contact_person,
         'phone' => $row->phone,
@@ -190,8 +190,8 @@ function my_migrations_user() {
       }
 
       // Adding the first photo
-      if ($row->photo && !in_array($row->photo, $item['photos'])) {
-        array_push($item['photos'], $row->photo);
+      if ($row->photo && !in_array(file_create_url($row->photo), $item['photos'])) {
+        array_push($item['photos'], file_create_url($row->photo));
       }
 
       // Adding the first intervention scope
@@ -214,8 +214,8 @@ function my_migrations_user() {
       }
 
       // Adding additional photos
-      if ($row->photo && !in_array($row->photo, $data[$row->uid]->photos)) {
-        array_push($data[$row->uid]->photos, $row->photo);
+      if ($row->photo && !in_array(file_create_url($row->photo), $data[$row->uid]->photos)) {
+        array_push($data[$row->uid]->photos, file_create_url($row->photo));
       }
 
       // Adding additional intervention scopes
