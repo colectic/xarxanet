@@ -159,7 +159,7 @@ function my_migrations_user() {
         'created' => $row->created,
         'access' => $row->access,
         'login' => $row->login,
-        'logo' => file_create_url($row->logo),
+        'logo' => $row->logo ? file_create_url($row->logo) : null,
         'nif' => $row->nif,
         'contact_person' => $row->contact_person,
         'phone' => $row->phone,
