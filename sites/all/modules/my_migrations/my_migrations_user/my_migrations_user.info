@@ -1,0 +1,5 @@
+name = My Migrations User
+description = Mòdul custom per a la ajuda a la exportació d'usuaris de Drupal.
+core = 7.x
+package = XARXANET
+dependencies[] = my_migrations
