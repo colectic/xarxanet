@@ -1,0 +1,172 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function my_migrations_user_menu() {
+  $items['admin/api/export/user'] = array(
+    'title' => 'User export',
+    'page callback' => 'my_migrations_user_rest_api',
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
+ * Retrieves all the users.
+ */
+function my_migrations_user_rest_api() {
+  $data = [];
+  $query = db_select('users', 'u');
+  $query->leftJoin('field_data_field_logotip', 'f1', 'f1.entity_id = u.uid');
+  $query->leftJoin('field_data_field_nif_de_l_entitat', 'f2', 'f2.entity_id = u.uid');
+  $query->leftJoin('field_data_field_persona_de_contacte', 'f3', 'f3.entity_id = u.uid');
+  $query->leftJoin('field_data_field_telefon', 'f4', 'f4.entity_id = u.uid');
+  $query->leftJoin('users_roles', 'f5', 'f5.uid = u.uid');
+  $query->leftJoin('field_data_field_correu_electronic_public', 'f6', 'f6.entity_id = u.uid');
+  $query->leftJoin('field_data_field_pagina_web', 'f7', 'f7.entity_id = u.uid');
+  $query->leftJoin('field_data_field_transparencia_web', 'f8', 'f8.entity_id = u.uid');
+  $query->leftJoin('field_data_field_pagina_facebook', 'f9', 'f9.entity_id = u.uid');
+  $query->leftJoin('field_data_field_twitter', 'f10', 'f10.entity_id = u.uid');
+  $query->leftJoin('field_data_field_instagram', 'f11', 'f11.entity_id = u.uid');
+  $query->leftJoin('field_data_field_youtube', 'f12', 'f12.entity_id = u.uid');
+  $query->leftJoin('field_data_field_google', 'f13', 'f13.entity_id = u.uid');
+  $query->leftJoin('field_data_field_ambit_intervencio', 'f14', 'f14.entity_id = u.uid');
+  $query->leftJoin('field_data_field_missio_valors', 'f15', 'f15.entity_id = u.uid');
+  $query->leftJoin('field_data_field_fotografies', 'f16', 'f16.entity_id = u.uid');
+  $query->leftJoin('location_instance', 'f17', 'f17.uid = u.uid');
+  $query->leftJoin('location', 'f18', 'f18.lid = f17.lid');
+  $query->leftJoin('file_managed', 'f19', 'f19.fid = f1.field_logotip_fid');
+  $query->leftJoin('file_managed', 'f20', 'f20.fid = f16.field_fotografies_fid');
+  $query->leftJoin('taxonomy_term_data', 'f21', 'f21.tid = f14.field_ambit_intervencio_tid');
+  $query->addField('u', 'uid', 'uid');
+  $query->addField('u', 'name', 'name');
+  $query->addField('u', 'mail', 'mail');
+  $query->addField('u', 'pass', 'pass');
+  $query->addField('u', 'status', 'status');
+  $query->addField('u', 'created', 'created');
+  $query->addField('u', 'access', 'access');
+  $query->addField('u', 'login', 'login');
+  $query->addField('f5', 'rid', 'role_id');
+  $query->addField('f19', 'uri', 'logo');
+  $query->addField('f2', 'field_nif_de_l_entitat_value', 'nif');
+  $query->addField('f3', 'field_persona_de_contacte_value', 'contact_person');
+  $query->addField('f4', 'field_telefon_value', 'phone');
+  $query->addField('f6', 'field_correu_electronic_public_value', 'public_mail');
+  $query->addField('f7', 'field_pagina_web_value', 'website');
+  $query->addField('f8', 'field_transparencia_web_value', 'web_transparency');
+  $query->addField('f9', 'field_pagina_facebook_value', 'facebook');
+  $query->addField('f10', 'field_twitter_value', 'twitter');
+  $query->addField('f11', 'field_instagram_value', 'instagram');
+  $query->addField('f12', 'field_youtube_value', 'youtube');
+  $query->addField('f13', 'field_google_value', 'google_plus');
+  $query->addField('f21', 'name', 'intervention_scope');
+  $query->addField('f15', 'field_missio_valors_value', 'mission');
+  $query->addField('f20', 'uri', 'photo');
+  $query->addField('f18', 'street', 'address');
+  $query->addField('f18', 'additional', 'address_additional');
+  $query->addField('f18', 'city', 'location');
+  $query->addField('f18', 'postal_code', 'postal_code');
+  $query->condition('u.uid', 0, '<>');
+
+  // Filter by vocabuloary ID
+  if (isset($_GET['uid'])) {
+    $uid = $_GET['uid'];
+    $query->condition('u.uid', $uid);
+  }
+
+  // Filter by a range of values
+  if (isset($_GET['from']) && isset($_GET['to'])) {
+    $from = $_GET['from'];
+    $to = $_GET['to'];
+    $query->range($from, $to);
+  }
+
+  $query->orderBy('u.uid', 'ASC');
+  $results = $query->execute();
+
+  // Build an array with the retrieved data
+  $uids = [];
+  $data = [];
+  foreach ($results as $row) {
+    if (!in_array($row->uid,  $uids)) {
+      // Build the user's basic data array
+      $item = [
+        'uid' => $row->uid,
+        'name' => $row->name,
+        'mail' => $row->mail,
+        'pass' => $row->pass,
+        'status' => $row->status,
+        'created' => $row->created,
+        'access' => $row->access,
+        'login' => $row->login,
+        'logo' => $row->logo ? file_create_url($row->logo) : null,
+        'nif' => $row->nif,
+        'contact_person' => $row->contact_person,
+        'phone' => $row->phone,
+        'public_mail' => $row->public_mail,
+        'website' => $row->website,
+        'web_transparency' => $row->web_transparency,
+        'facebook' => $row->facebook,
+        'twitter' => $row->twitter,
+        'instagram' => $row->instagram,
+        'youtube' => $row->youtube,
+        'google_plus' => $row->google_plus,
+        'mission' => $row->mission,
+        'address' => $row->address,
+        'address_additional' => $row->address_additional,
+        'location' => $row->location,
+        'postal_code' => $row->postal_code,
+        'roles' => [],
+        'intervention_scope' => [],
+        'photos' => [],
+      ];
+
+      // Add a flag (the user uid) to $uids array, to manage duplicated user's registries afterwerds
+      array_push($uids, $row->uid);
+
+      // Adding the first role
+      if ($row->role_id && !in_array($row->role_id, 'role_' . $item['roles'])) {
+        array_push($item['roles'], 'role_' . $row->role_id);
+      }
+
+      // Adding the first photo
+      if ($row->photo && !in_array(file_create_url($row->photo), $item['photos'])) {
+        array_push($item['photos'], file_create_url($row->photo));
+      }
+
+      // Adding the first intervention scope
+      if ($row->intervention_scope && !in_array($row->intervention_scope, $item['intervention_scope'])) {
+        array_push($item['intervention_scope'], $row->intervention_scope);
+      }
+
+      // Add item's data to $data array
+      $data[$row->uid] = (object)$item;
+    }
+    else {
+      /**
+       * In case of repeated user registries (due to the joins in the query),
+       * we only save the three multivalue fields, as shown below:
+       */
+
+      // Adding additional roles
+      if ($row->role_id && !in_array('role_' . $row->role_id, $data[$row->uid]->roles)) {
+        array_push($data[$row->uid]->roles, 'role_' . $row->role_id);
+      }
+
+      // Adding additional photos
+      if ($row->photo && !in_array(file_create_url($row->photo), $data[$row->uid]->photos)) {
+        array_push($data[$row->uid]->photos, file_create_url($row->photo));
+      }
+
+      // Adding additional intervention scopes
+      if ($row->intervention_scope && !in_array($row->intervention_scope, $data[$row->uid]->intervention_scope)) {
+        array_push($data[$row->uid]->intervention_scope, $row->intervention_scope);
+      }
+    }
+  }
+
+  // Return data in JSON format
+  drupal_json_output(array_values($data));
+}

@@ -1,0 +1,65 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function my_migrations_taxonomy_menu() {
+  $items['admin/api/export/taxonomy'] = array(
+    'title' => 'Taxonomy export',
+    'page callback' => 'my_migrations_taxonomy_rest_api',
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
+ * Retrieves all the taxonomy terms.
+ */
+function my_migrations_taxonomy_rest_api() {
+  $data = [];
+  $query = db_select('taxonomy_term_data', 't');
+  $query->leftJoin('taxonomy_term_hierarchy', 'h', 'h.tid = t.tid');
+  $query->leftJoin('taxonomy_vocabulary', 'v', 'v.vid = t.vid');
+  $query->addField('t', 'tid', 't_tid');
+  $query->addField('t', 'name', 't_name');
+  $query->addField('t', 'vid', 't_vid');
+  $query->addField('v', 'vid', 'v_vid');
+  $query->addField('v', 'name', 'v_name');
+  $query->addField('v', 'machine_name', 'v_machine_name');
+  $query->addField('v', 'name', 'v_description');
+  $query->addField('h', 'parent', 't_parent');
+  $query->orderBy('h.parent', 'ASC');
+  $query->orderBy('t.tid', 'ASC');
+  // Filter by vocabuloary ID
+  if (isset($_GET['vid'])) {
+    $vid = $_GET['vid'];
+    $query->condition('t.vid', $vid);
+  }
+  // Filter by a range of values
+  if (isset($_GET['from']) && isset($_GET['to'])) {
+    $from = $_GET['from'];
+    $to = $_GET['to'];
+    $query->range($from, $to);
+  }
+  $results = $query->execute();
+  // Build an array with the retrieved data
+  foreach ($results as $row) {
+    $item = [
+      'term' => [
+        'tid' => $row->t_tid,
+        'name' => $row->t_name,
+        'vid' => $row->t_vid,
+        'parent' => $row->t_parent,
+      ],
+      'vocabulary' => [
+        'vid' => $row->v_vid,
+        'name' => $row->v_name,
+        'machine_name' => $row->v_machine_name,
+      ],
+    ];
+    array_push($data, (object)$item);
+  }
+  // Return data in JSON format
+  drupal_json_output($data);
+}

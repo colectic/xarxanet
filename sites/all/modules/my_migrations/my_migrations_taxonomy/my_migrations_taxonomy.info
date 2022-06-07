@@ -1,0 +1,5 @@
+name = My Migrations Taxonomy
+description = Mòdul custom per a la ajuda a la exportació de taxonomies de Drupal.
+core = 7.x
+package = XARXANET
+dependencies[] = my_migrations
