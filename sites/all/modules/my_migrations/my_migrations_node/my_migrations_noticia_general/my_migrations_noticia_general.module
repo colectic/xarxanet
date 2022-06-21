@@ -148,7 +148,7 @@ function my_migrations_noticia_general_rest_api() {
         'body' => $row->body,
         'file_uri' => $row->file_uri ? file_create_url($row->file_uri) : null,
         'popup_image_uri' => $row->popup_image_uri ? file_create_url($row->popup_image_uri) : null,
-        'popup_video_uri' => $row->popup_video_uri ? file_create_url($row->popup_video_uri) : null,
+        'popup_video_uri' => $row->popup_video_uri ? my_migrations_sanitize_video_url($row->popup_video_uri) : null,
         'home_primary_highlighted' => $row->home_primary_highlighted,
         'home_secondary_highlighted' => $row->home_secondary_highlighted,
         'inner_primary_highlighted' => $row->inner_primary_highlighted,
@@ -236,4 +236,53 @@ function my_migrations_noticia_general_rest_api() {
 
   // Return data in JSON format
   drupal_json_output(array_values($data));
+}
+
+/**
+ * Auxiliary function that cleans up or skips some malformed url currently stored in the database.
+ *
+ * @param   string  $url
+ *          The url to sanitize.
+ *
+ * @return  string
+ *          The url, once sanitized.
+ */
+function my_migrations_sanitize_video_url($url) {
+
+  // Ensure that url comes from Vimeo or YouTube
+  if (strpos($url, 'youtube') === false && strpos($url, 'vimeo') === false && strpos($url, 'youtu.be') === false) {
+    return null;
+  }
+
+  // Now check for urls with some malformed patterns
+  if (strpos($url, 'http://youtu.be/') !== false) {
+    $url = str_replace('http://youtu.be/', 'https://www.youtube.com/watch?v=', $url);
+  }
+
+  if (strpos($url, 'https://youtu.be/') !== false) {
+    $url = str_replace('https://youtu.be/', 'https://www.youtube.com/watch?v=', $url);
+  }
+
+  if (strpos($url, 'http://www.youtube.com/embed/') !== false) {
+    $url = str_replace('http://www.youtube.com/embed/', 'https://www.youtube.com/watch?v=', $url);
+  }
+
+  if (strpos($url, 'https://www.youtube.com/embed/') !== false) {
+    $url = str_replace('https://www.youtube.com/embed/', 'https://www.youtube.com/watch?v=', $url);
+  }
+
+  if (strpos($url, 'www.youtube.com/embed/') !== false) {
+    $url = str_replace('www.youtube.com/embed/', 'https://www.youtube.com/watch?v=', $url);
+  }
+
+  if (strpos($url, 'time_continue=5&') !== false) {
+    $url = str_replace('time_continue=5&', '', $url);
+    $url .= '&t=5s';
+  }
+
+  if (strpos($url, 'https://player.vimeo.com/video/') !== false) {
+    $url = str_replace('https://player.vimeo.com/video/', 'https://vimeo.com/', $url);
+  }
+
+  return $url;
 }
