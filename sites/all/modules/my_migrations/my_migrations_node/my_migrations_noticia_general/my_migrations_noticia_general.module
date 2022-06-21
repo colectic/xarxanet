@@ -29,9 +29,17 @@ function my_migrations_noticia_general_rest_api() {
   $query->leftJoin('field_data_field_autor_noticies', 'f8', 'f8.entity_id = n.nid');
   $query->leftJoin('field_data_field_entitat', 'f9', 'f9.entity_id = n.nid');
   $query->leftJoin('field_data_body', 'f10', 'f10.entity_id = n.nid');
+
   $query->leftJoin('field_data_field_imatges', 'f11', 'f11.entity_id = n.nid');
   $query->leftJoin('file_managed', 'f12', 'f12.fid = f11.field_imatges_fid');
-  $query->leftJoin('field_data_field_peu_de_foto', 'f13', 'f13.entity_id = n.nid');
+  $query->leftJoin('field_data_field_peu_de_foto', 'f13', 'f13.entity_id = n.nid AND f13.delta = f11.delta');
+  $query->leftJoin('field_data_field_autoria', 'f30', 'f30.entity_id = f11.field_imatges_fid');
+  $query->leftJoin('field_data_field_etiquetes', 'f31', 'f31.entity_id = f11.field_imatges_fid');
+  $query->leftJoin('taxonomy_term_data', 'f32', 'f32.tid = f31.field_etiquetes_tid');
+  $query->leftJoin('field_data_field_file_image_alt_text', 'f33', 'f33.entity_id = f11.field_imatges_fid');
+  $query->leftJoin('field_data_field_file_image_title_text', 'f34', 'f34.entity_id = f11.field_imatges_fid');
+
+
   $query->leftJoin('field_data_field_file', 'f14', 'f14.entity_id = n.nid');
   $query->leftJoin('file_managed', 'f15', 'f15.fid = f14.field_file_fid');
   $query->leftJoin('field_data_field_imatge_emergent', 'f16', 'f16.entity_id = n.nid');
@@ -47,6 +55,10 @@ function my_migrations_noticia_general_rest_api() {
   $query->leftJoin('taxonomy_term_data', 'f29', 'f29.tid = f25.taxonomy_vocabulary_1_tid');
   $query->leftJoin('field_data_field_usuari_autor', 'f26', 'f26.entity_id = n.nid');
   $query->leftJoin('url_alias', 'f28', 'f28.source = CONCAT(:str, n.nid)', array(':str'=>'node/'));
+
+
+  // Fields
+
   $query->addField('n', 'nid', 'nid');
   $query->addField('n', 'vid', 'vid');
   $query->addField('n', 'title', 'title');
@@ -67,10 +79,17 @@ function my_migrations_noticia_general_rest_api() {
   $query->addField('f9', 'field_entitat_value', 'entity');
   $query->addField('f10', 'body_value', 'body');
   $query->addField('f10', 'body_summary', 'body_summary');
+
+
   $query->addField('f11', 'field_imatges_fid', 'images_fid');
+  $query->addField('f12', 'filename', 'images_filename');
   $query->addField('f12', 'uri', 'images_uri');
-  $query->addField('f11', 'field_imatges_alt', 'images_alt');
+  $query->addField('f33', 'field_file_image_alt_text_value', 'images_alt');
+  $query->addField('f34', 'field_file_image_title_text_value', 'images_title');
   $query->addField('f13', 'field_peu_de_foto_value', 'images_caption');
+  $query->addField('f30', 'field_autoria_value', 'images_author');
+  $query->addField('f32', 'name', 'images_tags');
+
   $query->addField('f15', 'uri', 'file_uri');
   $query->addField('f17', 'uri', 'popup_image_uri');
   $query->addField('f18', 'field_video_emergent_url', 'popup_video_uri');
@@ -156,8 +175,13 @@ function my_migrations_noticia_general_rest_api() {
       if ($row->images_fid && !array_key_exists($row->images_fid, $item['images'])) {
         $item['images'][$row->images_fid] = [
           'image_uri' => $row->images_uri ? file_create_url($row->images_uri) : null,
-          'image_alt' => $row->images_alt,
-          'image_caption' => $row->images_caption === '--Peu de foto--' ? null : $row->images_caption,
+          'image_filename' => $row->images_filename ? $row->images_filename : null,
+          'image_alt' => $row->images_alt ? $row->images_alt : null,
+          'image_title' => $row->images_title ? $row->images_title : null,
+          'image_author' => $row->images_author ? $row->images_author : null,
+          'image_caption_default' => $row->images_title ? $row->images_title : null,
+          'image_caption_custom' => $row->images_caption === '--Peu de foto--' ? null : $row->images_caption,
+          'image_tags' => $row->images_tags ? [$row->images_tags] : [],
         ];
       }
 
@@ -184,9 +208,19 @@ function my_migrations_noticia_general_rest_api() {
       if ($row->images_fid && !array_key_exists($row->images_fid, $data[$row->nid]->images)) {
         $data[$row->nid]->images[$row->images_fid] = [
           'image_uri' => $row->images_uri ? file_create_url($row->images_uri) : null,
-          'image_alt' => $row->images_alt,
-          'image_caption' => $row->images_caption === '--Peu de foto--' ? null : $row->images_caption,
+          'image_filename' => $row->images_filename ? $row->images_filename : null,
+          'image_alt' => $row->images_alt ? $row->images_alt : null,
+          'image_title' => $row->images_title ? $row->images_title : null,
+          'image_author' => $row->images_author ? $row->images_author : null,
+          'image_caption_default' => $row->images_title ? $row->images_title : null,
+          'image_caption_custom' => $row->images_caption === '--Peu de foto--' ? null : $row->images_caption,
+          'image_tags' => $row->images_tags ? [$row->images_tags] : [],
         ];
+      }
+
+      // Adding additional image tags
+      if ($row->images_tags && !in_array($row->images_tags, $data[$row->nid]->images[$row->images_fid]['image_tags'])) {
+        array_push($data[$row->nid]->images[$row->images_fid]['image_tags'], $row->images_tags);
       }
 
       // Adding additional tags
