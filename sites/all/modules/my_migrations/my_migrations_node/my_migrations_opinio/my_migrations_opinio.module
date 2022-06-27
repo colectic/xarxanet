@@ -1,0 +1,153 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function my_migrations_opinio_menu() {
+  $items['admin/api/export/node/opinio'] = array(
+    'title' => 'Opinio export',
+    'page callback' => 'my_migrations_opinio_rest_api',
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
+ * Retrieves all the nodes.
+ */
+
+function my_migrations_opinio_rest_api() {
+  $data = [];
+  $query = db_select('node', 'n');
+  $query->leftJoin('field_data_field_autor_a', 'f1', 'f1.entity_id = n.nid');
+  $query->leftJoin('field_data_field_resum', 'f2', 'f2.entity_id = n.nid');
+  $query->leftJoin('field_data_body', 'f3', 'f3.entity_id = n.nid');
+  $query->leftJoin('field_data_field_imatge_opcional', 'f4', 'f4.entity_id = n.nid');
+  $query->leftJoin('file_managed', 'f5', 'f5.fid = f4.field_imatge_opcional_fid');
+  $query->leftJoin('field_data_taxonomy_vocabulary_1', 'f6', 'f6.entity_id = n.nid');
+  $query->leftJoin('field_data_field_dpp', 'f7', 'f7.entity_id = n.nid');
+  $query->leftJoin('field_data_field_dsp', 'f8', 'f8.entity_id = n.nid');
+  $query->leftJoin('field_data_field_desp', 'f9', 'f9.entity_id = n.nid');
+  $query->leftJoin('field_data_field_data_ordenacio', 'f10', 'f10.entity_id = n.nid');
+  $query->leftJoin('field_data_field_data_calculada', 'f11', 'f11.entity_id = n.nid');
+  $query->leftJoin('location_instance', 'f12', 'f12.nid = n.nid');
+  $query->leftJoin('location', 'f13', 'f13.lid = f12.lid');
+  $query->leftJoin('field_data_field_agenda_imatge', 'f14', 'f14.entity_id = n.nid');
+  $query->leftJoin('file_managed', 'f15', 'f15.fid = f14.field_agenda_imatge_fid');
+  $query->leftJoin('url_alias', 'f16', 'f16.source = CONCAT(:str, n.nid)', array(':str'=>'node/'));
+
+  $query->addField('n', 'nid', 'nid');
+  $query->addField('n', 'vid', 'vid');
+  $query->addField('n', 'title', 'title');
+  $query->addField('n', 'uid', 'uid');
+  $query->addField('n', 'status', 'status');
+  $query->addField('n', 'created', 'created');
+  $query->addField('n', 'changed', 'changed');
+  $query->addField('n', 'comment', 'comments');
+  $query->addField('f1', 'field_autor_a_nid', 'author_id');
+  $query->addField('f2', 'field_resum_value', 'summary');
+  $query->addField('f3', 'body_value', 'body');
+  $query->addField('f3', 'body_format', 'body_format'); // It's always 2 for opinio, but probably is useful when importing all the node types
+  $query->addField('f4', 'field_imatge_opcional_fid', 'opc_img_fid');
+  $query->addField('f4', 'field_imatge_opcional_alt', 'opc_img_alt');
+  $query->addField('f4', 'field_imatge_opcional_title', 'opc_img_title');
+  $query->addField('f5', 'uri', 'opc_uri');
+  $query->addField('f5', 'filename', 'opc_filename');
+  $query->addField('f6', 'taxonomy_vocabulary_1_tid', 'tid');
+  $query->addField('f7', 'field_dpp_value', 'main_highlight_cover');
+  $query->addField('f8', 'field_dsp_value', 'second_highlight_cover');
+  $query->addField('f9', 'field_desp_value', 'special_highlight');
+  $query->addField('f10', 'field_data_ordenacio_value', 'order_date');
+  $query->addField('f11', 'field_data_calculada_value', 'computed_date');
+  $query->addField('f13', 'lid', 'lid');
+  $query->addField('f13', 'name', 'location_name');
+  $query->addField('f13', 'street', 'location_street');
+  $query->addField('f13', 'postal_code', 'location_pc');
+  $query->addField('f13', 'city', 'location_city');
+  $query->addField('f13', 'province', 'location_province');
+  $query->addField('f13', 'country', 'location_country');
+  $query->addField('f13', 'longitude', 'location_longitude');
+  $query->addField('f13', 'latitude', 'location_latitude');
+  $query->addField('f13', 'additional', 'location_additional');
+  $query->addField('f14', 'field_agenda_imatge_fid', 'main_img_fid');
+  $query->addField('f14', 'field_agenda_imatge_alt', 'lmain_img_alt');
+  $query->addField('f14', 'field_agenda_imatge_title', 'main_img_title');
+  $query->addField('f15', 'filename', 'main_img_filename');
+  $query->addField('f15', 'uri', 'main_img_uri');
+  $query->addField('f16', 'alias', 'url_alias');
+
+  $query->condition('n.type', 'opinio');
+
+  // Filter by node ID
+  if (isset($_GET['nid'])) {
+    $nid = $_GET['nid'];
+    $query->condition('n.nid', $nid);
+  }
+
+  // Filter by a range of values
+  if (isset($_GET['from']) && isset($_GET['to'])) {
+    $from = $_GET['from'];
+    $to = $_GET['to'];
+    $query->range($from, $to);
+  }
+
+  $query->range(0, 20); // Just for debugging purposes, REMOVE when done
+
+  $query->orderBy('n.nid', 'DESC');
+
+  $results = $query->execute();
+
+  $nids = [];
+  $data = [];
+  foreach ($results as $row) {
+      $item = [
+        'nid' => $row->nid,
+        'vid' => $row->vid,
+        'title' => $row->title,
+        'uid' => $row->uid,
+        'status' => $row->status,
+        'created' => $row->created,
+        'changed' => $row->changed,
+        'comments' => $row->comments,
+        'author_id' => $row->author_id,
+        'summary' => $row->summary,
+        'body' => $row->body,
+        'body_format' => $row->body_format,
+        'opc_img_fid' => $row->opc_img_fid,
+        'opc_img_alt' => $row->opc_img_alt,
+        'opc_img_title' => $row->opc_img_title,
+        'opc_uri' => $row->opc_uri ? file_create_url($row->opc_uri) : null,
+        'opc_filename' => $row->opc_filename,
+        'tid' => $row->tid,
+        'main_highlight_cover' => $row->main_highlight_cover,
+        'second_highlight_cover' => $row->second_highlight_cover,
+        'special_highlight' => $row->special_highlight,
+        'order_date' => $row->order_date,
+        'computed_date' => $row->computed_date,
+        'lid' => $row->lid,
+        'location_name' => $row->location_name,
+        'location_street' => $row->location_street,
+        'location_pc' => $row->location_pc,
+        'location_city' => $row->location_city,
+        'location_province' => $row->location_province,
+        'location_country' => $row->location_country,
+        'location_longitude' => $row->location_longitude,
+        'location_latitude' => $row->location_latitude,
+        'location_additional' => $row->location_additional,
+        'main_img_fid' => $row->main_img_fid,
+        'main_img_alt' => $row->main_img_alt,
+        'main_img_title' => $row->main_img_title,
+        'main_img_filename' => $row->main_img_filename,
+        'main_img_uri' => $row->main_img_uri ? file_create_url($row->main_img_uri) : null,
+        'url_alias' => $row->url_alias
+      ];
+
+      array_push($nids, $row->nid);
+
+      $data[$row->nid] = (object)$item;
+    }
+
+  drupal_json_output(array_values($data));
+
+}
