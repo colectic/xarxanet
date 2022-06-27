@@ -17,225 +17,257 @@ function my_migrations_noticia_general_menu() {
  * Retrieves all the nodes.
  */
 function my_migrations_noticia_general_rest_api() {
-  $data = [];
-  $query = db_select('node', 'n');
-  $query->leftJoin('field_data_field_tipus_noticia', 'f1', 'f1.entity_id = n.nid');
-  $query->leftJoin('taxonomy_term_data', 'f2', 'f2.tid = f1.field_tipus_noticia_tid');
-  $query->leftJoin('field_data_field_ambit_noticia', 'f3', 'f3.entity_id = n.nid');
-  $query->leftJoin('taxonomy_term_data', 'f4', 'f4.tid = f3.field_ambit_noticia_tid');
-  $query->leftJoin('field_data_field_agenda_imatge', 'f5', 'f5.entity_id = n.nid');
-  $query->leftJoin('file_managed', 'f6', 'f6.fid = f5.field_agenda_imatge_fid');
-  $query->leftJoin('field_data_field_file_image_alt_text', 'f35', 'f35.entity_id = f5.field_agenda_imatge_fid');
-  $query->leftJoin('field_data_field_file_image_title_text', 'f36', 'f36.entity_id = f5.field_agenda_imatge_fid');
-  $query->leftJoin('field_data_field_autoria', 'f37', 'f37.entity_id = f5.field_agenda_imatge_fid');
-  $query->leftJoin('field_data_field_etiquetes', 'f38', 'f38.entity_id = f5.field_agenda_imatge_fid');
-  $query->leftJoin('taxonomy_term_data', 'f39', 'f39.tid = f38.field_etiquetes_tid');
-  $query->leftJoin('field_data_field_resum', 'f7', 'f7.entity_id = n.nid');
-  $query->leftJoin('field_data_field_autor_noticies', 'f8', 'f8.entity_id = n.nid');
-  $query->leftJoin('field_data_field_entitat', 'f9', 'f9.entity_id = n.nid');
-  $query->leftJoin('field_data_body', 'f10', 'f10.entity_id = n.nid');
-  $query->leftJoin('field_data_field_imatges', 'f11', 'f11.entity_id = n.nid');
-  $query->leftJoin('file_managed', 'f12', 'f12.fid = f11.field_imatges_fid');
-  $query->leftJoin('field_data_field_peu_de_foto', 'f13', 'f13.entity_id = n.nid AND f13.delta = f11.delta');
-  $query->leftJoin('field_data_field_autoria', 'f30', 'f30.entity_id = f11.field_imatges_fid');
-  $query->leftJoin('field_data_field_etiquetes', 'f31', 'f31.entity_id = f11.field_imatges_fid');
-  $query->leftJoin('taxonomy_term_data', 'f32', 'f32.tid = f31.field_etiquetes_tid');
-  $query->leftJoin('field_data_field_file_image_alt_text', 'f33', 'f33.entity_id = f11.field_imatges_fid');
-  $query->leftJoin('field_data_field_file_image_title_text', 'f34', 'f34.entity_id = f11.field_imatges_fid');
-  $query->leftJoin('field_data_field_file', 'f14', 'f14.entity_id = n.nid');
-  $query->leftJoin('file_managed', 'f15', 'f15.fid = f14.field_file_fid');
-  $query->leftJoin('field_data_field_imatge_emergent', 'f16', 'f16.entity_id = n.nid');
-  $query->leftJoin('file_managed', 'f17', 'f17.fid = f16.field_imatge_emergent_fid');
-  $query->leftJoin('field_data_field_video_emergent', 'f18', 'f18.entity_id = n.nid');
-  $query->leftJoin('field_data_field_dpp', 'f19', 'f19.entity_id = n.nid');
-  $query->leftJoin('field_data_field_dsp', 'f20', 'f20.entity_id = n.nid');
-  $query->leftJoin('field_data_field_dpp_portal', 'f21', 'f21.entity_id = n.nid');
-  $query->leftJoin('field_data_field_dsp_portal', 'f22', 'f22.entity_id = n.nid');
-  $query->leftJoin('field_data_field_desp', 'f23', 'f23.entity_id = n.nid');
-  $query->leftJoin('field_data_field_data_calculada', 'f24', 'f24.entity_id = n.nid');
-  $query->leftJoin('field_data_taxonomy_vocabulary_1', 'f25', 'f25.entity_id = n.nid');
-  $query->leftJoin('taxonomy_term_data', 'f29', 'f29.tid = f25.taxonomy_vocabulary_1_tid');
-  $query->leftJoin('field_data_field_usuari_autor', 'f26', 'f26.entity_id = n.nid');
-  $query->leftJoin('url_alias', 'f28', 'f28.source = CONCAT(:str, n.nid)', array(':str'=>'node/'));
-  $query->addField('n', 'nid', 'nid');
-  $query->addField('n', 'vid', 'vid');
-  $query->addField('n', 'title', 'title');
-  $query->addField('n', 'uid', 'uid');
-  $query->addField('n', 'status', 'status');
-  $query->addField('n', 'created', 'created');
-  $query->addField('n', 'changed', 'changed');
-  $query->addField('n', 'comment', 'comments');
-  $query->addField('f2', 'tid', 'news_type_tid');
-  $query->addField('f2', 'name', 'news_type_name');
-  $query->addField('f4', 'tid', 'news_scope_tid');
-  $query->addField('f4', 'name', 'news_scope_name');
-  $query->addField('f6', 'uri', 'main_image');
-  $query->addField('f35', 'field_file_image_alt_text_value', 'main_image_alt');
-  $query->addField('f36', 'field_file_image_title_text_value', 'main_image_title');
-  $query->addField('f37', 'field_autoria_value', 'main_image_author');
-  $query->addField('f39', 'name', 'main_image_tags');
-  $query->addField('f7', 'field_resum_value', 'summary');
-  $query->addField('f8', 'field_autor_noticies_value', 'author');
-  $query->addField('f9', 'field_entitat_value', 'entity');
-  $query->addField('f10', 'body_value', 'body');
-  $query->addField('f10', 'body_summary', 'body_summary');
-  $query->addField('f11', 'field_imatges_fid', 'images_fid');
-  $query->addField('f12', 'filename', 'images_filename');
-  $query->addField('f12', 'uri', 'images_uri');
-  $query->addField('f33', 'field_file_image_alt_text_value', 'images_alt');
-  $query->addField('f34', 'field_file_image_title_text_value', 'images_title');
-  $query->addField('f13', 'field_peu_de_foto_value', 'images_caption');
-  $query->addField('f30', 'field_autoria_value', 'images_author');
-  $query->addField('f32', 'name', 'images_tags');
-  $query->addField('f15', 'uri', 'file_uri');
-  $query->addField('f17', 'uri', 'popup_image_uri');
-  $query->addField('f18', 'field_video_emergent_url', 'popup_video_uri');
-  $query->addField('f19', 'field_dpp_value', 'home_primary_highlighted');
-  $query->addField('f20', 'field_dsp_value', 'home_secondary_highlighted');
-  $query->addField('f21', 'field_dpp_portal_value', 'inner_primary_highlighted');
-  $query->addField('f22', 'field_dsp_portal_value', 'inner_secondary_highlighted');
-  $query->addField('f23', 'field_desp_value', 'special_highlighted');
-  $query->addField('f24', 'field_data_calculada_value', 'computed_date');
-  $query->addField('f29', 'name', 'tag');
-  $query->addField('f26', 'field_usuari_autor_value', 'user_author');
-  $query->addField('f28', 'alias', 'url_alias');
-  $query->condition('n.type', 'noticia_general');
 
-  // Filter by node ID
+  // Get all nids of content type 'noticia_general'
+  if (isset($_GET['all'])) {
+    $nids = [];
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node');
+    $query->entityCondition('bundle', 'noticia_general');
+
+    // This filters the nodes that have been modified since the begining of the migration and thus needs to be updated
+    if (isset($_GET['update'])) {
+      $query->propertyCondition('changed', strtotime(date('2022-05-01')), '>');
+    }
+
+    // This optional filter aims to prevent timeouts
+    if (isset($_GET['from']) && isset($_GET['to'])) {
+      $from = $_GET['from'];
+      $to = $_GET['to'];
+      $query->range($from, $to);
+    }
+
+    $results = $query->execute();
+    // Get the nid of each node
+    foreach ($results['node'] as $node) {
+      array_push($nids, $node->nid);
+    }
+
+    // Return data in JSON format
+    drupal_json_output($nids);
+  }
+
+  // Get full data object
   if (isset($_GET['nid'])) {
+    $data = [];
+    $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_tipus_noticia', 'f1', 'f1.entity_id = n.nid');
+    $query->leftJoin('taxonomy_term_data', 'f2', 'f2.tid = f1.field_tipus_noticia_tid');
+    $query->leftJoin('field_data_field_ambit_noticia', 'f3', 'f3.entity_id = n.nid');
+    $query->leftJoin('taxonomy_term_data', 'f4', 'f4.tid = f3.field_ambit_noticia_tid');
+    $query->leftJoin('field_data_field_agenda_imatge', 'f5', 'f5.entity_id = n.nid');
+    $query->leftJoin('file_managed', 'f6', 'f6.fid = f5.field_agenda_imatge_fid');
+    $query->leftJoin('field_data_field_file_image_alt_text', 'f35', 'f35.entity_id = f5.field_agenda_imatge_fid');
+    $query->leftJoin('field_data_field_file_image_title_text', 'f36', 'f36.entity_id = f5.field_agenda_imatge_fid');
+    $query->leftJoin('field_data_field_autoria', 'f37', 'f37.entity_id = f5.field_agenda_imatge_fid');
+    $query->leftJoin('field_data_field_etiquetes', 'f38', 'f38.entity_id = f5.field_agenda_imatge_fid');
+    $query->leftJoin('taxonomy_term_data', 'f39', 'f39.tid = f38.field_etiquetes_tid');
+    $query->leftJoin('field_data_field_resum', 'f7', 'f7.entity_id = n.nid');
+    $query->leftJoin('field_data_field_autor_noticies', 'f8', 'f8.entity_id = n.nid');
+    $query->leftJoin('field_data_field_entitat', 'f9', 'f9.entity_id = n.nid');
+    $query->leftJoin('field_data_body', 'f10', 'f10.entity_id = n.nid');
+    $query->leftJoin('field_data_field_imatges', 'f11', 'f11.entity_id = n.nid');
+    $query->leftJoin('file_managed', 'f12', 'f12.fid = f11.field_imatges_fid');
+    $query->leftJoin('field_data_field_peu_de_foto', 'f13', 'f13.entity_id = n.nid AND f13.delta = f11.delta');
+    $query->leftJoin('field_data_field_autoria', 'f30', 'f30.entity_id = f11.field_imatges_fid');
+    $query->leftJoin('field_data_field_etiquetes', 'f31', 'f31.entity_id = f11.field_imatges_fid');
+    $query->leftJoin('taxonomy_term_data', 'f32', 'f32.tid = f31.field_etiquetes_tid');
+    $query->leftJoin('field_data_field_file_image_alt_text', 'f33', 'f33.entity_id = f11.field_imatges_fid');
+    $query->leftJoin('field_data_field_file_image_title_text', 'f34', 'f34.entity_id = f11.field_imatges_fid');
+    $query->leftJoin('field_data_field_file', 'f14', 'f14.entity_id = n.nid');
+    $query->leftJoin('file_managed', 'f15', 'f15.fid = f14.field_file_fid');
+    $query->leftJoin('field_data_field_imatge_emergent', 'f16', 'f16.entity_id = n.nid');
+    $query->leftJoin('file_managed', 'f17', 'f17.fid = f16.field_imatge_emergent_fid');
+    $query->leftJoin('field_data_field_video_emergent', 'f18', 'f18.entity_id = n.nid');
+    $query->leftJoin('field_data_field_dpp', 'f19', 'f19.entity_id = n.nid');
+    $query->leftJoin('field_data_field_dsp', 'f20', 'f20.entity_id = n.nid');
+    $query->leftJoin('field_data_field_dpp_portal', 'f21', 'f21.entity_id = n.nid');
+    $query->leftJoin('field_data_field_dsp_portal', 'f22', 'f22.entity_id = n.nid');
+    $query->leftJoin('field_data_field_desp', 'f23', 'f23.entity_id = n.nid');
+    $query->leftJoin('field_data_field_data_calculada', 'f24', 'f24.entity_id = n.nid');
+    $query->leftJoin('field_data_taxonomy_vocabulary_1', 'f25', 'f25.entity_id = n.nid');
+    $query->leftJoin('taxonomy_term_data', 'f29', 'f29.tid = f25.taxonomy_vocabulary_1_tid');
+    $query->leftJoin('field_data_field_usuari_autor', 'f26', 'f26.entity_id = n.nid');
+    $query->leftJoin('url_alias', 'f28', 'f28.source = CONCAT(:str, n.nid)', array(':str'=>'node/'));
+    $query->addField('n', 'nid', 'nid');
+    $query->addField('n', 'vid', 'vid');
+    $query->addField('n', 'title', 'title');
+    $query->addField('n', 'uid', 'uid');
+    $query->addField('n', 'status', 'status');
+    $query->addField('n', 'created', 'created');
+    $query->addField('n', 'changed', 'changed');
+    $query->addField('n', 'comment', 'comments');
+    $query->addField('f2', 'tid', 'news_type_tid');
+    $query->addField('f2', 'name', 'news_type_name');
+    $query->addField('f4', 'tid', 'news_scope_tid');
+    $query->addField('f4', 'name', 'news_scope_name');
+    $query->addField('f6', 'uri', 'main_image');
+    $query->addField('f35', 'field_file_image_alt_text_value', 'main_image_alt');
+    $query->addField('f36', 'field_file_image_title_text_value', 'main_image_title');
+    $query->addField('f37', 'field_autoria_value', 'main_image_author');
+    $query->addField('f39', 'name', 'main_image_tags');
+    $query->addField('f7', 'field_resum_value', 'summary');
+    $query->addField('f8', 'field_autor_noticies_value', 'author');
+    $query->addField('f9', 'field_entitat_value', 'entity');
+    $query->addField('f10', 'body_value', 'body');
+    $query->addField('f10', 'body_summary', 'body_summary');
+    $query->addField('f11', 'field_imatges_fid', 'images_fid');
+    $query->addField('f12', 'filename', 'images_filename');
+    $query->addField('f12', 'uri', 'images_uri');
+    $query->addField('f33', 'field_file_image_alt_text_value', 'images_alt');
+    $query->addField('f34', 'field_file_image_title_text_value', 'images_title');
+    $query->addField('f13', 'field_peu_de_foto_value', 'images_caption');
+    $query->addField('f30', 'field_autoria_value', 'images_author');
+    $query->addField('f32', 'name', 'images_tags');
+    $query->addField('f15', 'uri', 'file_uri');
+    $query->addField('f17', 'uri', 'popup_image_uri');
+    $query->addField('f18', 'field_video_emergent_url', 'popup_video_uri');
+    $query->addField('f19', 'field_dpp_value', 'home_primary_highlighted');
+    $query->addField('f20', 'field_dsp_value', 'home_secondary_highlighted');
+    $query->addField('f21', 'field_dpp_portal_value', 'inner_primary_highlighted');
+    $query->addField('f22', 'field_dsp_portal_value', 'inner_secondary_highlighted');
+    $query->addField('f23', 'field_desp_value', 'special_highlighted');
+    $query->addField('f24', 'field_data_calculada_value', 'computed_date');
+    $query->addField('f29', 'name', 'tag');
+    $query->addField('f26', 'field_usuari_autor_value', 'user_author');
+    $query->addField('f28', 'alias', 'url_alias');
+    $query->condition('n.type', 'noticia_general');
+
+    // Filter by node ID
     $nid = $_GET['nid'];
     $query->condition('n.nid', $nid);
-  }
 
-  // Filter by a range of values
-  if (isset($_GET['from']) && isset($_GET['to'])) {
-    $from = $_GET['from'];
-    $to = $_GET['to'];
-    $query->range($from, $to);
-  }
 
-  $query->orderBy('n.nid', 'DESC');
-  $results = $query->execute();
-
-  $nids = [];
-  $data = [];
-  foreach ($results as $row) {
-    if (!in_array($row->nid,  $nids)) {
-      // Build the node's basic data array
-      $item = [
-        'nid' => $row->nid,
-        'vid' => $row->vid,
-        'title' => $row->title,
-        'uid' => $row->uid,
-        'status' => $row->status,
-        'created' => $row->created,
-        'changed' => $row->changed,
-        'comments' => $row->comments,
-        'news_type_tid' => $row->news_type_tid,
-        'news_type_name' => $row->news_type_name,
-        'news_scope_tid' => $row->news_scope_tid,
-        'news_scope_name' => $row->news_scope_name,
-        'main_image' => [
-          'uri' => $row->main_image ? file_create_url($row->main_image) : null,
-          'alt' => $row->main_image_alt,
-          'title' => $row->main_image_title,
-          'author' => $row->main_image_author,
-          'tags' => $row->main_image_tags ? [$row->main_image_tags] : [],
-        ],
-        'author' => $row->author,
-        'summary' => $row->summary,
-        'body_summary' => $row->body_summary,
-        'body' => $row->body,
-        'file_uri' => $row->file_uri ? file_create_url($row->file_uri) : null,
-        'popup_image_uri' => $row->popup_image_uri ? file_create_url($row->popup_image_uri) : null,
-        'popup_video_uri' => $row->popup_video_uri ? my_migrations_sanitize_video_url($row->popup_video_uri) : null,
-        'home_primary_highlighted' => $row->home_primary_highlighted,
-        'home_secondary_highlighted' => $row->home_secondary_highlighted,
-        'inner_primary_highlighted' => $row->inner_primary_highlighted,
-        'inner_secondary_highlighted' => $row->inner_secondary_highlighted,
-        'special_highlighted' => $row->special_highlighted,
-        'computed_date' => $row->computed_date,
-        'user_author' => $row->user_author,
-        'url_alias' => $row->url_alias,
-        'entities' => [],
-        'images' => [],
-        'tags' => [],
-      ];
-
-      // Add a flag (the nid) to $nids array, to manage duplicated node registries afterwerds
-      array_push($nids, $row->nid);
-
-      // Adding the first entity
-      if ($row->entity && !in_array($row->entity, $item['entities'])) {
-        array_push($item['entities'], $row->entity);
-      }
-
-      // Adding the first image
-      if ($row->images_fid && !array_key_exists($row->images_fid, $item['images'])) {
-        $item['images'][$row->images_fid] = [
-          'uri' => $row->images_uri ? file_create_url($row->images_uri) : null,
-          'filename' => $row->images_filename ? $row->images_filename : null,
-          'alt' => $row->images_alt ? $row->images_alt : null,
-          'title' => $row->images_title ? $row->images_title : null,
-          'author' => $row->images_author ? $row->images_author : null,
-          'caption_default' => $row->images_title ? $row->images_title : null,
-          'caption_custom' => $row->images_caption === '--Peu de foto--' ? null : $row->images_caption,
-          'tags' => $row->images_tags ? [$row->images_tags] : [],
-        ];
-      }
-
-      // Adding the first tag
-      if ($row->tag && !in_array($row->tag, $item['tags'])) {
-        array_push($item['tags'], $row->tag);
-      }
-
-      // Add item's data to $data array
-      $data[$row->nid] = (object)$item;
+    // Filter by a range of values
+    if (isset($_GET['from']) && isset($_GET['to'])) {
+      $from = $_GET['from'];
+      $to = $_GET['to'];
+      $query->range($from, $to);
     }
-    else {
-      /**
-       * In case of repeated node registries (due to the joins in the query),
-       * we only save the multivalue fields, as shown below:
-       */
 
-      // Adding additional entities
-      if ($row->entity && !in_array($row->entity, $data[$row->nid]->entities)) {
-        array_push($data[$row->nid]->entities, $row->entity);
-      }
+    $query->orderBy('n.nid', 'DESC');
+    $results = $query->execute();
 
-      // Adding additional main image tags
-      if ($row->main_image_tags && !in_array($row->main_image_tags, $data[$row->nid]->main_image['tags'])) {
-        array_push($data[$row->nid]->main_image['tags'], $row->main_image_tags);
-      }
-
-      // Adding additional images
-      if ($row->images_fid && !array_key_exists($row->images_fid, $data[$row->nid]->images)) {
-        $data[$row->nid]->images[$row->images_fid] = [
-          'uri' => $row->images_uri ? file_create_url($row->images_uri) : null,
-          'filename' => $row->images_filename ? $row->images_filename : null,
-          'alt' => $row->images_alt ? $row->images_alt : null,
-          'title' => $row->images_title ? $row->images_title : null,
-          'author' => $row->images_author ? $row->images_author : null,
-          'caption_default' => $row->images_title ? $row->images_title : null,
-          'caption_custom' => $row->images_caption === '--Peu de foto--' ? null : $row->images_caption,
-          'tags' => $row->images_tags ? [$row->images_tags] : [],
+    $nids = [];
+    $data = [];
+    foreach ($results as $row) {
+      if (!in_array($row->nid,  $nids)) {
+        // Build the node's basic data array
+        $item = [
+          'nid' => $row->nid,
+          'vid' => $row->vid,
+          'title' => $row->title,
+          'uid' => $row->uid,
+          'status' => $row->status,
+          'created' => $row->created,
+          'changed' => $row->changed,
+          'comments' => $row->comments,
+          'news_type_tid' => $row->news_type_tid,
+          'news_type_name' => $row->news_type_name,
+          'news_scope_tid' => $row->news_scope_tid,
+          'news_scope_name' => $row->news_scope_name,
+          'main_image' => [
+            'uri' => $row->main_image ? file_create_url($row->main_image) : null,
+            'alt' => $row->main_image_alt,
+            'title' => $row->main_image_title,
+            'author' => $row->main_image_author,
+            'tags' => $row->main_image_tags ? [$row->main_image_tags] : [],
+          ],
+          'author' => $row->author,
+          'summary' => $row->summary,
+          'body_summary' => $row->body_summary,
+          'body' => $row->body,
+          'file_uri' => $row->file_uri ? file_create_url($row->file_uri) : null,
+          'popup_image_uri' => $row->popup_image_uri ? file_create_url($row->popup_image_uri) : null,
+          'popup_video_uri' => $row->popup_video_uri ? my_migrations_sanitize_video_url($row->popup_video_uri) : null,
+          'home_primary_highlighted' => $row->home_primary_highlighted,
+          'home_secondary_highlighted' => $row->home_secondary_highlighted,
+          'inner_primary_highlighted' => $row->inner_primary_highlighted,
+          'inner_secondary_highlighted' => $row->inner_secondary_highlighted,
+          'special_highlighted' => $row->special_highlighted,
+          'computed_date' => $row->computed_date,
+          'user_author' => $row->user_author,
+          'url_alias' => $row->url_alias,
+          'entities' => [],
+          'images' => [],
+          'tags' => [],
         ];
-      }
 
-      // Adding additional image tags
-      if ($row->images_tags && !in_array($row->images_tags, $data[$row->nid]->images[$row->images_fid]['tags'])) {
-        array_push($data[$row->nid]->images[$row->images_fid]['tags'], $row->images_tags);
-      }
+        // Add a flag (the nid) to $nids array, to manage duplicated node registries afterwerds
+        array_push($nids, $row->nid);
 
-      // Adding additional tags
-      if ($row->tag && !in_array($row->tag, $data[$row->nid]->tags)) {
-        array_push($data[$row->nid]->tags, $row->tag);
+        // Adding the first entity
+        if ($row->entity && !in_array($row->entity, $item['entities'])) {
+          array_push($item['entities'], $row->entity);
+        }
+
+        // Adding the first image
+        if ($row->images_fid && !array_key_exists($row->images_fid, $item['images'])) {
+          $item['images'][$row->images_fid] = [
+            'uri' => $row->images_uri ? file_create_url($row->images_uri) : null,
+            'filename' => $row->images_filename ? $row->images_filename : null,
+            'alt' => $row->images_alt ? $row->images_alt : null,
+            'title' => $row->images_title ? $row->images_title : null,
+            'author' => $row->images_author ? $row->images_author : null,
+            'caption_default' => $row->images_title ? $row->images_title : null,
+            'caption_custom' => $row->images_caption === '--Peu de foto--' ? null : $row->images_caption,
+            'tags' => $row->images_tags ? [$row->images_tags] : [],
+          ];
+        }
+
+        // Adding the first tag
+        if ($row->tag && !in_array($row->tag, $item['tags'])) {
+          array_push($item['tags'], $row->tag);
+        }
+
+        // Add item's data to $data array
+        $data[$row->nid] = (object)$item;
+      }
+      else {
+        /**
+         * In case of repeated node registries (due to the joins in the query),
+         * we only save the multivalue fields, as shown below:
+         */
+
+        // Adding additional entities
+        if ($row->entity && !in_array($row->entity, $data[$row->nid]->entities)) {
+          array_push($data[$row->nid]->entities, $row->entity);
+        }
+
+        // Adding additional main image tags
+        if ($row->main_image_tags && !in_array($row->main_image_tags, $data[$row->nid]->main_image['tags'])) {
+          array_push($data[$row->nid]->main_image['tags'], $row->main_image_tags);
+        }
+
+        // Adding additional images
+        if ($row->images_fid && !array_key_exists($row->images_fid, $data[$row->nid]->images)) {
+          $data[$row->nid]->images[$row->images_fid] = [
+            'uri' => $row->images_uri ? file_create_url($row->images_uri) : null,
+            'filename' => $row->images_filename ? $row->images_filename : null,
+            'alt' => $row->images_alt ? $row->images_alt : null,
+            'title' => $row->images_title ? $row->images_title : null,
+            'author' => $row->images_author ? $row->images_author : null,
+            'caption_default' => $row->images_title ? $row->images_title : null,
+            'caption_custom' => $row->images_caption === '--Peu de foto--' ? null : $row->images_caption,
+            'tags' => $row->images_tags ? [$row->images_tags] : [],
+          ];
+        }
+
+        // Adding additional image tags
+        if ($row->images_tags && !in_array($row->images_tags, $data[$row->nid]->images[$row->images_fid]['tags'])) {
+          array_push($data[$row->nid]->images[$row->images_fid]['tags'], $row->images_tags);
+        }
+
+        // Adding additional tags
+        if ($row->tag && !in_array($row->tag, $data[$row->nid]->tags)) {
+          array_push($data[$row->nid]->tags, $row->tag);
+        }
       }
     }
-  }
 
-  // Return data in JSON format
-  drupal_json_output(array_values($data));
+    // Return data in JSON format
+    drupal_json_output(array_values($data));
+  }
 }
 
 /**
