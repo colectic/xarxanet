@@ -102,6 +102,8 @@ function my_migrations_noticia_general_rest_api() {
     $query->addField('f4', 'tid', 'news_scope_tid');
     $query->addField('f4', 'name', 'news_scope_name');
     $query->addField('f6', 'uri', 'main_image');
+    $query->addField('f6', 'filename', 'main_image_filename');
+    $query->addField('f6', 'uid', 'main_image_uid');
     $query->addField('f35', 'field_file_image_alt_text_value', 'main_image_alt');
     $query->addField('f36', 'field_file_image_title_text_value', 'main_image_title');
     $query->addField('f37', 'field_autoria_value', 'main_image_author');
@@ -114,6 +116,7 @@ function my_migrations_noticia_general_rest_api() {
     $query->addField('f11', 'field_imatges_fid', 'images_fid');
     $query->addField('f12', 'filename', 'images_filename');
     $query->addField('f12', 'uri', 'images_uri');
+    $query->addField('f12', 'uid', 'images_uid');
     $query->addField('f33', 'field_file_image_alt_text_value', 'images_alt');
     $query->addField('f34', 'field_file_image_title_text_value', 'images_title');
     $query->addField('f13', 'field_peu_de_foto_value', 'images_caption');
@@ -168,9 +171,11 @@ function my_migrations_noticia_general_rest_api() {
           'news_scope_name' => $row->news_scope_name,
           'main_image' => [
             'uri' => $row->main_image ? file_create_url($row->main_image) : null,
-            'alt' => $row->main_image_alt,
-            'title' => $row->main_image_title,
-            'author' => $row->main_image_author,
+            'filename' => $row->main_image_filename ? $row->main_image_filename : null,
+            'alt' => $row->main_image_alt ? $row->main_image_alt : null,
+            'title' => $row->main_image_title ? $row->main_image_title : null,
+            'author' => $row->main_image_author ? $row->main_image_author : null,
+            'uid' => $row->main_image_uid ? $row->main_image_uid : null,
             'tags' => $row->main_image_tags ? [$row->main_image_tags] : [],
           ],
           'author' => $row->author,
@@ -209,6 +214,7 @@ function my_migrations_noticia_general_rest_api() {
             'alt' => $row->images_alt ? $row->images_alt : null,
             'title' => $row->images_title ? $row->images_title : null,
             'author' => $row->images_author ? $row->images_author : null,
+            'uid' => $row->images_uid ? $row->images_uid : null,
             'caption_default' => $row->images_title ? $row->images_title : null,
             'caption_custom' => $row->images_caption === '--Peu de foto--' ? null : $row->images_caption,
             'tags' => $row->images_tags ? [$row->images_tags] : [],
@@ -247,6 +253,7 @@ function my_migrations_noticia_general_rest_api() {
             'alt' => $row->images_alt ? $row->images_alt : null,
             'title' => $row->images_title ? $row->images_title : null,
             'author' => $row->images_author ? $row->images_author : null,
+            'uid' => $row->images_uid ? $row->images_uid : null,
             'caption_default' => $row->images_title ? $row->images_title : null,
             'caption_custom' => $row->images_caption === '--Peu de foto--' ? null : $row->images_caption,
             'tags' => $row->images_tags ? [$row->images_tags] : [],
