@@ -107,6 +107,7 @@ function my_migrations_noticia_general_rest_api() {
     $query->addField('f35', 'field_file_image_alt_text_value', 'main_image_alt');
     $query->addField('f36', 'field_file_image_title_text_value', 'main_image_title');
     $query->addField('f37', 'field_autoria_value', 'main_image_author');
+    $query->addField('f39', 'tid', 'main_image_tags_tid');
     $query->addField('f39', 'name', 'main_image_tags');
     $query->addField('f7', 'field_resum_value', 'summary');
     $query->addField('f8', 'field_autor_noticies_value', 'author');
@@ -121,6 +122,7 @@ function my_migrations_noticia_general_rest_api() {
     $query->addField('f34', 'field_file_image_title_text_value', 'images_title');
     $query->addField('f13', 'field_peu_de_foto_value', 'images_caption');
     $query->addField('f30', 'field_autoria_value', 'images_author');
+    $query->addField('f32', 'tid', 'images_tags_tid');
     $query->addField('f32', 'name', 'images_tags');
     $query->addField('f15', 'uri', 'file_uri');
     $query->addField('f17', 'uri', 'popup_image_uri');
@@ -131,6 +133,7 @@ function my_migrations_noticia_general_rest_api() {
     $query->addField('f22', 'field_dsp_portal_value', 'inner_secondary_highlighted');
     $query->addField('f23', 'field_desp_value', 'special_highlighted');
     $query->addField('f24', 'field_data_calculada_value', 'computed_date');
+    $query->addField('f29', 'tid', 'tag_tid');
     $query->addField('f29', 'name', 'tag');
     $query->addField('f26', 'field_usuari_autor_value', 'user_author');
     $query->addField('f28', 'alias', 'url_alias');
@@ -165,10 +168,14 @@ function my_migrations_noticia_general_rest_api() {
           'created' => $row->created,
           'changed' => $row->changed,
           'comments' => $row->comments,
-          'news_type_tid' => $row->news_type_tid,
-          'news_type_name' => $row->news_type_name,
-          'news_scope_tid' => $row->news_scope_tid,
-          'news_scope_name' => $row->news_scope_name,
+          'news_type' => (object)[
+            'tid' => $row->news_type_tid,
+            'name' => $row->news_type_name,
+          ],
+          'news_scope' => (object)[
+            'tid' => $row->news_scope_tid,
+            'name' => $row->news_scope_name,
+          ],
           'main_image' => [
             'uri' => $row->main_image ? file_create_url($row->main_image) : null,
             'filename' => $row->main_image_filename ? $row->main_image_filename : null,
@@ -176,7 +183,7 @@ function my_migrations_noticia_general_rest_api() {
             'title' => $row->main_image_title ? $row->main_image_title : null,
             'author' => $row->main_image_author ? $row->main_image_author : null,
             'uid' => $row->main_image_uid ? $row->main_image_uid : null,
-            'tags' => $row->main_image_tags ? [$row->main_image_tags] : [],
+            'tags' => $row->main_image_tags ? [$row->main_image_tags_tid => $row->main_image_tags] : [],
           ],
           'author' => $row->author,
           'summary' => $row->summary,
@@ -217,13 +224,13 @@ function my_migrations_noticia_general_rest_api() {
             'uid' => $row->images_uid ? $row->images_uid : null,
             'caption_default' => $row->images_title ? $row->images_title : null,
             'caption_custom' => $row->images_caption === '--Peu de foto--' ? null : $row->images_caption,
-            'tags' => $row->images_tags ? [$row->images_tags] : [],
+            'tags' => $row->images_tags ? [$row->images_tags_tid => $row->images_tags] : [],
           ];
         }
 
         // Adding the first tag
         if ($row->tag && !in_array($row->tag, $item['tags'])) {
-          array_push($item['tags'], $row->tag);
+          $item['tags'][$row->tag_tid] = $row->tag;
         }
 
         // Add item's data to $data array
@@ -241,8 +248,8 @@ function my_migrations_noticia_general_rest_api() {
         }
 
         // Adding additional main image tags
-        if ($row->main_image_tags && !in_array($row->main_image_tags, $data[$row->nid]->main_image['tags'])) {
-          array_push($data[$row->nid]->main_image['tags'], $row->main_image_tags);
+        if ($row->main_image_tags && !array_key_exists($row->main_image_tags_tid, $data[$row->nid]->main_image['tags'])) {
+          $data[$row->nid]->main_image['tags'][$row->main_image_tags_tid] = $row->main_image_tags;
         }
 
         // Adding additional images
@@ -256,18 +263,18 @@ function my_migrations_noticia_general_rest_api() {
             'uid' => $row->images_uid ? $row->images_uid : null,
             'caption_default' => $row->images_title ? $row->images_title : null,
             'caption_custom' => $row->images_caption === '--Peu de foto--' ? null : $row->images_caption,
-            'tags' => $row->images_tags ? [$row->images_tags] : [],
+            'tags' => $row->images_tags ? [$row->images_tags_tid => $row->images_tags] : [],
           ];
         }
 
         // Adding additional image tags
-        if ($row->images_tags && !in_array($row->images_tags, $data[$row->nid]->images[$row->images_fid]['tags'])) {
-          array_push($data[$row->nid]->images[$row->images_fid]['tags'], $row->images_tags);
+        if (null !== $row->images_tags && !array_key_exists($row->images_tags_tid, $data[$row->nid]->images[$row->images_fid]['tags'])) {
+          $data[$row->nid]->images[$row->images_fid]['tags'][$row->images_tags_tid] = $row->images_tags;
         }
 
         // Adding additional tags
-        if ($row->tag && !in_array($row->tag, $data[$row->nid]->tags)) {
-          array_push($data[$row->nid]->tags, $row->tag);
+        if ($row->tag && !array_key_exists($row->tag_tid, $data[$row->nid]->tags)) {
+          $data[$row->nid]->tags[$row->tag_tid] = $row->tag;
         }
       }
     }
