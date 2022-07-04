@@ -124,6 +124,7 @@ function my_migrations_noticia_general_rest_api() {
     $query->addField('f30', 'field_autoria_value', 'images_author');
     $query->addField('f32', 'tid', 'images_tags_tid');
     $query->addField('f32', 'name', 'images_tags');
+    $query->addField('f15', 'fid', 'file_fid');
     $query->addField('f15', 'uri', 'file_uri');
     $query->addField('f17', 'uri', 'popup_image_uri');
     $query->addField('f18', 'field_video_emergent_url', 'popup_video_uri');
@@ -189,7 +190,7 @@ function my_migrations_noticia_general_rest_api() {
           'summary' => $row->summary,
           'body_summary' => $row->body_summary,
           'body' => $row->body,
-          'file_uri' => $row->file_uri ? file_create_url($row->file_uri) : null,
+          'file_uri' => $row->file_uri ? [$row->file_fid => file_create_url($row->file_uri)] : [],
           'popup_image_uri' => $row->popup_image_uri ? file_create_url($row->popup_image_uri) : null,
           'popup_video_uri' => $row->popup_video_uri ? my_migrations_sanitize_video_url($row->popup_video_uri) : null,
           'home_primary_highlighted' => $row->home_primary_highlighted,
@@ -241,6 +242,11 @@ function my_migrations_noticia_general_rest_api() {
          * In case of repeated node registries (due to the joins in the query),
          * we only save the multivalue fields, as shown below:
          */
+
+        // Adding additional files
+        if ($row->file_uri && !array_key_exists($row->file_fid, $data[$row->nid]->file_uri)) {
+          $data[$row->nid]->file_uri[$row->file_fid] = file_create_url($row->file_uri);
+        }
 
         // Adding additional entities
         if ($row->entity && !in_array($row->entity, $data[$row->nid]->entities)) {
