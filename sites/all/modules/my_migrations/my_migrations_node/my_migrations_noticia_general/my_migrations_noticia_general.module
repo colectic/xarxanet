@@ -165,10 +165,14 @@ function my_migrations_noticia_general_rest_api() {
           'created' => $row->created,
           'changed' => $row->changed,
           'comments' => $row->comments,
-          'news_type_tid' => $row->news_type_tid,
-          'news_type_name' => $row->news_type_name,
-          'news_scope_tid' => $row->news_scope_tid,
-          'news_scope_name' => $row->news_scope_name,
+          'news_type' => (object)[
+            'tid' => $row->news_type_tid,
+            'name' => $row->news_type_name,
+          ],
+          'news_scope' => (object)[
+            'tid' => $row->news_scope_tid,
+            'name' => $row->news_scope_name,
+          ],
           'main_image' => [
             'uri' => $row->main_image ? file_create_url($row->main_image) : null,
             'filename' => $row->main_image_filename ? $row->main_image_filename : null,
