@@ -37,10 +37,10 @@ function my_migrations_taxonomy_rest_api() {
     $query->condition('t.vid', $vid);
   }
   // Filter by a range of values
-  if (isset($_GET['from']) && isset($_GET['to'])) {
-    $from = $_GET['from'];
-    $to = $_GET['to'];
-    $query->range($from, $to);
+  if (isset($_GET['offset']) && isset($_GET['limit'])) {
+    $offset = $_GET['offset'];
+    $limit = $_GET['limit'];
+    $query->range($offset, $limit);
   }
   $results = $query->execute();
   // Build an array with the retrieved data

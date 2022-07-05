@@ -31,10 +31,10 @@ function my_migrations_noticia_general_rest_api() {
     }
 
     // This optional filter aims to prevent timeouts
-    if (isset($_GET['from']) && isset($_GET['to'])) {
-      $from = $_GET['from'];
-      $to = $_GET['to'];
-      $query->range($from, $to);
+    if (isset($_GET['offset']) && isset($_GET['limit'])) {
+      $offset = $_GET['offset'];
+      $limit = $_GET['limit'];
+      $query->range($offset, $limit);
     }
 
     $results = $query->execute();
@@ -144,12 +144,11 @@ function my_migrations_noticia_general_rest_api() {
     $nid = $_GET['nid'];
     $query->condition('n.nid', $nid);
 
-
     // Filter by a range of values
-    if (isset($_GET['from']) && isset($_GET['to'])) {
-      $from = $_GET['from'];
-      $to = $_GET['to'];
-      $query->range($from, $to);
+    if (isset($_GET['offset']) && isset($_GET['limit'])) {
+      $offset = $_GET['offset'];
+      $limit = $_GET['limit'];
+      $query->range($offset, $limit);
     }
 
     $query->orderBy('n.nid', 'DESC');
