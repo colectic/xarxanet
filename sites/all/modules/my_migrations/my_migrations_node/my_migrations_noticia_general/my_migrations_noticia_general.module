@@ -19,7 +19,7 @@ function my_migrations_noticia_general_menu() {
 function my_migrations_noticia_general_rest_api() {
 
   // Get all nids of content type 'noticia_general'
-  if (isset($_GET['all'])) {
+  if (isset($_GET['import'])) {
     $nids = [];
     $query = new EntityFieldQuery();
     $query->entityCondition('entity_type', 'node');
