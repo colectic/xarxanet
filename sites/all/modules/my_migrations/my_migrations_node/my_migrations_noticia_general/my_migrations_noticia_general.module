@@ -25,16 +25,55 @@ function my_migrations_noticia_general_rest_api() {
     $query->entityCondition('entity_type', 'node');
     $query->entityCondition('bundle', 'noticia_general');
 
-    // This filters the nodes that have been modified since the begining of the migration and thus needs to be updated
-    if (isset($_GET['update'])) {
-      $query->propertyCondition('changed', strtotime(date('2022-05-01')), '>');
+    // This optional filter aims to prevent timeouts
+    if (isset($_GET['offset']) && isset($_GET['limit'])) {
+      $offset = $_GET['offset'];
+      $limit = $_GET['limit'];
+      $query->range($offset, $limit);
     }
+
+    // Set the sort order, optionally
+    if (isset($_GET['sort']) && $_GET['sort'] == 'desc') {
+      $query->propertyOrderBy('nid', 'DESC');
+    }
+
+    if (isset($_GET['sort']) && $_GET['sort'] == 'asc') {
+      $query->propertyOrderBy('nid', 'ASC');
+    }
+
+    $results = $query->execute();
+    // Get the nid of each node
+    foreach ($results['node'] as $node) {
+      array_push($nids, $node->nid);
+    }
+
+    // Return data in JSON format
+    drupal_json_output($nids);
+  }
+
+  // Get all nids of content type 'noticia_general' that were updated
+  // from the begining of the development of the news site
+  if (isset($_GET['update'])) {
+    $nids = [];
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node');
+    $query->entityCondition('bundle', 'noticia_general');
+    $query->propertyCondition('changed', strtotime(date('2022-05-01')), '>');
 
     // This optional filter aims to prevent timeouts
     if (isset($_GET['offset']) && isset($_GET['limit'])) {
       $offset = $_GET['offset'];
       $limit = $_GET['limit'];
       $query->range($offset, $limit);
+    }
+
+    // Set the sort order, optionally
+    if (isset($_GET['sort']) && $_GET['sort'] == 'desc') {
+      $query->propertyOrderBy('nid', 'DESC');
+    }
+
+    if (isset($_GET['sort']) && $_GET['sort'] == 'asc') {
+      $query->propertyOrderBy('nid', 'ASC');
     }
 
     $results = $query->execute();
