@@ -99,10 +99,10 @@ function my_migrations_autors_rest_api() {
   }
 
   // Filter by a range of values
-  if (isset($_GET['from']) && isset($_GET['to'])) {
-    $from = $_GET['from'];
-    $to = $_GET['to'];
-    $query->range($from, $to);
+  if (isset($_GET['offset']) && isset($_GET['limit'])) {
+    $offset = $_GET['offset'];
+    $limit = $_GET['limit'];
+    $query->range($offset, $limit);
   }
 
   $query->range(0, 20); // Just for debugging purposes, REMOVE when done

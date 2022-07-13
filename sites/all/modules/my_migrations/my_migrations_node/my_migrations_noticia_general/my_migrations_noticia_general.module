@@ -128,6 +128,8 @@ function my_migrations_noticia_general_rest_api() {
     $query->leftJoin('taxonomy_term_data', 'f29', 'f29.tid = f25.taxonomy_vocabulary_1_tid');
     $query->leftJoin('field_data_field_usuari_autor', 'f26', 'f26.entity_id = n.nid');
     $query->leftJoin('url_alias', 'f28', 'f28.source = CONCAT(:str, n.nid)', array(':str'=>'node/'));
+    $query->leftJoin('metatag', 'f40', 'f40.entity_id = n.nid');
+    $query->leftJoin('yoast_seo', 'f41', 'f41.entity_id = n.nid');
     $query->addField('n', 'nid', 'nid');
     $query->addField('n', 'vid', 'vid');
     $query->addField('n', 'title', 'title');
@@ -177,6 +179,9 @@ function my_migrations_noticia_general_rest_api() {
     $query->addField('f29', 'name', 'tag');
     $query->addField('f26', 'field_usuari_autor_value', 'user_author');
     $query->addField('f28', 'alias', 'url_alias');
+    $query->addField('f40', 'data', 'metatag'); // if alias is named 'metatags', it doesn't work. Place 'metatag' instead.
+    $query->addField('f41', 'focus_keyword', 'focus_keyword');
+    $query->addField('f41', 'seo_status', 'seo_status');
     $query->condition('n.type', 'noticia_general');
 
     // Filter by node ID
@@ -242,6 +247,11 @@ function my_migrations_noticia_general_rest_api() {
           'entities' => [],
           'images' => [],
           'tags' => [],
+          'metatags' => unserialize($row->metatag),
+          'yoast_seo' => [
+            'focus_keyword' => $row->focus_keyword ? $row->focus_keyword : null,
+            'seo_status' => $row->seo_status ? $row->seo_status : null,
+          ],
         ];
 
         // Add a flag (the nid) to $nids array, to manage duplicated node registries afterwerds
