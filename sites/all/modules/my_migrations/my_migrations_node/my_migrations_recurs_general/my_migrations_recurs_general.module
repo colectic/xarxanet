@@ -4,7 +4,7 @@
  * Implements hook_menu().
  */
 function my_migrations_recurs_general_menu() {
-  $items['admin/api/export/node/recurs-general'] = array(
+  $items['api/export/node/recurs-general'] = array(
     'title' => 'Recurs general export',
     'page callback' => 'my_migrations_recurs_general_rest_api',
     'access callback' => TRUE,

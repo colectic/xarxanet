@@ -4,7 +4,7 @@
  * Implements hook_menu().
  */
 function my_migrations_autors_menu() {
-  $items['admin/api/export/node/autors'] = array(
+  $items['api/export/node/autors'] = array(
     'title' => 'Autors export',
     'page callback' => 'my_migrations_autors_rest_api',
     'access callback' => TRUE,

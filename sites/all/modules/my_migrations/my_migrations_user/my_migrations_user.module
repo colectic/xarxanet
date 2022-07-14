@@ -4,7 +4,7 @@
  * Implements hook_menu().
  */
 function my_migrations_user_menu() {
-  $items['admin/api/export/user'] = array(
+  $items['api/export/user'] = array(
     'title' => 'User export',
     'page callback' => 'my_migrations_user_rest_api',
     'access callback' => TRUE,
