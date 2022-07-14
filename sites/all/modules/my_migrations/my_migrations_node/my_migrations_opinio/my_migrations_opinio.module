@@ -4,7 +4,7 @@
  * Implements hook_menu().
  */
 function my_migrations_opinio_menu() {
-  $items['admin/api/export/node/opinio'] = array(
+  $items['api/export/node/opinio'] = array(
     'title' => 'Opinio export',
     'page callback' => 'my_migrations_opinio_rest_api',
     'access callback' => TRUE,

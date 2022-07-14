@@ -4,7 +4,7 @@
  * Implements hook_menu().
  */
 function my_migrations_taxonomy_menu() {
-  $items['admin/api/export/taxonomy'] = array(
+  $items['api/export/taxonomy'] = array(
     'title' => 'Taxonomy export',
     'page callback' => 'my_migrations_taxonomy_rest_api',
     'access callback' => TRUE,
