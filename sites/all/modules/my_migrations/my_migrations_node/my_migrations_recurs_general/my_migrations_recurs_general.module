@@ -17,6 +17,76 @@ function my_migrations_recurs_general_menu() {
  * Retrieves all the nodes.
  */
 function my_migrations_recurs_general_rest_api() {
+  // Get all nids of content type 'recurs_general'
+  if (isset($_GET['import'])) {
+    $nids = [];
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node');
+    $query->entityCondition('bundle', 'recurs_general');
+
+    // This optional filter aims to prevent timeouts
+    if (isset($_GET['offset']) && isset($_GET['limit'])) {
+      $offset = $_GET['offset'];
+      $limit = $_GET['limit'];
+      $query->range($offset, $limit);
+    }
+
+    // Set the sort order, optionally
+    if (isset($_GET['sort']) && $_GET['sort'] == 'desc') {
+      $query->propertyOrderBy('nid', 'DESC');
+    }
+
+    if (isset($_GET['sort']) && $_GET['sort'] == 'asc') {
+      $query->propertyOrderBy('nid', 'ASC');
+    }
+
+    $results = $query->execute();
+    // Get the nid of each node
+    foreach ($results['node'] as $node) {
+      array_push($nids, $node->nid);
+    }
+
+    // Return data in JSON format
+    drupal_json_output($nids);
+  }
+
+  // Get all nids of content type 'noticia_general' that were updated
+  // from the begining of the development of the news site
+  if (isset($_GET['update'])) {
+    $nids = [];
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node');
+    $query->entityCondition('bundle', 'recurs_general');
+    $query->propertyCondition('changed', strtotime(date('2022-05-01')), '>');
+
+    // This optional filter aims to prevent timeouts
+    if (isset($_GET['offset']) && isset($_GET['limit'])) {
+      $offset = $_GET['offset'];
+      $limit = $_GET['limit'];
+      $query->range($offset, $limit);
+    }
+
+    // Set the sort order, optionally
+    if (isset($_GET['sort']) && $_GET['sort'] == 'desc') {
+      $query->propertyOrderBy('nid', 'DESC');
+    }
+
+    if (isset($_GET['sort']) && $_GET['sort'] == 'asc') {
+      $query->propertyOrderBy('nid', 'ASC');
+    }
+
+    $results = $query->execute();
+    // Get the nid of each node
+    foreach ($results['node'] as $node) {
+      array_push($nids, $node->nid);
+    }
+
+    // Return data in JSON format
+    drupal_json_output($nids);
+  }
+
+  // Get full data object
+  if (isset($_GET['nid'])) {
   $data = [];
   $query = db_select('node', 'n');
   $query->leftJoin('field_data_field_ambit_recurs', 'f1', 'f1.entity_id = n.nid');
@@ -350,4 +420,5 @@ foreach ($data as $index) {
 
   // Return data in JSON format
   drupal_json_output(array_values($data));
+}
 }
