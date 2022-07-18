@@ -108,7 +108,6 @@ function my_migrations_recurs_general_rest_api() {
   $query->leftJoin('field_data_field_dpp_portal', 'f17', 'f17.entity_id = n.nid');
   $query->leftJoin('field_data_field_dsp_portal', 'f18', 'f18.entity_id = n.nid');
   $query->leftJoin('field_data_field_desp', 'f19', 'f19.entity_id = n.nid');
-  $query->leftJoin('xmlsitemap', 'f20', 'f20.id = n.nid');
   $query->leftJoin('field_data_field_data_calculada', 'f21', 'f21.entity_id = n.nid');
   $query->leftJoin('location_instance', 'f22', 'f22.nid = n.nid');
   $query->leftJoin('location', 'f23', 'f23.lid = f22.lid');
@@ -135,58 +134,40 @@ function my_migrations_recurs_general_rest_api() {
   $query->addField('n', 'created', 'created');
   $query->addField('n', 'changed', 'changed');
   $query->addField('n', 'comment', 'comments');
-  //Ambit
   $query->addField('f1', 'field_ambit_recurs_tid', 'resource_tid');
   $query->addField('f2', 'name', 'resource_name');
-  // Main image
   $query->addField('f3', 'field_agenda_imatge_fid', 'main_image_fid');
   $query->addField('f3', 'field_agenda_imatge_alt', 'main_image_alt');
   $query->addField('f3', 'field_agenda_imatge_title', 'main_image_title');
   $query->addField('f4', 'filename', 'main_image_filename');
   $query->addField('f4', 'uri', 'main_image_uri');
-  // Autor
   $query->addField('f5', 'field_autor_value', 'author');
-  // Summary
   $query->addField('f6', 'field_resum_value', 'summary');
   $query->addField('f6', 'field_resum_format', 'summary_format');
-  // Body and body summary
   $query->addField('f7', 'body_value', 'body');
   $query->addField('f7', 'body_summary', 'body_summary');
   $query->addField('f7', 'body_format', 'body_format');
-  // Subtitles
+
+  $query->addField('f8', 'delta', 'subtitle_delta');
   $query->addField('f8', 'field_subtitols_value', 'subtitle');
-  // Contents
+  $query->addField('f9', 'delta', 'content_delta');
   $query->addField('f9', 'field_continguts_value', 'content');
+
   $query->addField('f9', 'field_continguts_format', 'contingut_format');
-  // Pop-up image. NOTE: it seems that there are only some images from noticia_general at this table. Probably not necessary for resources.
   $query->addField('f10', 'field_imatge_emergent_fid', 'popup_image_fid');
   $query->addField('f10', 'field_imatge_emergent_alt', 'popup_image_alt');
   $query->addField('f10', 'field_imatge_emergent_title', 'popup_image_title');
   $query->addField('f11', 'filename', 'popup_image_filename');
   $query->addField('f11', 'uri', 'popup_image_uri');
-  // Pop-up video
   $query->addField('f12', 'field_video_emergent_url', 'popup_video_url');
-  // Order date
   $query->addField('f13', 'field_data_ordenacio_value', 'order_date');
-  // URL alias
   $query->addField('f14', 'alias', 'url_alias');
-  // Highlights. Probably it is something that is not useful as the nodes highlighted when we publish the new site will be different
-  // Main highlight cover
   $query->addField('f15', 'field_dpp_value', 'main_highlight_cover');
-  // Secondary highlight cover
   $query->addField('f16', 'field_dsp_value', 'secondary_highlight_cover');
-  // Main highlight portal
   $query->addField('f17', 'field_dpp_portal_value', 'main_highlight_portal');
-  // Secondary highlight portal
   $query->addField('f18', 'field_dsp_portal_value', 'secondary_highlight_portal');
-  // Special highlight
   $query->addField('f19', 'field_desp_value', 'special_highlight');
-  // xmlsitemap
-  $query->addField('f20', 'status', 'xmlsitemap_included'); // Included just in case, although it seems to be the same value for all resources
-  $query->addField('f20', 'priority', 'xmlsitemap_priority'); // Included just in case, although it seems to be the same value for all resources
-  // Calculated date
   $query->addField('f21', 'field_data_calculada_value', 'calculated_date');
-  // Location
   $query->addField('f23', 'lid', 'lid');
   $query->addField('f23', 'name', 'name');
   $query->addField('f23', 'street', 'address');
@@ -197,16 +178,11 @@ function my_migrations_recurs_general_rest_api() {
   $query->addField('f23', 'longitude', 'longitude');
   $query->addField('f23', 'latitude', 'latitude');
   $query->addField('f23', 'additional', 'additional');
-  // Votes. Probably not useful, I can't see where this is used in the nodes that it is added
   $query->addField('f24', 'field_vote_rating', 'votes');
-  // Metatags
   $query->addField('f25', 'data', 'metatag');
-  // Author field (text)
   $query->addField('f26', 'field_usuari_autor_value', 'author_text');
-  // Tags
   $query->addField('f28', 'tid', 'tag_tid');
   $query->addField('f28', 'name', 'tag_name');
-  // Secondary images
   $query->addField('f30', 'fid', 'secondary_img_fid');
   $query->addField('f30', 'filename', 'secondary_img_filename');
   $query->addField('f30', 'uri', 'secondary_img_uri');
@@ -254,7 +230,6 @@ function my_migrations_recurs_general_rest_api() {
           'resource_tid' => $row->resource_tid,
           'resource_name' => $row->resource_name,
         ],
-        // Main image
         'main_image' => [
           'fid' => $row->main_image_fid,
           'alt' => $row->main_image_alt,
@@ -262,20 +237,14 @@ function my_migrations_recurs_general_rest_api() {
           'filename' => $row->main_image_filename,
           'uri' => $row->main_image_uri ? file_create_url($row->main_image_uri) : null,
         ],
-        // Autor
         'author' => $row->author,
-        //Summary
         'summary' => $row->summary,
         'summary_format' => $row->summary_format,
-        // Body and body summary
         'body' => $row->body,
         'body_summary' => $row->body_summary,
         'body_format' => $row->body_format,
-        //Subtitles
         'subtitles' => [],
-        //Contents
         'contents' => [],
-        // Pop-up image. NOTE: it seems that there are only some images from noticia_general at this table. Probably not necessary for resources.
         'popup_image' => [
           'fid' => $row-> popup_image_fid,
           'alt' => $row->popup_image_alt,
@@ -283,15 +252,10 @@ function my_migrations_recurs_general_rest_api() {
           'filename' => $row->popup_image_filename,
           'uri' => $row->popup_image_uri ? file_create_url($row->popup_image_uri) : null,
         ],
-        // Pop-up video
         'popup_video' => $row->popup_video_url,
-        // Order date
         'order_date' => $row->order_date,
-        // Calculated date
         'calculated_date' => $row->calculated_date,
-        // URL alias
         'url_alias' => $row->url_alias,
-        // Highlights. Probably it is something that is not useful as the nodes highlighted when we publish the new site will be different
         'highlighted' => [
           'main_cover' => $row->main_highlight_cover,
           'secondary_cover' => $row->secondary_highlight_cover,
@@ -299,12 +263,6 @@ function my_migrations_recurs_general_rest_api() {
           'secondary_portal' => $row->secondary_highlight_portal,
           'special' => $row->special_highlight,
         ],
-        // xmlsitemap
-        'xmlsitemap' => [
-          'included' => $row->xmlsitemap_included, // Included just in case, although it seems to be the same value for all resources
-          'priority' => $row->xmlsitemap_priority, // Included just in case, although it seems to be the same value for all resources
-        ],
-        // Location
         'location' => [
           'lid' => $row->lid,
           'name' => $row->name,
@@ -317,98 +275,93 @@ function my_migrations_recurs_general_rest_api() {
           'latitude' => $row->latitude,
           'additional' => $row->additional,
         ],
-        // Votes. Probably not useful, I can't see where this is used in the nodes that it is added
         'votes' => $row->votes,
-        // Metatags
         'metatags' => unserialize($row->metatag),
-        // Author field (text)
         'author_text' => $row->author_text,
-        // Tags
         'tags' => new stdClass(),
-        // Secondary images
         'secondary_images' => [],
       ];
 
-    // Add a flag (the nid) to $nids array, to manage duplicated node registries afterwerds
-    array_push($nids, $row->nid);
+      // Add a flag (the nid) to $nids array, to manage duplicated node registries afterwerds
+      array_push($nids, $row->nid);
 
-    // Adding the first subtitle
-    if ($row->subtitle && !in_array($row->subtitle, $item['subtitles'])) {
-      array_push($item['subtitles'], $row->subtitle);
-    }
+      // Adding the first subtitle
+      if ($row->subtitle && !in_array($row->subtitle, $item['subtitles'])) {
+        array_push($item['subtitles'], $row->subtitle);
+      }
 
-     // Adding the first content
-     if ($row->content && !in_array($row->content, $item['contents'])) {
-      array_push($item['contents'], $row->content);
-    }
+      // Adding the first content
+      if ($row->content && !in_array($row->content, $item['contents'])) {
+        array_push($item['contents'], $row->content);
+      }
 
      // Adding the first tag
-     $tid = $row->tag_tid;
-     $tags = $item['tags'];
-     if ($row->tag_tid && !property_exists($tags, $tid)) {
-      $tags->$tid = $row->tag_name;
-    }
+      $tid = $row->tag_tid;
+      $tags = $item['tags'];
+      if ($row->tag_tid && !property_exists($tags, $tid)) {
+        $tags->$tid = $row->tag_name;
+      }
 
      //Adding the first secondary image
-     if ($row->secondary_img_fid && !array_key_exists($row->secondary_img_fid, $item['secondary_images'])) {
-      $item['secondary_images'][$row->secondary_img_fid] = [
-        'uri' => $row->secondary_img_uri ? file_create_url($row->secondary_img_uri) : null,
-        'filename' => $row->secondary_img_filename ? $row->secondary_img_filename : null,
-        'alt' => $row->secondary_img_alt ? $row->secondary_img_alt : null,
-        'title' => $row->secondary_img_title ? $row->secondary_img_title : null,
-        'author' => $row->secondary_img_author ? $row->secondary_img_author : null,
-        'caption_default' => $row->secondary_img_title ? $row->secondary_img_title : null,
-        'caption_custom' => $row->secondary_img_caption === '--Peu de foto--' ? null : $row->secondary_img_caption,
-        'tags' => $row->secondary_img_tags ? [$row->secondary_img_tags] : [],
-      ];
-    }
+      if ($row->secondary_img_fid && !array_key_exists($row->secondary_img_fid, $item['secondary_images'])) {
+        $item['secondary_images'][$row->secondary_img_fid] = [
+          'uri' => $row->secondary_img_uri ? file_create_url($row->secondary_img_uri) : null,
+          'filename' => $row->secondary_img_filename ? $row->secondary_img_filename : null,
+          'alt' => $row->secondary_img_alt ? $row->secondary_img_alt : null,
+          'title' => $row->secondary_img_title ? $row->secondary_img_title : null,
+          'author' => $row->secondary_img_author ? $row->secondary_img_author : null,
+          'caption_default' => $row->secondary_img_title ? $row->secondary_img_title : null,
+          'caption_custom' => $row->secondary_img_caption === '--Peu de foto--' ? null : $row->secondary_img_caption,
+          'tags' => $row->secondary_img_tags ? [$row->secondary_img_tags] : [],
+        ];
+      }
 
-     // Add item's data to $data array
-     $data[$row->nid] = (object)$item;
+      // Add item's data to $data array
+      $data[$row->nid] = (object)$item;
+    }
+    else {
+      // Adding additional subtitles
+      if ($row->subtitle && !in_array($row->subtitle, $data[$row->nid]->subtitles)) {
+        array_push($data[$row->nid]->subtitles, $row->subtitle);
+      }
+
+      // Adding additional contents
+      if ($row->content && !in_array($row->content, $data[$row->nid]->contents)) {
+        array_push($data[$row->nid]->contents, $row->content);
+      }
+
+      // Adding additional tags
+      $tid = $row->tag_tid;
+      $tags = $data[$row->nid]->tags;
+      if ($row->tag_tid && !property_exists($tags, $tid)) {
+        $tags->$tid = $row->tag_name;
+      }
+
+      //Adding additional secondary images
+      if ($row->secondary_img_fid && !array_key_exists($row->secondary_img_fid, $data[$row->nid]->secondary_images)) {
+        array_push($data[$row->nid]->secondary_images,
+        [
+          'uri' => $row->secondary_img_uri ? file_create_url($row->secondary_img_uri) : null,
+          'filename' => $row->secondary_img_filename ? $row->secondary_img_filename : null,
+          'alt' => $row->secondary_img_alt ? $row->secondary_img_alt : null,
+          'title' => $row->secondary_img_title ? $row->secondary_img_title : null,
+          'author' => $row->secondary_img_author ? $row->secondary_img_author : null,
+          'caption_default' => $row->secondary_img_title ? $row->secondary_img_title : null,
+          'caption_custom' => $row->secondary_img_caption === '--Peu de foto--' ? null : $row->secondary_img_caption,
+          'tags' => $row->secondary_img_tags ? [$row->secondary_img_tags] : [],
+        ]);
+      }
+    }
   }
-  else {
-    // Adding additional subtitles
-    if ($row->subtitle && !in_array($row->subtitle, $data[$row->nid]->subtitles)) {
-      array_push($data[$row->nid]->subtitles, $row->subtitle);
-    }
 
-    // Adding additional contents
-    if ($row->content && !in_array($row->content, $data[$row->nid]->contents)) {
-      array_push($data[$row->nid]->contents, $row->content);
-    }
-
-    // Adding additional tags
-    $tid = $row->tag_tid;
-    $tags = $data[$row->nid]->tags;
-    if ($row->tag_tid && !property_exists($tags, $tid)) {
-     $tags->$tid = $row->tag_name;
-   }
-
-    //Adding additional secondary images
-    if ($row->secondary_img_fid && !array_key_exists($row->secondary_img_fid, $data[$row->nid]->secondary_images)) {
-      array_push($data[$row->nid]->secondary_images,
-      [
-        'uri' => $row->secondary_img_uri ? file_create_url($row->secondary_img_uri) : null,
-        'filename' => $row->secondary_img_filename ? $row->secondary_img_filename : null,
-        'alt' => $row->secondary_img_alt ? $row->secondary_img_alt : null,
-        'title' => $row->secondary_img_title ? $row->secondary_img_title : null,
-        'author' => $row->secondary_img_author ? $row->secondary_img_author : null,
-        'caption_default' => $row->secondary_img_title ? $row->secondary_img_title : null,
-        'caption_custom' => $row->secondary_img_caption === '--Peu de foto--' ? null : $row->secondary_img_caption,
-        'tags' => $row->secondary_img_tags ? [$row->secondary_img_tags] : [],
-      ]);
-    }
-  }
-}
-
-// Iteration to group each subtitle with its content once the query is over
-foreach ($data as $index) {
-  for ($i = 0; $i < count($index->subtitles); $i++) {
-      $index->sections->$i = new stdClass();
-      $index->sections->$i->title = $index->subtitles[$i];
-      $index->sections->$i->content = $index->contents[$i];
-    }
-}
+  // Iteration to group each subtitle with its content once the query is over
+  // foreach ($data as $index) {
+  // for ($i = 0; $i < count($index->subtitles); $i++) {
+  //     $index->sections->$i = new stdClass();
+  //     $index->sections->$i->title = $index->subtitles[$i];
+  //     $index->sections->$i->content = $index->contents[$i];
+  //   }
+  // }
 
   // Return data in JSON format
   drupal_json_output(array_values($data));
