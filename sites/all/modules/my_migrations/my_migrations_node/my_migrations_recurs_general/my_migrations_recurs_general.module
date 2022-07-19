@@ -112,6 +112,7 @@ function my_migrations_recurs_general_rest_api() {
     $query->leftJoin('location', 'f23', 'f23.lid = f22.lid');
     $query->leftJoin('field_data_field_vote', 'f24', 'f24.entity_id = n.nid');
     $query->leftJoin('metatag', 'f25', 'f25.entity_id = n.nid');
+    $query->leftJoin('yoast_seo', 'f37', 'f37.entity_id = n.nid');
     $query->leftJoin('field_data_field_usuari_autor', 'f26', 'f26.entity_id = n.nid');
     $query->leftJoin('field_data_taxonomy_vocabulary_1', 'f27', 'f27.entity_id = n.nid');
     $query->leftJoin('taxonomy_term_data', 'f28', 'f28.tid = f27.taxonomy_vocabulary_1_tid');
@@ -123,6 +124,9 @@ function my_migrations_recurs_general_rest_api() {
     $query->leftJoin('field_data_field_file_image_title_text', 'f35', 'f35.entity_id = f29.field_imatges_fid');
     $query->leftJoin('field_data_field_etiquetes', 'f33', 'f33.entity_id = n.nid');
     $query->leftJoin('taxonomy_term_data', 'f36', 'f36.tid = f33.field_etiquetes_tid');
+    $query->leftJoin('field_data_field_file', 'f38', 'f38.entity_id = n.nid');
+    $query->leftJoin('file_managed', 'f39', 'f39.fid = f38.field_file_fid');
+    $query->leftJoin('field_data_field_links', 'f40', 'f40.entity_id = n.nid');
     $query->addField('n', 'nid', 'nid');
     $query->addField('n', 'vid', 'vid');
     $query->addField('n', 'title', 'title');
@@ -173,7 +177,9 @@ function my_migrations_recurs_general_rest_api() {
     $query->addField('f23', 'latitude', 'latitude');
     $query->addField('f23', 'additional', 'additional');
     $query->addField('f24', 'field_vote_rating', 'votes');
-    $query->addField('f25', 'data', 'metatag');
+    $query->addField('f25', 'data', 'metatag'); // if alias is named 'metatags', it doesn't work. Place 'metatag' instead.
+    $query->addField('f37', 'focus_keyword', 'focus_keyword');
+    $query->addField('f37', 'seo_status', 'seo_status');
     $query->addField('f26', 'field_usuari_autor_value', 'author_text');
     $query->addField('f28', 'tid', 'tag_tid');
     $query->addField('f28', 'name', 'tag_name');
@@ -185,6 +191,10 @@ function my_migrations_recurs_general_rest_api() {
     $query->addField('f36', 'name', 'secondary_img_tags');
     $query->addField('f34', 'field_file_image_alt_text_value', 'secondary_img_alt');
     $query->addField('f35', 'field_file_image_title_text_value', 'secondary_img_title');
+    $query->addField('f39', 'fid', 'file_fid');
+    $query->addField('f39', 'uri', 'file_uri');
+    $query->addField('f40', 'field_links_url', 'link_url');
+    $query->addField('f40', 'field_links_title', 'link_title');
     $query->condition('n.type', 'recurs_general');
     $query->condition('n.nid', $_GET['nid']);
     $query->orderBy('n.nid', 'DESC');
@@ -196,20 +206,20 @@ function my_migrations_recurs_general_rest_api() {
       if (!in_array($row->nid,  $nids)) {
         // Build the node's basic data array
         $item = [
-          'nid' => $row->nid,
-          'vid' => $row->vid,
+          'nid' => (int)$row->nid,
+          'vid' => (int)$row->vid,
           'title' => $row->title,
-          'uid' => $row->uid,
-          'status' => $row->status,
-          'created' => $row->created,
-          'changed' => $row->changed,
-          'comments' => $row->comments,
+          'uid' => (int)$row->uid,
+          'status' => (int)$row->status,
+          'created' => (int)$row->created,
+          'changed' => (int)$row->changed,
+          'comments' => (int)$row->comments,
           'resource_scope' => (object)[
-            'resource_tid' => $row->resource_tid,
+            'resource_tid' => (int)$row->resource_tid,
             'resource_name' => $row->resource_name,
           ],
           'main_image' => [
-            'fid' => $row->main_image_fid,
+            'fid' => (int)$row->main_image_fid,
             'alt' => $row->main_image_alt,
             'title' => $row->main_image_title,
             'filename' => $row->main_image_filename,
@@ -220,24 +230,27 @@ function my_migrations_recurs_general_rest_api() {
           'summary_format' => $row->summary_format,
           'body' => $row->body,
           'body_summary' => $row->body_summary,
-          'body_format' => $row->body_format,
+          'body_format' => (int)$row->body_format,
+          'secondary_images' => [],
+          'file_uri' => $row->file_uri ? [$row->file_fid => file_create_url($row->file_uri)] : [],
+          'links' => $row->link_url && $row->link_title ? [$row->link_url => $row->link_title] : [],
           'contents' => [],
           'popup_image' => [
-            'fid' => $row-> popup_image_fid,
+            'fid' => (int)$row-> popup_image_fid,
             'alt' => $row->popup_image_alt,
             'title' => $row->popup_image_title,
             'filename' => $row->popup_image_filename,
             'uri' => $row->popup_image_uri ? file_create_url($row->popup_image_uri) : null,
           ],
           'popup_video' => $row->popup_video_url,
-          'order_date' => $row->order_date,
-          'computed_date' => $row->computed_date,
+          'order_date' => (int)$row->order_date,
+          'computed_date' => (int)$row->computed_date,
           'url_alias' => $row->url_alias,
-          'home_primary_highlighted' => $row->home_primary_highlighted,
-          'home_secondary_highlighted' => $row->home_secondary_highlighted,
-          'inner_primary_highlighted' => $row->inner_primary_highlighted,
-          'inner_secondary_highlighted' => $row->inner_secondary_highlighted,
-          'special_highlighted' => $row->special_highlighted,
+          'home_primary_highlighted' => (int)$row->home_primary_highlighted,
+          'home_secondary_highlighted' => (int)$row->home_secondary_highlighted,
+          'inner_primary_highlighted' => (int)$row->inner_primary_highlighted,
+          'inner_secondary_highlighted' => (int)$row->inner_secondary_highlighted,
+          'special_highlighted' => (int)$row->special_highlighted,
           'location' => [
             'lid' => $row->lid,
             'name' => $row->name,
@@ -250,11 +263,14 @@ function my_migrations_recurs_general_rest_api() {
             'latitude' => $row->latitude,
             'additional' => $row->additional,
           ],
-          'votes' => $row->votes,
-          'metatags' => unserialize($row->metatag),
           'author_text' => $row->author_text,
           'tags' => [],
-          'secondary_images' => [],
+          'votes' => $row->votes,
+          'metatags' => unserialize($row->metatag),
+          'yoast_seo' => [
+            'focus_keyword' => $row->focus_keyword ? $row->focus_keyword : null,
+            'seo_status' => $row->seo_status ? $row->seo_status : null,
+          ],
         ];
 
         // Add a flag (the nid) to $nids array, to manage duplicated node registries afterwards
@@ -290,6 +306,16 @@ function my_migrations_recurs_general_rest_api() {
         }
       }
       else {
+        // Adding additional links
+        if ($row->link_url && $row->link_title && !array_key_exists($row->link_url, $item['links'])) {
+          $item['links'][$row->link_url] = $row->link_title;
+        }
+
+        // Adding additional files
+        if ($row->file_uri && !array_key_exists($row->file_fid, $item['file_uri'])) {
+          $item['file_uri'][$row->file_fid] = file_create_url($row->file_uri);
+        }
+
         // Adding additional subtitles
         if ($row->subtitle && !$item['contents'][$row->subtitle_delta]['title']) {
           $item['contents'][$row->subtitle_delta]['title'] = $row->subtitle;
