@@ -52,7 +52,7 @@ function my_migrations_noticia_general_rest_api() {
   }
 
   // Get all nids of content type 'noticia_general' that were updated
-  // from the begining of the development of the news site
+  // from the begining of the development of the new site
   if (isset($_GET['update'])) {
     $nids = [];
     $query = new EntityFieldQuery();
@@ -254,7 +254,7 @@ function my_migrations_noticia_general_rest_api() {
           ],
         ];
 
-        // Add a flag (the nid) to $nids array, to manage duplicated node registries afterwerds
+        // Add a flag (the nid) to $nids array, to manage duplicated node registries afterwards
         array_push($nids, $row->nid);
 
         // Adding the first entity
