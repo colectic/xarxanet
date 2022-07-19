@@ -50,8 +50,8 @@ function my_migrations_recurs_general_rest_api() {
     drupal_json_output($nids);
   }
 
-  // Get all nids of content type 'noticia_general' that were updated
-  // from the begining of the development of the news site
+  // Get all nids of content type 'recurs_general' that were updated
+  // from the begining of the development of the new site
   if (isset($_GET['update'])) {
     $nids = [];
     $query = new EntityFieldQuery();
@@ -87,7 +87,6 @@ function my_migrations_recurs_general_rest_api() {
 
   // Get full data object
   if (isset($_GET['nid']) && is_numeric($_GET['nid'])) {
-    $data = [];
     $query = db_select('node', 'n');
     $query->leftJoin('field_data_field_ambit_recurs', 'f1', 'f1.entity_id = n.nid');
     $query->leftJoin('taxonomy_term_data', 'f2', 'f2.tid = f1.field_ambit_recurs_tid');
@@ -120,9 +119,9 @@ function my_migrations_recurs_general_rest_api() {
     $query->leftJoin('file_managed', 'f30', 'f30.fid = f29.field_imatges_fid');
     $query->leftJoin('field_data_field_peu_de_foto', 'f31', 'f31.entity_id = n.nid AND f31.delta = f29.delta');
     $query->leftJoin('field_data_field_autoria', 'f32', 'f32.entity_id = f29.field_imatges_fid');
-    $query->leftJoin('field_data_field_etiquetes', 'f33', 'f33.entity_id = n.nid');
     $query->leftJoin('field_data_field_file_image_alt_text', 'f34', 'f34.entity_id = f29.field_imatges_fid');
     $query->leftJoin('field_data_field_file_image_title_text', 'f35', 'f35.entity_id = f29.field_imatges_fid');
+    $query->leftJoin('field_data_field_etiquetes', 'f33', 'f33.entity_id = n.nid');
     $query->leftJoin('taxonomy_term_data', 'f36', 'f36.tid = f33.field_etiquetes_tid');
     $query->addField('n', 'nid', 'nid');
     $query->addField('n', 'vid', 'vid');
@@ -149,7 +148,6 @@ function my_migrations_recurs_general_rest_api() {
     $query->addField('f8', 'field_subtitols_value', 'subtitle');
     $query->addField('f9', 'delta', 'content_delta');
     $query->addField('f9', 'field_continguts_value', 'content');
-    $query->addField('f9', 'field_continguts_format', 'contingut_format');
     $query->addField('f10', 'field_imatge_emergent_fid', 'popup_image_fid');
     $query->addField('f10', 'field_imatge_emergent_alt', 'popup_image_alt');
     $query->addField('f10', 'field_imatge_emergent_title', 'popup_image_title');
@@ -158,12 +156,12 @@ function my_migrations_recurs_general_rest_api() {
     $query->addField('f12', 'field_video_emergent_url', 'popup_video_url');
     $query->addField('f13', 'field_data_ordenacio_value', 'order_date');
     $query->addField('f14', 'alias', 'url_alias');
-    $query->addField('f15', 'field_dpp_value', 'main_highlight_cover');
-    $query->addField('f16', 'field_dsp_value', 'secondary_highlight_cover');
-    $query->addField('f17', 'field_dpp_portal_value', 'main_highlight_portal');
-    $query->addField('f18', 'field_dsp_portal_value', 'secondary_highlight_portal');
-    $query->addField('f19', 'field_desp_value', 'special_highlight');
-    $query->addField('f21', 'field_data_calculada_value', 'calculated_date');
+    $query->addField('f15', 'field_dpp_value', 'home_primary_highlighted');
+    $query->addField('f16', 'field_dsp_value', 'home_secondary_highlighted');
+    $query->addField('f17', 'field_dpp_portal_value', 'inner_primary_highlighted');
+    $query->addField('f18', 'field_dsp_portal_value', 'inner_secondary_highlighted');
+    $query->addField('f19', 'field_desp_value', 'special_highlighted');
+    $query->addField('f21', 'field_data_calculada_value', 'computed_date');
     $query->addField('f23', 'lid', 'lid');
     $query->addField('f23', 'name', 'name');
     $query->addField('f23', 'street', 'address');
@@ -193,7 +191,7 @@ function my_migrations_recurs_general_rest_api() {
     $results = $query->execute();
 
     $nids = [];
-    $data = [];
+    $item = [];
     foreach ($results as $row) {
       if (!in_array($row->nid,  $nids)) {
         // Build the node's basic data array
@@ -223,7 +221,7 @@ function my_migrations_recurs_general_rest_api() {
           'body' => $row->body,
           'body_summary' => $row->body_summary,
           'body_format' => $row->body_format,
-          'contents' => (array)[],
+          'contents' => [],
           'popup_image' => [
             'fid' => $row-> popup_image_fid,
             'alt' => $row->popup_image_alt,
@@ -233,15 +231,13 @@ function my_migrations_recurs_general_rest_api() {
           ],
           'popup_video' => $row->popup_video_url,
           'order_date' => $row->order_date,
-          'calculated_date' => $row->calculated_date,
+          'computed_date' => $row->computed_date,
           'url_alias' => $row->url_alias,
-          'highlighted' => [
-            'main_cover' => $row->main_highlight_cover,
-            'secondary_cover' => $row->secondary_highlight_cover,
-            'main_portal' => $row->main_highlight_portal,
-            'secondary_portal' => $row->secondary_highlight_portal,
-            'special' => $row->special_highlight,
-          ],
+          'home_primary_highlighted' => $row->home_primary_highlighted,
+          'home_secondary_highlighted' => $row->home_secondary_highlighted,
+          'inner_primary_highlighted' => $row->inner_primary_highlighted,
+          'inner_secondary_highlighted' => $row->inner_secondary_highlighted,
+          'special_highlighted' => $row->special_highlighted,
           'location' => [
             'lid' => $row->lid,
             'name' => $row->name,
@@ -257,28 +253,26 @@ function my_migrations_recurs_general_rest_api() {
           'votes' => $row->votes,
           'metatags' => unserialize($row->metatag),
           'author_text' => $row->author_text,
-          'tags' => new stdClass(),
+          'tags' => [],
           'secondary_images' => [],
         ];
 
-        // Add a flag (the nid) to $nids array, to manage duplicated node registries afterwerds
+        // Add a flag (the nid) to $nids array, to manage duplicated node registries afterwards
         array_push($nids, $row->nid);
 
         // Adding the first subtitle
-        if ($row->subtitle && !$item['contents'][$row->subtitle_delta]['title']) {
+        if ($row->subtitle) {
           $item['contents'][$row->subtitle_delta]['title'] = $row->subtitle;
         }
 
         // Adding the first content
-        if ($row->content && !$item['contents'][$row->content_delta]['content']) {
+        if ($row->content) {
           $item['contents'][$row->content_delta]['content'] = $row->content;
         }
 
         // Adding the first tag
-        $tid = $row->tag_tid;
-        $tags = $item['tags'];
-        if ($row->tag_tid && !property_exists($tags, $tid)) {
-          $tags->$tid = $row->tag_name;
+        if ($row->tag_name && !array_key_exists($row->tag_tid, $item['tags'])) {
+          $item['tags'][$row->tag_tid] = $row->tag_name;
         }
 
         // Adding the first secondary image
@@ -294,32 +288,26 @@ function my_migrations_recurs_general_rest_api() {
             'tags' => $row->secondary_img_tags ? [$row->secondary_img_tags] : [],
           ];
         }
-
-        // Add item's data to $data array
-        $data[$row->nid] = $item;
       }
       else {
         // Adding additional subtitles
-        if ($row->subtitle && !$data[$row->nid]['contents'][$row->subtitle_delta]['title']) {
-          $data[$row->nid]['contents'][$row->subtitle_delta]['title'] = $row->subtitle;
+        if ($row->subtitle && !$item['contents'][$row->subtitle_delta]['title']) {
+          $item['contents'][$row->subtitle_delta]['title'] = $row->subtitle;
         }
 
         // Adding additional content
-        if ($row->content && !$data[$row->nid]['contents'][$row->content_delta]['content']) {
-          $data[$row->nid]['contents'][$row->content_delta]['content'] = $row->content;
+        if ($row->content && $item['contents'][$row->content_delta] && !$item['contents'][$row->content_delta]['content']) {
+          $item['contents'][$row->content_delta]['content'] = $row->content;
         }
 
         // Adding additional tags
-        $tid = $row->tag_tid;
-        $tags = $data[$row->nid]->tags;
-        if ($row->tag_tid && !property_exists($tags, $tid)) {
-          $tags->$tid = $row->tag_name;
+        if ($row->tag_name && !array_key_exists($row->tag_tid, $item['tags'])) {
+          $item['tags'][$row->tag_tid] = $row->tag_name;
         }
 
         // Adding additional secondary images
-        if ($row->secondary_img_fid && !array_key_exists($row->secondary_img_fid, $data[$row->nid]->secondary_images)) {
-          array_push($data[$row->nid]->secondary_images,
-          [
+        if ($row->secondary_img_fid && !array_key_exists($row->secondary_img_fid, $item['secondary_images'])) {
+          $item['secondary_images'][$row->secondary_img_fid] = [
             'uri' => $row->secondary_img_uri ? file_create_url($row->secondary_img_uri) : null,
             'filename' => $row->secondary_img_filename ? $row->secondary_img_filename : null,
             'alt' => $row->secondary_img_alt ? $row->secondary_img_alt : null,
@@ -328,11 +316,12 @@ function my_migrations_recurs_general_rest_api() {
             'caption_default' => $row->secondary_img_title ? $row->secondary_img_title : null,
             'caption_custom' => $row->secondary_img_caption === '--Peu de foto--' ? null : $row->secondary_img_caption,
             'tags' => $row->secondary_img_tags ? [$row->secondary_img_tags] : [],
-          ]);
+          ];
         }
       }
     }
+
     // Return data in JSON format
-    drupal_json_output(array_values($data));
+    drupal_json_output($item);
   }
 }
