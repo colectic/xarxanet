@@ -1,0 +1,191 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function my_migrations_esdeveniments_menu() {
+  $items['api/export/node/esdeveniments'] = array(
+    'title' => 'Esdeveniments export',
+    'page callback' => 'my_migrations_esdeveniments_rest_api',
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
+ * Retrieves all the nodes.
+ */
+function my_migrations_esdeveniments_rest_api() {
+
+  // Get all nids of content type 'event'
+  if (isset($_GET['import'])) {
+    $nids = [];
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node');
+    $query->entityCondition('bundle', 'event');
+
+    // This optional filter aims to prevent timeouts
+    if (isset($_GET['offset']) && isset($_GET['limit'])) {
+      $offset = $_GET['offset'];
+      $limit = $_GET['limit'];
+      $query->range($offset, $limit);
+    }
+
+    // Set the sort order, optionally
+    if (isset($_GET['sort']) && $_GET['sort'] == 'desc') {
+      $query->propertyOrderBy('nid', 'DESC');
+    }
+
+    if (isset($_GET['sort']) && $_GET['sort'] == 'asc') {
+      $query->propertyOrderBy('nid', 'ASC');
+    }
+
+    $results = $query->execute();
+    // Get the nid of each node
+    foreach ($results['node'] as $node) {
+      array_push($nids, $node->nid);
+    }
+
+    // Return data in JSON format
+    drupal_json_output($nids);
+  }
+
+  // Get all nids of content type 'event' that were updated
+  // from the begining of the development of the new site
+  if (isset($_GET['update'])) {
+    $nids = [];
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node');
+    $query->entityCondition('bundle', 'event');
+    $query->propertyCondition('changed', strtotime(date('2022-05-01')), '>');
+
+    // This optional filter aims to prevent timeouts
+    if (isset($_GET['offset']) && isset($_GET['limit'])) {
+      $offset = $_GET['offset'];
+      $limit = $_GET['limit'];
+      $query->range($offset, $limit);
+    }
+
+    // Set the sort order, optionally
+    if (isset($_GET['sort']) && $_GET['sort'] == 'desc') {
+      $query->propertyOrderBy('nid', 'DESC');
+    }
+
+    if (isset($_GET['sort']) && $_GET['sort'] == 'asc') {
+      $query->propertyOrderBy('nid', 'ASC');
+    }
+
+    $results = $query->execute();
+    // Get the nid of each node
+    foreach ($results['node'] as $node) {
+      array_push($nids, $node->nid);
+    }
+
+    // Return data in JSON format
+    drupal_json_output($nids);
+  }
+
+  // Get full data object
+  if (isset($_GET['nid'])) {
+    $data = [];
+    $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_agenda_imatge', 'f1', 'f1.entity_id = n.nid');
+    $query->leftJoin('file_managed', 'f2', 'f2.fid = f1.field_agenda_imatge_fid');
+    $query->leftJoin('field_data_field_resum', 'f3', 'f3.entity_id = n.nid');
+    $query->leftJoin('field_data_body', 'f4', 'f4.entity_id = n.nid');
+
+    $query->addField('n', 'nid', 'nid');
+    $query->addField('n', 'vid', 'vid');
+    $query->addField('n', 'title', 'title');
+    $query->addField('n', 'uid', 'uid');
+    $query->addField('n', 'status', 'status');
+    $query->addField('n', 'created', 'created');
+    $query->addField('n', 'changed', 'changed');
+    $query->addField('n', 'comment', 'comments');
+    $query->addField('f1', 'field_agenda_imatge_fid', 'main_img_fid');
+    $query->addField('f1', 'field_agenda_imatge_alt', 'main_img_alt');
+    $query->addField('f1', 'field_agenda_imatge_title', 'main_img_title');
+    $query->addField('f2', 'filename', 'main_img_filename');
+    $query->addField('f2', 'filemime', 'main_img_filemime');
+    $query->addField('f2', 'uri', 'main_img_uri');
+    $query->addField('f3', 'field_resum_value', 'summary');
+    $query->addField('f3', 'field_resum_format', 'summary_format');
+    $query->addField('f4', 'body_format', 'body_format');
+    $query->addField('f4', 'body_value', 'body');
+    $query->addField('f4', 'body_summary', 'body_summary');
+
+
+    $query->condition('n.type', 'event');
+
+
+    // Filter by node ID
+    $nid = $_GET['nid'];
+    $query->condition('n.nid', $nid);
+
+    // Filter by a range of values
+    if (isset($_GET['offset']) && isset($_GET['limit'])) {
+      $offset = $_GET['offset'];
+      $limit = $_GET['limit'];
+      $query->range($offset, $limit);
+    }
+
+    $query->orderBy('n.nid', 'DESC');
+    $results = $query->execute();
+
+    $nids = [];
+    $data = [];
+    foreach ($results as $row) {
+      if (!in_array($row->nid,  $nids)) {
+        // Build the node's basic data array
+        $item = [
+          'nid' => $row->nid,
+          'vid' => $row->vid,
+          'title' => $row->title,
+          'uid' => $row->uid,
+          'status' => $row->status,
+          'created' => $row->created,
+          'changed' => $row->changed,
+          'comments' => $row->comments,
+          'main_image' => [
+            'fid' => $row->main_img_fid ? $row->main_img_fid : null,
+            'uri' => $row->main_img_uri ? file_create_url($row->main_img_uri) : null,
+            'alt' => $row->main_img_alt ? $row->main_img_alt : null,
+            'title' => $row->main_img_title ? $row ->main_img_title : null,
+            'filename' => $row->main_img_filename ? $row->main_img_filename : null,
+            'filemime' => $row->main_img_filemime ? $row ->main_img_filemime : null,
+          ],
+          'summary' => [
+            'format' => $row->summary_format,
+            'value' => $row->summary,
+          ],
+          'body' => [
+            'format' => $row->body_format,
+            'body' => $row->body,
+            'summary' => $row->body_summary,
+          ],
+        ];
+
+        // Add a flag (the nid) to $nids array, to manage duplicated node registries afterwards
+        array_push($nids, $row->nid);
+
+        // Adding the first entity
+        if ($row->entity && !in_array($row->entity, $item['entities'])) {
+          array_push($item['entities'], $row->entity);
+        }
+
+        // Add item's data to $data array
+        $data[$row->nid] = (object)$item;
+
+      } else {
+        // Adding additional entities
+        if ($row->entity && !in_array($row->entity, $data[$row->nid]->entities)) {
+          array_push($data[$row->nid]->entities, $row->entity);
+        }
+      }
+
+    // Return data in JSON format
+    drupal_json_output(array_values($data));
+    }
+  }
+}
