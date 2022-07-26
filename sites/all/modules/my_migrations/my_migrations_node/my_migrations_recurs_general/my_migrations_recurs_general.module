@@ -180,7 +180,7 @@ function my_migrations_recurs_general_rest_api() {
     $query->addField('f25', 'data', 'metatag'); // if alias is named 'metatags', it doesn't work. Place 'metatag' instead.
     $query->addField('f37', 'focus_keyword', 'focus_keyword');
     $query->addField('f37', 'seo_status', 'seo_status');
-    $query->addField('f26', 'field_usuari_autor_value', 'author_text');
+    $query->addField('f26', 'field_usuari_autor_value', 'author_entity');
     $query->addField('f28', 'tid', 'tag_tid');
     $query->addField('f28', 'name', 'tag_name');
     $query->addField('f30', 'fid', 'secondary_img_fid');
@@ -215,8 +215,8 @@ function my_migrations_recurs_general_rest_api() {
           'changed' => (int)$row->changed,
           'comments' => (int)$row->comments,
           'resource_scope' => (object)[
-            'resource_tid' => (int)$row->resource_tid,
-            'resource_name' => $row->resource_name,
+            'tid' => (int)$row->resource_tid,
+            'name' => $row->resource_name,
           ],
           'main_image' => [
             'fid' => (int)$row->main_image_fid,
@@ -263,7 +263,7 @@ function my_migrations_recurs_general_rest_api() {
             'latitude' => $row->latitude,
             'additional' => $row->additional,
           ],
-          'author_text' => $row->author_text,
+          'author_entity' => $row->author_entity,
           'tags' => [],
           'votes' => $row->votes,
           'metatags' => unserialize($row->metatag),
