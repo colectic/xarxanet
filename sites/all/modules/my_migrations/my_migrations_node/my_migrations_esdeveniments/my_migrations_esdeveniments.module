@@ -94,6 +94,26 @@ function my_migrations_esdeveniments_rest_api() {
     $query->leftJoin('file_managed', 'f2', 'f2.fid = f1.field_agenda_imatge_fid');
     $query->leftJoin('field_data_field_resum', 'f3', 'f3.entity_id = n.nid');
     $query->leftJoin('field_data_body', 'f4', 'f4.entity_id = n.nid');
+    $query->leftJoin('field_data_field_date_event', 'f5', 'f5.entity_id = n.nid');
+    $query->leftJoin('field_data_field_link', 'f6', 'f6.entity_id = n.nid');
+    $query->leftJoin('field_data_field_esdeveniment_en_linia', 'f7', 'f7.entity_id = n.nid');
+    $query->leftJoin('location_instance', 'f8', 'f8.nid = n.nid');
+    $query->leftJoin('location', 'f9', 'f9.lid = f8.lid');
+    $query->leftJoin('field_data_field_organizer', 'f10', 'f10.entity_id = n.nid');
+    $query->leftJoin('field_data_field_org_adress', 'f11', 'f11.entity_id = n.nid');
+    $query->leftJoin('field_data_field_org_web', 'f12', 'f12.entity_id = n.nid');
+    $query->leftJoin('field_data_field_org_email', 'f13', 'f13.entity_id = n.nid');
+    $query->leftJoin('field_data_field_event_type', 'f14', 'f14.entity_id = n.nid');
+    $query->leftJoin('field_data_field_dpp', 'f15', 'f15.entity_id = n.nid');
+    $query->leftJoin('field_data_field_dsp', 'f16', 'f16.entity_id = n.nid');
+    $query->leftJoin('field_data_field_desp', 'f17', 'f17.entity_id = n.nid');
+    $query->leftJoin('field_data_field_data_ordenacio', 'f18', 'f18.entity_id = n.nid');
+    $query->leftJoin('url_alias', 'f19', 'f19.source = CONCAT(:str, n.nid)', array(':str'=>'node/'));
+    $query->leftJoin('field_data_field_data_calculada', 'f20', 'f20.entity_id = n.nid');
+    $query->leftJoin('metatag', 'f21', 'f21.entity_id = n.nid');
+    $query->leftJoin('yoast_seo', 'f22', 'f22.entity_id = n.nid');
+    $query->leftJoin('field_data_taxonomy_vocabulary_1', 'f23', 'f23.entity_id = n.nid');
+    $query->leftJoin('taxonomy_term_data', 'f24', 'f24.tid = f23.taxonomy_vocabulary_1_tid');
 
     $query->addField('n', 'nid', 'nid');
     $query->addField('n', 'vid', 'vid');
@@ -114,7 +134,37 @@ function my_migrations_esdeveniments_rest_api() {
     $query->addField('f4', 'body_format', 'body_format');
     $query->addField('f4', 'body_value', 'body');
     $query->addField('f4', 'body_summary', 'body_summary');
-
+    $query->addField('f5', 'field_date_event_value', 'date_1');
+    $query->addField('f5', 'field_date_event_value2', 'date_2');
+    $query->addField('f6', 'field_link_value', 'link');
+    $query->addField('f7', 'field_esdeveniment_en_linia_value', 'online');
+    $query->addField('f9', 'lid', 'lid');
+    $query->addField('f9', 'name', 'name');
+    $query->addField('f9', 'street', 'address');
+    $query->addField('f9', 'postal_code', 'postal_code');
+    $query->addField('f9', 'city', 'city');
+    $query->addField('f9', 'province', 'province');
+    $query->addField('f9', 'country', 'country');
+    $query->addField('f9', 'longitude', 'longitude');
+    $query->addField('f9', 'latitude', 'latitude');
+    $query->addField('f9', 'additional', 'additional');
+    $query->addField('f10', 'field_organizer_value', 'organizer');
+    $query->addField('f11', 'field_org_adress_value', 'organizer_address');
+    $query->addField('f12', 'field_org_web_title', 'organizer_url_title');
+    $query->addField('f12', 'field_org_web_url', 'organizer_url');
+    $query->addField('f13', 'field_org_email_value', 'organizer_email');
+    $query->addField('f14', 'field_event_type_value', 'type');
+    $query->addField('f15', 'field_dpp_value', 'home_primary_highlighted');
+    $query->addField('f16', 'field_dsp_value', 'home_secondary_highlighted');
+    $query->addField('f17', 'field_desp_value', 'special_highlighted');
+    $query->addField('f18', 'field_data_ordenacio_value', 'order_date');
+    $query->addField('f19', 'alias', 'url_alias');
+    $query->addField('f20', 'field_data_calculada_value', 'computed_date');
+    $query->addField('f21', 'data', 'metatag'); // if alias is named 'metatags', it doesn't work. Place 'metatag' instead.
+    $query->addField('f22', 'focus_keyword', 'focus_keyword');
+    $query->addField('f22', 'seo_status', 'seo_status');
+    $query->addField('f24', 'tid', 'tag_tid');
+    $query->addField('f24', 'name', 'tag_name');
 
     $query->condition('n.type', 'event');
 
@@ -164,23 +214,59 @@ function my_migrations_esdeveniments_rest_api() {
             'body' => $row->body,
             'summary' => $row->body_summary,
           ],
+          'date_1' => $row->date_1,
+          'date_2' => $row->date_2,
+          'link' => $row->link,
+          'online' => $row->online,
+          'location' => [
+            'lid' => $row->lid,
+            'name' => $row->name,
+            'address' => $row->address,
+            'postal_code' => $row->postal_code, // It seems that it is not possible to add it from the edit page of an event
+            'city' => $row->city,
+            'province' => $row->province,
+            'country' => $row->country,
+            'longitude' => $row->longitude,
+            'latitude' => $row->latitude,
+            'additional' => $row->additional,
+          ],
+          'organizer' => [
+            'organizer' => $row->organizer,
+            'address' => $row->organizer_address,
+            'url_title' => $row->organizer_url_title,
+            'url' => $row->organizer_url,
+            'email' => $row->organizer_email,
+          ],
+          'type' => $row->type,
+          'home_primary_highlighted' => $row->home_primary_highlighted,
+          'home_secondary_highlighted' => $row->home_secondary_highlighted,
+          'special_highlighted' => $row->special_highlighted,
+          'order_date' => $row->order_date,
+          'computed_date' => $row->computed_date,
+          'url_alias' => $row->url_alias,
+          'tags' => [], // It seems like there is no field to add tags in this content type
+          'metatags' => unserialize($row->metatag),
+          'yoast_seo' => [
+            'focus_keyword' => $row->focus_keyword ? $row->focus_keyword : null,
+            'seo_status' => $row->seo_status ? $row->seo_status : null,
+          ],
         ];
 
         // Add a flag (the nid) to $nids array, to manage duplicated node registries afterwards
         array_push($nids, $row->nid);
 
-        // Adding the first entity
-        if ($row->entity && !in_array($row->entity, $item['entities'])) {
-          array_push($item['entities'], $row->entity);
+         // Adding the first tag
+         if ($row->tag_name && !array_key_exists($row->tag_tid, $item['tags'])) {
+          $item['tags'][$row->tag_tid] = $row->tag_name;
         }
 
         // Add item's data to $data array
         $data[$row->nid] = (object)$item;
 
       } else {
-        // Adding additional entities
-        if ($row->entity && !in_array($row->entity, $data[$row->nid]->entities)) {
-          array_push($data[$row->nid]->entities, $row->entity);
+        // Adding additional tags
+        if ($row->tag_name && !array_key_exists($row->tag_tid, $item['tags'])) {
+          $item['tags'][$row->tag_tid] = $row->tag_name;
         }
       }
 
