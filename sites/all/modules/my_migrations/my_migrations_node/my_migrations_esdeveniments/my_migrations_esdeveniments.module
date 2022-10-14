@@ -168,110 +168,82 @@ function my_migrations_esdeveniments_rest_api() {
 
     $query->condition('n.type', 'event');
 
-
     // Filter by node ID
     $nid = $_GET['nid'];
     $query->condition('n.nid', $nid);
-
-    // Filter by a range of values
-    if (isset($_GET['offset']) && isset($_GET['limit'])) {
-      $offset = $_GET['offset'];
-      $limit = $_GET['limit'];
-      $query->range($offset, $limit);
-    }
-
-    $query->orderBy('n.nid', 'DESC');
     $results = $query->execute();
 
     $nids = [];
     $data = [];
     foreach ($results as $row) {
-      if (!in_array($row->nid,  $nids)) {
-        // Build the node's basic data array
-        $item = [
-          'nid' => $row->nid,
-          'vid' => $row->vid,
-          'title' => $row->title,
-          'uid' => $row->uid,
-          'status' => $row->status,
-          'created' => $row->created,
-          'changed' => $row->changed,
-          'comments' => $row->comments,
-          'main_image' => [
-            'fid' => $row->main_img_fid ? $row->main_img_fid : null,
-            'uri' => $row->main_img_uri ? file_create_url($row->main_img_uri) : null,
-            'alt' => $row->main_img_alt ? $row->main_img_alt : null,
-            'title' => $row->main_img_title ? $row ->main_img_title : null,
-            'filename' => $row->main_img_filename ? $row->main_img_filename : null,
-            'filemime' => $row->main_img_filemime ? $row ->main_img_filemime : null,
-          ],
-          'summary' => [
-            'format' => $row->summary_format,
-            'value' => $row->summary,
-          ],
-          'body' => [
-            'format' => $row->body_format,
-            'body' => $row->body,
-            'summary' => $row->body_summary,
-          ],
-          'date_1' => $row->date_1,
-          'date_2' => $row->date_2,
-          'link' => $row->link,
-          'online' => $row->online,
-          'location' => [
-            'lid' => $row->lid,
-            'name' => $row->name,
-            'address' => $row->address,
-            'postal_code' => $row->postal_code, // It seems that it is not possible to add it from the edit page of an event
-            'city' => $row->city,
-            'province' => $row->province,
-            'country' => $row->country,
-            'longitude' => $row->longitude,
-            'latitude' => $row->latitude,
-            'additional' => $row->additional,
-          ],
-          'organizer' => [
-            'organizer' => $row->organizer,
-            'address' => $row->organizer_address,
-            'url_title' => $row->organizer_url_title,
-            'url' => $row->organizer_url,
-            'email' => $row->organizer_email,
-          ],
-          'type' => $row->type,
-          'home_primary_highlighted' => $row->home_primary_highlighted,
-          'home_secondary_highlighted' => $row->home_secondary_highlighted,
-          'special_highlighted' => $row->special_highlighted,
-          'order_date' => $row->order_date,
-          'computed_date' => $row->computed_date,
-          'url_alias' => $row->url_alias,
-          'tags' => [], // It seems like there is no field to add tags in this content type
-          'metatags' => unserialize($row->metatag),
-          'yoast_seo' => [
-            'focus_keyword' => $row->focus_keyword ? $row->focus_keyword : null,
-            'seo_status' => $row->seo_status ? $row->seo_status : null,
-          ],
-        ];
-
-        // Add a flag (the nid) to $nids array, to manage duplicated node registries afterwards
-        array_push($nids, $row->nid);
-
-         // Adding the first tag
-         if ($row->tag_name && !array_key_exists($row->tag_tid, $item['tags'])) {
-          $item['tags'][$row->tag_tid] = $row->tag_name;
-        }
-
-        // Add item's data to $data array
-        $data[$row->nid] = (object)$item;
-
-      } else {
-        // Adding additional tags
-        if ($row->tag_name && !array_key_exists($row->tag_tid, $item['tags'])) {
-          $item['tags'][$row->tag_tid] = $row->tag_name;
-        }
-      }
-
+      // Build the node's basic data array
+      $item = [
+        'nid' => $row->nid,
+        'vid' => $row->vid,
+        'title' => $row->title,
+        'uid' => $row->uid,
+        'status' => $row->status,
+        'created' => $row->created,
+        'changed' => $row->changed,
+        'comments' => $row->comments,
+        'main_image' => [
+          'fid' => $row->main_img_fid ? $row->main_img_fid : null,
+          'uri' => $row->main_img_uri ? file_create_url($row->main_img_uri) : null,
+          'alt' => $row->main_img_alt ? $row->main_img_alt : null,
+          'title' => $row->main_img_title ? $row ->main_img_title : null,
+          'filename' => $row->main_img_filename ? $row->main_img_filename : null,
+          'filemime' => $row->main_img_filemime ? $row ->main_img_filemime : null,
+        ],
+        'summary' => [
+          'format' => $row->summary_format,
+          'value' => $row->summary,
+        ],
+        'body' => [
+          'format' => $row->body_format,
+          'body' => $row->body,
+          'summary' => $row->body_summary,
+        ],
+        'date_1' => $row->date_1,
+        'date_2' => $row->date_2,
+        'link' => $row->link,
+        'online' => $row->online,
+        'location' => [
+          'lid' => $row->lid,
+          'name' => $row->name,
+          'address' => $row->address,
+          'postal_code' => $row->postal_code, // It seems that it is not possible to add it from the edit page of an event
+          'city' => $row->city,
+          'province' => $row->province,
+          'country' => $row->country,
+          'longitude' => $row->longitude,
+          'latitude' => $row->latitude,
+          'additional' => $row->additional,
+        ],
+        'organizer' => [
+          'organizer' => $row->organizer,
+          'address' => $row->organizer_address,
+          'url_title' => $row->organizer_url_title,
+          'url' => $row->organizer_url,
+          'email' => $row->organizer_email,
+        ],
+        'type' => $row->type,
+        'home_primary_highlighted' => $row->home_primary_highlighted,
+        'home_secondary_highlighted' => $row->home_secondary_highlighted,
+        'special_highlighted' => $row->special_highlighted,
+        'order_date' => $row->order_date,
+        'computed_date' => $row->computed_date,
+        'url_alias' => $row->url_alias,
+        // 'tags' => [], // It seems like there is no field to add tags in this content type
+        'metatags' => unserialize($row->metatag),
+        'yoast_seo' => [
+          'focus_keyword' => $row->focus_keyword ? $row->focus_keyword : null,
+          'seo_status' => $row->seo_status ? $row->seo_status : null,
+        ],
+      ];
+      // Add item's data to $data array
+      $data[$row->nid] = (object)$item;
+    }
     // Return data in JSON format
     drupal_json_output(array_values($data));
-    }
   }
 }
