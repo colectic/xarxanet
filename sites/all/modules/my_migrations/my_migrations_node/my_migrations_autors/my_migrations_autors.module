@@ -87,12 +87,6 @@ function my_migrations_autors_rest_api() {
     drupal_json_output($nids);
   }
 
-
-
-
-
-
-
   // Get full data object
   if (isset($_GET['nid'])) {
 
