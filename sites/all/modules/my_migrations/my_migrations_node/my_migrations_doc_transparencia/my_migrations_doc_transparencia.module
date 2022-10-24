@@ -5,7 +5,7 @@
  */
 function my_migrations_doc_transparencia_menu() {
   $items['api/export/node/transparencia'] = array(
-    'title' => 'Finançament export',
+    'title' => 'Documents de transparència export',
     'page callback' => 'my_migrations_doc_transparencia_rest_api',
     'access callback' => TRUE,
   );
