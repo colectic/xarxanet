@@ -3,10 +3,10 @@
 /**
  * Implements hook_menu().
  */
-function my_migrations_actualitat_menu() {
-  $items['api/export/node/actualitat'] = array(
-    'title' => 'Actualitat export',
-    'page callback' => 'my_migrations_actualitat_rest_api',
+function my_migrations_newsletter_abast_menu() {
+  $items['api/export/newsletter/abast'] = array(
+    'title' => 'Abast export',
+    'page callback' => 'my_migrations_newsletter_abast_rest_api',
     'access callback' => TRUE,
   );
 
@@ -16,14 +16,14 @@ function my_migrations_actualitat_menu() {
 /**
  * Retrieves all the nodes.
  */
-function my_migrations_actualitat_rest_api() {
+function my_migrations_newsletter_abast_rest_api() {
 
-  // Get all nids of content type 'butllet_actualitat_21'
+  // Get all nids of content type 'butlleti_abast_nou'
   if (isset($_GET['import'])) {
     $nids = [];
     $query = new EntityFieldQuery();
     $query->entityCondition('entity_type', 'node');
-    $query->entityCondition('bundle', 'butllet_actualitat_21');
+    $query->entityCondition('bundle', 'butlleti_abast_nou');
 
     // This optional filter aims to prevent timeouts
     if (isset($_GET['offset']) && isset($_GET['limit'])) {
@@ -51,13 +51,13 @@ function my_migrations_actualitat_rest_api() {
     drupal_json_output($nids);
   }
 
-  // Get all nids of content type 'butllet_actualitat_21' that were updated
+  // Get all nids of content type 'butlleti_abast_nou' that were updated
   // from the begining of the development of the new site
   if (isset($_GET['update'])) {
     $nids = [];
     $query = new EntityFieldQuery();
     $query->entityCondition('entity_type', 'node');
-    $query->entityCondition('bundle', 'butllet_actualitat_21');
+    $query->entityCondition('bundle', 'butlleti_abast_nou');
     $query->propertyCondition('changed', strtotime(date('2022-05-01')), '>');
 
     // This optional filter aims to prevent timeouts

@@ -3,10 +3,10 @@
 /**
  * Implements hook_menu().
  */
-function my_migrations_actualitat_old_menu() {
-  $items['api/export/node/actualitat/old'] = array(
+function my_migrations_newsletter_actualitat_old_menu() {
+  $items['api/export/newsletter/actualitat/old'] = array(
     'title' => 'Actualitat (Old) export',
-    'page callback' => 'my_migrations_actualitat_old_rest_api',
+    'page callback' => 'my_migrations_newsletter_actualitat_old_rest_api',
     'access callback' => TRUE,
   );
 
@@ -16,7 +16,7 @@ function my_migrations_actualitat_old_menu() {
 /**
  * Retrieves all the nodes.
  */
-function my_migrations_actualitat_old_rest_api() {
+function my_migrations_newsletter_actualitat_old_rest_api() {
 
   // Get all nids of content type 'butlleti_actualitat'
   if (isset($_GET['import'])) {

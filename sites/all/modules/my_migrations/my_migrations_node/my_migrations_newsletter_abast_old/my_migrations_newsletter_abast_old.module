@@ -3,10 +3,10 @@
 /**
  * Implements hook_menu().
  */
-function my_migrations_abast_old_menu() {
-  $items['api/export/node/abast/old'] = array(
+function my_migrations_newsletter_abast_old_menu() {
+  $items['api/export/newsletter/abast/old'] = array(
     'title' => 'Abast export (Old)',
-    'page callback' => 'my_migrations_abast_old_rest_api',
+    'page callback' => 'my_migrations_newsletter_abast_old_rest_api',
     'access callback' => TRUE,
   );
 
@@ -16,7 +16,7 @@ function my_migrations_abast_old_menu() {
 /**
  * Retrieves all the nodes.
  */
-function my_migrations_abast_old_rest_api() {
+function my_migrations_newsletter_abast_old_rest_api() {
 
   // Get all nids of content type 'butlleti_abast'
   if (isset($_GET['import'])) {
