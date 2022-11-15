@@ -89,6 +89,16 @@ function my_migrations_newsletter_premsa_rest_api() {
   // Get full data object
   if (isset($_GET['nid'])) {
     $node = node_load($_GET['nid']);
+
+    // Expand node's field collection, populating all its data and attaching it to the node object
+    if (field_get_items('node', $node, 'field_premsa_esdeveniments')) {
+      $items = field_get_items('node', $node, 'field_premsa_esdeveniments');
+      foreach ($items as $item) {
+        $fc = field_collection_field_get_entity($item);
+        $node->field_premsa_esdeveniments_expanded[] = $fc;
+      }
+    }
+
     // Return data in JSON format
     drupal_json_output($node);
   }
