@@ -506,9 +506,14 @@ function simplenews_statistics_delete_clicks($nid) {
   }
 
   // Delete and return count.
-  return db_delete('simplenews_statistics_click')
+  if (!empty($urlids)) {
+    return db_delete('simplenews_statistics_click')
     ->condition('urlid', $urlids)
     ->execute();
+  }
+  else {
+    return true;
+  }
 }
 
 /**
