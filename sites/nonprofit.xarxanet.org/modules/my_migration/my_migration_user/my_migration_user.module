@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function my_migration_user_menu() {
+  $items['api/export/user'] = array(
+    'title' => 'User export',
+    'page callback' => 'my_migration_user_rest_api',
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
+ * Retrieves all the users.
+ */
+function my_migration_user_rest_api() {
+  $data = [];
+  $query = db_select('users', 'u');
+  $query->leftJoin('users_roles', 'r', 'r.uid = u.uid');
+  $query->addField('u', 'uid', 'uid');
+  $query->addField('u', 'name', 'name');
+  $query->addField('u', 'mail', 'mail');
+  $query->addField('u', 'pass', 'pass');
+  $query->addField('u', 'status', 'status');
+  $query->addField('u', 'created', 'created');
+  $query->addField('u', 'access', 'access');
+  $query->addField('u', 'login', 'login');
+  $query->addField('r', 'rid', 'role_id');
+  $query->condition('u.uid', 0, '<>');
+
+  // Filter by vocabuloary ID
+  if (isset($_GET['uid'])) {
+    $uid = $_GET['uid'];
+    $query->condition('u.uid', $uid);
+  }
+
+  // Filter by a range of values
+  if (isset($_GET['offset']) && isset($_GET['limit'])) {
+    $offset = $_GET['offset'];
+    $limit = $_GET['limit'];
+    $query->range($offset, $limit);
+  }
+
+  $query->orderBy('u.uid', 'ASC');
+  $results = $query->execute();
+
+  // Build an array with the retrieved data
+  $uids = [];
+  $data = [];
+  foreach ($results as $row) {
+    if (!in_array($row->uid,  $uids)) {
+      // Build the user's basic data array
+      $item = [
+        'uid' => $row->uid,
+        'name' => $row->name,
+        'mail' => $row->mail,
+        'pass' => $row->pass,
+        'status' => $row->status,
+        'created' => $row->created,
+        'access' => $row->access,
+        'login' => $row->login,
+        'roles' => [],
+      ];
+
+      // Add a flag (the user uid) to $uids array, to manage duplicated user's registries afterwerds
+      array_push($uids, $row->uid);
+
+      // Adding the first role
+      if ($row->role_id && !in_array($row->role_id, 'role_' . $item['roles'])) {
+        array_push($item['roles'], 'role_' . $row->role_id);
+      }
+
+      // Add item's data to $data array
+      $data[$row->uid] = (object)$item;
+    }
+    else {
+      /**
+       * In case of repeated user registries (due to the joins in the query),
+       * we only save the roles' multivalue field, as shown below:
+       */
+
+      // Adding additional roles
+      if ($row->role_id && !in_array('role_' . $row->role_id, $data[$row->uid]->roles)) {
+        array_push($data[$row->uid]->roles, 'role_' . $row->role_id);
+      }
+    }
+  }
+
+  // Return data in JSON format
+  drupal_json_output(array_values($data));
+}
