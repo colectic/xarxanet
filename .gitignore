@@ -1,9 +1,11 @@
 teb_scripts
 sites/default
+sites/sites.php
 sites/nonprofit.xarxanet.org/files
 sites/nonprofit.xarxanet.local
 sites/nonprofit.xarxanet.local/*
 sites/nonprofit.xarxanet.org/settings.php
+sites/nonprofit.xarxanet.org/settings.ddev.php
 sites/nonprofit.xarxanet.org/themes/xn19_nonprofit/node_modules
 xnt
 robots.txt
@@ -12,7 +14,6 @@ robots.txt
 icon.png
 sites/all/modules/webinar_mails/*
 .DS_Store
-sites/nonprofit.xarxanet.local
 .vscode
 node_modules
 .sass-cache
