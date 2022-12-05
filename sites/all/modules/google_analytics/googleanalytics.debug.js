@@ -8,16 +8,16 @@ $(document).ready(function() {
   // clicks on all elements.
   $(document.body).bind("mousedown keyup touchstart", function(event) {
     console.group("Running Google Analytics for Drupal.");
-    console.info(event);
+    console.info("Event '%s' has been detected.", event.type);
 
     // Catch the closest surrounding link of a clicked element.
     $(event.target).closest("a,area").each(function() {
-      console.info("Element '%o' has been detected. Link '%s' found.", this, this.href);
+      console.info("Closest element '%o' has been found. URL '%s' extracted.", this, this.href);
 
       // Is the clicked URL internal?
       if (Drupal.googleanalytics.isInternal(this.href)) {
         // Skip 'click' tracking, if custom tracking events are bound.
-        if ($(this).is('.colorbox')) {
+        if ($(this).is('.colorbox') && (Drupal.settings.googleanalytics.trackColorbox)) {
           // Do nothing here. The custom event will handle all tracking.
           console.info("Click on .colorbox item has been detected.");
         }
@@ -25,12 +25,19 @@ $(document).ready(function() {
         else if (Drupal.settings.googleanalytics.trackDownload && Drupal.googleanalytics.isDownload(this.href)) {
           // Download link clicked.
           console.info("Download url '%s' has been found. Tracked download as extension '%s'.", Drupal.googleanalytics.getPageUrl(this.href), Drupal.googleanalytics.getDownloadExtension(this.href).toUpperCase());
-          ga("send", "event", "Downloads", Drupal.googleanalytics.getDownloadExtension(this.href).toUpperCase(), Drupal.googleanalytics.getPageUrl(this.href));
+          gtag('event', Drupal.googleanalytics.getDownloadExtension(this.href).toUpperCase(), {
+            event_category: 'Downloads',
+            event_label: Drupal.googleanalytics.getPageUrl(this.href),
+            transport_type: 'beacon'
+          });
         }
         else if (Drupal.googleanalytics.isInternalSpecial(this.href)) {
           // Keep the internal URL for Google Analytics website overlay intact.
           console.info("Click on internal special link '%s' has been tracked.", Drupal.googleanalytics.getPageUrl(this.href));
-          ga("send", "pageview", { "page": Drupal.googleanalytics.getPageUrl(this.href) });
+          gtag('config', drupalSettings.google_analytics.account, {
+            page_path: Drupal.googleanalytics.getPageUrl(this.href),
+            transport_type: 'beacon'
+          });
         }
         else {
           // e.g. anchor in same page or other internal page link
@@ -41,13 +48,21 @@ $(document).ready(function() {
         if (Drupal.settings.googleanalytics.trackMailto && $(this).is("a[href^='mailto:'],area[href^='mailto:']")) {
           // Mailto link clicked.
           console.info("Click on e-mail '%s' has been tracked.", this.href.substring(7));
-          ga("send", "event", "Mails", "Click", this.href.substring(7));
+          gtag('event', 'Click', {
+            event_category: 'Mails',
+            event_label: this.href.substring(7),
+            transport_type: 'beacon'
+          });
         }
         else if (Drupal.settings.googleanalytics.trackOutbound && this.href.match(/^\w+:\/\//i)) {
-          if (Drupal.settings.googleanalytics.trackDomainMode != 2 || (Drupal.settings.googleanalytics.trackDomainMode == 2 && !Drupal.googleanalytics.isCrossDomain(this.hostname, Drupal.settings.googleanalytics.trackCrossDomains))) {
+          if (Drupal.settings.googleanalytics.trackDomainMode !== 2 || (Drupal.settings.googleanalytics.trackDomainMode === 2 && !Drupal.googleanalytics.isCrossDomain(this.hostname, Drupal.settings.googleanalytics.trackCrossDomains))) {
             // External link clicked / No top-level cross domain clicked.
             console.info("Outbound link '%s' has been tracked.", this.href);
-            ga("send", "event", "Outbound links", "Click", this.href);
+            gtag('event', 'Click', {
+              event_category: 'Outbound links',
+              event_label: this.href,
+              transport_type: 'beacon'
+            });
           }
           else {
             console.info("Internal link '%s' clicked, not tracked.", this.href);
@@ -63,19 +78,25 @@ $(document).ready(function() {
   if (Drupal.settings.googleanalytics.trackUrlFragments) {
     window.onhashchange = function() {
       console.info("Track URL '%s' as pageview. Hash '%s' has changed.", location.pathname + location.search + location.hash, location.hash);
-      ga('send', 'pageview', location.pathname + location.search + location.hash);
-    }
+      gtag('config', drupalSettings.google_analytics.account, {
+        page_path: location.pathname + location.search + location.hash
+      });
+    };
   }
 
   // Colorbox: This event triggers when the transition has completed and the
   // newly loaded content has been revealed.
-  $(document).bind("cbox_complete", function () {
-    var href = $.colorbox.element().attr("href");
-    if (href) {
-      console.info("Colorbox transition to url '%s' has been tracked.", Drupal.googleanalytics.getPageUrl(href));
-      ga("send", "pageview", { "page": Drupal.googleanalytics.getPageUrl(href) });
-    }
-  });
+  if (Drupal.settings.googleanalytics.trackColorbox) {
+    $(document).bind("cbox_complete", function () {
+      var href = $.colorbox.element().attr("href");
+      if (href) {
+        console.info("Colorbox transition to url '%s' has been tracked.", Drupal.googleanalytics.getPageUrl(href));
+        gtag('config', drupalSettings.google_analytics.account, {
+          page_path: Drupal.googleanalytics.getPageUrl(href)
+        });
+      }
+    });
+  }
 
 });
 
@@ -92,7 +113,7 @@ $(document).ready(function() {
 Drupal.googleanalytics.isCrossDomain = function (hostname, crossDomains) {
   /**
    * jQuery < 1.6.3 bug: $.inArray crushes IE6 and Chrome if second argument is
-   * `null` or `undefined`, http://bugs.jquery.com/ticket/10076,
+   * `null` or `undefined`, https://bugs.jquery.com/ticket/10076,
    * https://github.com/jquery/jquery/commit/a839af034db2bd934e4d4fa6758a3fed8de74174
    *
    * @todo: Remove/Refactor in D8
@@ -151,8 +172,8 @@ Drupal.googleanalytics.isInternalSpecial = function (url) {
  * Extract the relative internal URL from an absolute internal URL.
  *
  * Examples:
- * - http://mydomain.com/node/1 -> /node/1
- * - http://example.com/foo/bar -> http://example.com/foo/bar
+ * - https://mydomain.com/node/1 -> /node/1
+ * - https://example.com/foo/bar -> https://example.com/foo/bar
  *
  * @param string url
  *   The web url to check.
