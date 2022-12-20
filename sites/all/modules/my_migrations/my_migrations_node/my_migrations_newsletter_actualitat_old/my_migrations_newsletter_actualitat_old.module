@@ -45,8 +45,15 @@ function my_migrations_newsletter_actualitat_old_rest_api() {
     $results = $query->execute();
     // Get the nid of each node
     foreach ($results['node'] as $node) {
+      $item = node_load($node->nid);
+
       array_push($nids, [
-        'nid' => $node->nid,
+        'nid' => (int)$item->nid,
+        'uid' => (int)$item->uid,
+        'title' => $item->title,
+        'created' => $item->created,
+        'changed' => $item->changed,
+        'status' => (bool)$item->status,
         'url_alias' => $base_url . '/' . drupal_get_path_alias('node/' . $node->nid)
       ]);
     }
