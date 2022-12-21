@@ -17,6 +17,7 @@ function my_migrations_newsletter_abast_old_menu() {
  * Retrieves all the nodes.
  */
 function my_migrations_newsletter_abast_old_rest_api() {
+  global $base_url;
 
   // Get all nids of content type 'butlleti_abast'
   if (isset($_GET['import'])) {
@@ -44,7 +45,17 @@ function my_migrations_newsletter_abast_old_rest_api() {
     $results = $query->execute();
     // Get the nid of each node
     foreach ($results['node'] as $node) {
-      array_push($nids, $node->nid);
+      $item = node_load($node->nid);
+
+      array_push($nids, [
+        'nid' => (int)$item->nid,
+        'uid' => (int)$item->uid,
+        'title' => $item->title,
+        'created' => (int)$item->created,
+        'changed' => (int)$item->changed,
+        'status' => (bool)$item->status,
+        'url_alias' => $base_url . '/' . drupal_get_path_alias('node/' . $node->nid)
+      ]);
     }
 
     // Return data in JSON format
@@ -79,7 +90,17 @@ function my_migrations_newsletter_abast_old_rest_api() {
     $results = $query->execute();
     // Get the nid of each node
     foreach ($results['node'] as $node) {
-      array_push($nids, $node->nid);
+      $item = node_load($node->nid);
+
+      array_push($nids, [
+        'nid' => (int)$item->nid,
+        'uid' => (int)$item->uid,
+        'title' => $item->title,
+        'created' => (int)$item->created,
+        'changed' => (int)$item->changed,
+        'status' => (bool)$item->status,
+        'url_alias' => $base_url . '/' . drupal_get_path_alias('node/' . $node->nid)
+      ]);
     }
 
     // Return data in JSON format
