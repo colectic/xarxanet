@@ -1,116 +1,124 @@
 <?php
 
-/**
- * Implements hook_menu().
- */
-function my_migrations_newsletter_abast_old_menu() {
-  $items['api/export/newsletter/abast/old'] = array(
-    'title' => 'Abast export (Old)',
-    'page callback' => 'my_migrations_newsletter_abast_old_rest_api',
-    'access callback' => TRUE,
-  );
+// Joan Galtés (Tothomweb):
 
-  return $items;
-}
+// Finally, this content type will not be imported.
+// The nodes belonging to this content type (butlleti_abast) are very old nodes,
+// that becomes from Drupal 6 era. They have not any CSS styles nor layout.
+// So, Josep Carbonell and me both decided to not import them.
 
-/**
- * Retrieves all the nodes.
- */
-function my_migrations_newsletter_abast_old_rest_api() {
-  global $base_url;
 
-  // Get all nids of content type 'butlleti_abast'
-  if (isset($_GET['import'])) {
-    $nids = [];
-    $query = new EntityFieldQuery();
-    $query->entityCondition('entity_type', 'node');
-    $query->entityCondition('bundle', 'butlleti_abast');
+// /**
+//  * Implements hook_menu().
+//  */
+// function my_migrations_newsletter_abast_old_menu() {
+//   $items['api/export/newsletter/abast/old'] = array(
+//     'title' => 'Abast export (Old)',
+//     'page callback' => 'my_migrations_newsletter_abast_old_rest_api',
+//     'access callback' => TRUE,
+//   );
 
-    // This optional filter aims to prevent timeouts
-    if (isset($_GET['offset']) && isset($_GET['limit'])) {
-      $offset = $_GET['offset'];
-      $limit = $_GET['limit'];
-      $query->range($offset, $limit);
-    }
+//   return $items;
+// }
 
-    // Set the sort order, optionally
-    if (isset($_GET['sort']) && $_GET['sort'] == 'desc') {
-      $query->propertyOrderBy('nid', 'DESC');
-    }
+// /**
+//  * Retrieves all the nodes.
+//  */
+// function my_migrations_newsletter_abast_old_rest_api() {
+//   global $base_url;
 
-    if (isset($_GET['sort']) && $_GET['sort'] == 'asc') {
-      $query->propertyOrderBy('nid', 'ASC');
-    }
+//   // Get all nids of content type 'butlleti_abast'
+//   if (isset($_GET['import'])) {
+//     $nids = [];
+//     $query = new EntityFieldQuery();
+//     $query->entityCondition('entity_type', 'node');
+//     $query->entityCondition('bundle', 'butlleti_abast');
 
-    $results = $query->execute();
-    // Get the nid of each node
-    foreach ($results['node'] as $node) {
-      $item = node_load($node->nid);
+//     // This optional filter aims to prevent timeouts
+//     if (isset($_GET['offset']) && isset($_GET['limit'])) {
+//       $offset = $_GET['offset'];
+//       $limit = $_GET['limit'];
+//       $query->range($offset, $limit);
+//     }
 
-      array_push($nids, [
-        'nid' => (int)$item->nid,
-        'uid' => (int)$item->uid,
-        'title' => $item->title,
-        'created' => (int)$item->created,
-        'changed' => (int)$item->changed,
-        'status' => (bool)$item->status,
-        'url_alias' => $base_url . '/' . drupal_get_path_alias('node/' . $node->nid)
-      ]);
-    }
+//     // Set the sort order, optionally
+//     if (isset($_GET['sort']) && $_GET['sort'] == 'desc') {
+//       $query->propertyOrderBy('nid', 'DESC');
+//     }
 
-    // Return data in JSON format
-    drupal_json_output($nids);
-  }
+//     if (isset($_GET['sort']) && $_GET['sort'] == 'asc') {
+//       $query->propertyOrderBy('nid', 'ASC');
+//     }
 
-  // Get all nids of content type 'butlleti_abast' that were updated
-  // from the begining of the development of the new site
-  if (isset($_GET['update'])) {
-    $nids = [];
-    $query = new EntityFieldQuery();
-    $query->entityCondition('entity_type', 'node');
-    $query->entityCondition('bundle', 'butlleti_abast');
-    $query->propertyCondition('changed', strtotime(date('2022-05-01')), '>');
+//     $results = $query->execute();
+//     // Get the nid of each node
+//     foreach ($results['node'] as $node) {
+//       $item = node_load($node->nid);
 
-    // This optional filter aims to prevent timeouts
-    if (isset($_GET['offset']) && isset($_GET['limit'])) {
-      $offset = $_GET['offset'];
-      $limit = $_GET['limit'];
-      $query->range($offset, $limit);
-    }
+//       array_push($nids, [
+//         'nid' => (int)$item->nid,
+//         'uid' => (int)$item->uid,
+//         'title' => $item->title,
+//         'created' => (int)$item->created,
+//         'changed' => (int)$item->changed,
+//         'status' => (bool)$item->status,
+//         'url_alias' => $base_url . '/' . drupal_get_path_alias('node/' . $node->nid)
+//       ]);
+//     }
 
-    // Set the sort order, optionally
-    if (isset($_GET['sort']) && $_GET['sort'] == 'desc') {
-      $query->propertyOrderBy('nid', 'DESC');
-    }
+//     // Return data in JSON format
+//     drupal_json_output($nids);
+//   }
 
-    if (isset($_GET['sort']) && $_GET['sort'] == 'asc') {
-      $query->propertyOrderBy('nid', 'ASC');
-    }
+//   // Get all nids of content type 'butlleti_abast' that were updated
+//   // from the begining of the development of the new site
+//   if (isset($_GET['update'])) {
+//     $nids = [];
+//     $query = new EntityFieldQuery();
+//     $query->entityCondition('entity_type', 'node');
+//     $query->entityCondition('bundle', 'butlleti_abast');
+//     $query->propertyCondition('changed', strtotime(date('2022-05-01')), '>');
 
-    $results = $query->execute();
-    // Get the nid of each node
-    foreach ($results['node'] as $node) {
-      $item = node_load($node->nid);
+//     // This optional filter aims to prevent timeouts
+//     if (isset($_GET['offset']) && isset($_GET['limit'])) {
+//       $offset = $_GET['offset'];
+//       $limit = $_GET['limit'];
+//       $query->range($offset, $limit);
+//     }
 
-      array_push($nids, [
-        'nid' => (int)$item->nid,
-        'uid' => (int)$item->uid,
-        'title' => $item->title,
-        'created' => (int)$item->created,
-        'changed' => (int)$item->changed,
-        'status' => (bool)$item->status,
-        'url_alias' => $base_url . '/' . drupal_get_path_alias('node/' . $node->nid)
-      ]);
-    }
+//     // Set the sort order, optionally
+//     if (isset($_GET['sort']) && $_GET['sort'] == 'desc') {
+//       $query->propertyOrderBy('nid', 'DESC');
+//     }
 
-    // Return data in JSON format
-    drupal_json_output($nids);
-  }
+//     if (isset($_GET['sort']) && $_GET['sort'] == 'asc') {
+//       $query->propertyOrderBy('nid', 'ASC');
+//     }
 
-  // Get full data object
-  if (isset($_GET['nid'])) {
-    $node = node_load($_GET['nid']);
-    // Return data in JSON format
-    drupal_json_output($node);
-  }
-}
+//     $results = $query->execute();
+//     // Get the nid of each node
+//     foreach ($results['node'] as $node) {
+//       $item = node_load($node->nid);
+
+//       array_push($nids, [
+//         'nid' => (int)$item->nid,
+//         'uid' => (int)$item->uid,
+//         'title' => $item->title,
+//         'created' => (int)$item->created,
+//         'changed' => (int)$item->changed,
+//         'status' => (bool)$item->status,
+//         'url_alias' => $base_url . '/' . drupal_get_path_alias('node/' . $node->nid)
+//       ]);
+//     }
+
+//     // Return data in JSON format
+//     drupal_json_output($nids);
+//   }
+
+//   // Get full data object
+//   if (isset($_GET['nid'])) {
+//     $node = node_load($_GET['nid']);
+//     // Return data in JSON format
+//     drupal_json_output($node);
+//   }
+// }
