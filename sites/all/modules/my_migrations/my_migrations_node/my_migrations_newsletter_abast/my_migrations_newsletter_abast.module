@@ -25,6 +25,8 @@ function my_migrations_newsletter_abast_rest_api() {
     $query = new EntityFieldQuery();
     $query->entityCondition('entity_type', 'node');
     $query->entityCondition('bundle', 'butlleti_abast_nou');
+    // This is the last newsletter (nº 441) based in nodes. Older ones will be imported with a scrapping technique.
+    $query->propertyCondition('created', 1517266860, '>=');
 
     // This optional filter aims to prevent timeouts
     if (isset($_GET['offset']) && isset($_GET['limit'])) {
