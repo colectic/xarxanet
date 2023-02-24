@@ -1,0 +1,5 @@
+name = My Migration Side highlighted article
+description = Mòdul custom per a la ajuda a la exportació de continguts de Drupal.
+core = 7.x
+package = NONPROFIT
+dependencies[] = my_migration_node

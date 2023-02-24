@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function my_migration_node_main_group_articles_menu() {
+  $items['api/export/node/mga'] = array(
+    'title' => 'Main group of articles export',
+    'page callback' => 'my_migration_node_main_group_articles_rest_api',
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
+ * Retrieves all the nodes.
+ */
+function my_migration_node_main_group_articles_rest_api() {
+
+  // Get all nids of content type 'recull_noticies_principal'
+  if (isset($_GET['import'])) {
+    $nids = [];
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node');
+    $query->entityCondition('bundle', 'recull_noticies_principal');
+
+    // This optional filter aims to prevent timeouts
+    if (isset($_GET['offset']) && isset($_GET['limit'])) {
+      $offset = $_GET['offset'];
+      $limit = $_GET['limit'];
+      $query->range($offset, $limit);
+    }
+
+    // Set the sort order, optionally
+    if (isset($_GET['sort']) && $_GET['sort'] == 'desc') {
+      $query->propertyOrderBy('nid', 'DESC');
+    }
+
+    if (isset($_GET['sort']) && $_GET['sort'] == 'asc') {
+      $query->propertyOrderBy('nid', 'ASC');
+    }
+
+    $results = $query->execute();
+    // Get the nid of each node
+    foreach ($results['node'] as $node) {
+      array_push($nids, $node->nid);
+    }
+
+    // Return data in JSON format
+    drupal_json_output($nids);
+  }
+
+  // Get all nids of content type 'recull_noticies_principal' that were updated
+  // from the begining of the development of the new site
+  if (isset($_GET['update'])) {
+    $nids = [];
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node');
+    $query->entityCondition('bundle', 'recull_noticies_principal');
+    $query->propertyCondition('changed', strtotime(date('2022-05-01')), '>');
+
+    // This optional filter aims to prevent timeouts
+    if (isset($_GET['offset']) && isset($_GET['limit'])) {
+      $offset = $_GET['offset'];
+      $limit = $_GET['limit'];
+      $query->range($offset, $limit);
+    }
+
+    // Set the sort order, optionally
+    if (isset($_GET['sort']) && $_GET['sort'] == 'desc') {
+      $query->propertyOrderBy('nid', 'DESC');
+    }
+
+    if (isset($_GET['sort']) && $_GET['sort'] == 'asc') {
+      $query->propertyOrderBy('nid', 'ASC');
+    }
+
+    $results = $query->execute();
+    // Get the nid of each node
+    foreach ($results['node'] as $node) {
+      array_push($nids, $node->nid);
+    }
+
+    // Return data in JSON format
+    drupal_json_output($nids);
+  }
+
+  // Get full data object
+  if (isset($_GET['nid'])) {
+    $node = node_load($_GET['nid']);
+    // Return data in JSON format
+    drupal_json_output($node);
+  }
+}
