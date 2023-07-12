@@ -9,3 +9,18 @@ body.anniversary-2023 {
   background-repeat: repeat;
   background-size: 400px;
 }
+
+body.anniversary-2023 #confetti {
+  position: fixed;
+  top: 10%;
+  left: 0;
+  width: 100%;
+  height: 0;
+  z-index: 99;
+  display: flex;
+  justify-content: space-between;
+}
+
+body.anniversary-2023 #confetti > div {
+  width: 25%;
+}
