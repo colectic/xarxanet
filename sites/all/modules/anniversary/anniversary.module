@@ -39,6 +39,13 @@ function anniversary_preprocess_html(&$vars) {
         )
       );
       // Adding JS to the website's header
+      drupal_add_js(drupal_get_path('module', 'anniversary') . '/js/party.js',
+        array(
+          'group' => JS_THEME,
+          'weight' => '99',
+          'every_page' => TRUE
+        )
+      );
       drupal_add_js(drupal_get_path('module', 'anniversary') . '/js/anniversary.js',
         array(
           'group' => JS_THEME,
