@@ -1,0 +1,8 @@
+name = Anniversary
+description = Simply adds extra CSS & Javascript for the 20th anniversary of Xarxanet.
+package = Custom
+core = 7.x
+configure = admin/config/system/anniversary
+files[] = anniversary.admin.inc
+stylesheets[all][] = css/anniversary.css
+scripts[] = js/anniversary.js

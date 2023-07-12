@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * Implements hook_preprocess_html()
+ *
+ * This hook will allow to add some CSS & JS files to the header,
+ * in order to add some Anniversary decorations & behaviors to the website
+ * without having to modify or override the default theme styles or javascript
+ */
+function anniversary_preprocess_html(&$vars) {
+  // Avoid caching
+  $vars['#cache']['max-age'] = 0;
+  // Load current theme settings
+  $theme_name = 'xn17';
+  $var_name = 'theme_' . $theme_name . '_settings';
+  $settings = variable_get($var_name, array());
+  // Load current user
+  global $user;
+  $current_user = user_load($user->uid);
+  $isAdministrator = FALSE;
+
+  if (!path_is_admin(current_path())) {
+
+    if ($current_user->uid == 11 || $current_user->uid == 1) {
+      $isAdministrator = TRUE;
+    }
+
+    $current_date = time();
+    $anniversary_start_date = strtotime(variable_get('anniversary_start_date'));
+    $anniversary_end_date = strtotime(variable_get('anniversary_end_date'));
+
+    if (($current_date >= $anniversary_start_date && $current_date <= $anniversary_end_date) || $isAdministrator) {
+      // Adding CSS to the website's header
+      drupal_add_css(drupal_get_path('module', 'anniversary') . '/css/anniversary.css',
+        array(
+          'group' => CSS_THEME,
+          'weight' => '100',
+          'every_page' => TRUE
+        )
+      );
+      // Adding JS to the website's header
+      drupal_add_js(drupal_get_path('module', 'anniversary') . '/js/anniversary.js',
+        array(
+          'group' => JS_THEME,
+          'weight' => '100',
+          'every_page' => TRUE
+        )
+      );
+      // Adding a custom class to the body tag
+      $vars['classes_array'][] = 'anniversary-2023';
+      // Set a custom Anniversary logo for this period
+      $settings['logo_path'] = drupal_get_path('module', 'anniversary') . '/img/logo-20th-anniversary-xarxanet.png';
+      variable_set($var_name, $settings);
+    }
+    else {
+      // Restore original xn17 theme logo
+      $settings['logo_path'] = 'sites/all/themes/xn17/assets/images/logo/logo-30-white.svg';
+      variable_set($var_name, $settings);
+    }
+  }
+}
+
+/**
+ * Implements hook_menu()
+ */
+function anniversary_menu() {
+  $items['admin/config/system/anniversary'] = array(
+    'title' => t('Aspecte pel 20è aniversari de Xarxanet'),
+    'description' => t('Configuració de la decoració pel 20è aniversari de Xarxanet'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('anniversary_settings_form'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'anniversary.admin.inc',
+    'file path' => drupal_get_path('module', 'anniversary'),
+  );
+
+  return $items;
+}
