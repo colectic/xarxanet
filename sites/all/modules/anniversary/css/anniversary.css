@@ -1,0 +1,11 @@
+body.anniversary-2023 #logo {
+  width: 100%;
+  height: auto;
+  max-width: 280px;
+}
+
+body.anniversary-2023 {
+  background-image: url(/sites/all/modules/anniversary/img/anniversary-bg.png);
+  background-repeat: repeat;
+  background-size: 400px;
+}
