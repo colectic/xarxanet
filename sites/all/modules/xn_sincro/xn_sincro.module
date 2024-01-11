@@ -104,6 +104,14 @@ function xn_sincro_menu() {
 function xn_sincro_json() {
   $data = ['exist' => false];
   if ($_GET['rnid'] && is_numeric($_GET['rnid'])) {
+    $query = db_query("select entity_id from field_data_field_remote_nid where field_remote_nid_value=:rnid;", array(':rnid' => $_GET['rnid']));
+    $entities = $query->fetchAll();
+    if (isset($entities[0]) && property_exists($entities[0], 'entity_id')) {
+      $data = ['exist' => true, 'nid' => $entities[0]->entity_id];
+    }
+
+    //Sembla que això no funciona per nodes no publicats.
+    /*
     $query = new EntityFieldQuery();
     $entities = $query->entityCondition('entity_type', 'node')
       ->entityCondition('bundle', 'job_offer')
@@ -117,6 +125,7 @@ function xn_sincro_json() {
         $data = ['exist' => true, 'nid' => $node->nid];
       }
     }
+    */
   }
 
   return drupal_json_output($data);
