@@ -468,7 +468,7 @@ ksort($financ_nodes);
 									<a href="http://www.peretarres.org" style="color:white;  font-weight:normal">Fundació Pere Tarrés</a><br />
 									<a href="https://www.lavinianext.com/ca/" style="color:white;  font-weight:normal">LaviniaNext</a><br />
 									<a href="http://colectic.coop/" style="color:white;  font-weight:normal">Colectic</a><br />
-									<a href="http://voluntaris.cat/" style="color:white;  font-weight:normal">Federació Catalana del Voluntariat Social</a><br />
+									<a href="https://www.xadica.cat/" style="color:white;  font-weight:normal">Xarxa Digital Catalana</a><br />
 								</p>
 							</td>
 							<td style="padding:0 0 0 15px"">
