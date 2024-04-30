@@ -160,7 +160,7 @@ function my_migrations_autors_rest_api() {
     // Alias
     $query->addField('f12', 'alias', 'url_alias');
     // Metatags
-    $query->addField('f13', 'data', 'metatags');
+    $query->addField('f13', 'data', 'metatag');
 
     $query->condition('n.type', 'autor_a');
 
@@ -231,7 +231,7 @@ function my_migrations_autors_rest_api() {
         // Alias
         'url_alias' => $row->url_alias,
         // Metatags
-        'metatags' => $row->metatags,
+        'metatags' => unserialize($row->metatag),
       ];
       array_push($nids, $row->nid);
       $data[$row->nid] = (object)$item;
