@@ -124,6 +124,7 @@ function my_migrations_noticia_general_rest_api() {
     $query->leftJoin('field_data_field_dsp_portal', 'f22', 'f22.entity_id = n.nid');
     $query->leftJoin('field_data_field_desp', 'f23', 'f23.entity_id = n.nid');
     $query->leftJoin('field_data_field_data_calculada', 'f24', 'f24.entity_id = n.nid');
+    $query->leftJoin('field_data_field_data_ordenacio', 'f42', 'f42.entity_id = n.nid');
     $query->leftJoin('field_data_taxonomy_vocabulary_1', 'f25', 'f25.entity_id = n.nid');
     $query->leftJoin('taxonomy_term_data', 'f29', 'f29.tid = f25.taxonomy_vocabulary_1_tid');
     $query->leftJoin('field_data_field_usuari_autor', 'f26', 'f26.entity_id = n.nid');
@@ -175,6 +176,7 @@ function my_migrations_noticia_general_rest_api() {
     $query->addField('f22', 'field_dsp_portal_value', 'inner_secondary_highlighted');
     $query->addField('f23', 'field_desp_value', 'special_highlighted');
     $query->addField('f24', 'field_data_calculada_value', 'computed_date');
+    $query->addField('f42', 'field_data_ordenacio_value', 'order_date');
     $query->addField('f29', 'tid', 'tag_tid');
     $query->addField('f29', 'name', 'tag');
     $query->addField('f26', 'field_usuari_autor_value', 'user_author');
@@ -241,6 +243,7 @@ function my_migrations_noticia_general_rest_api() {
           'inner_primary_highlighted' => $row->inner_primary_highlighted,
           'inner_secondary_highlighted' => $row->inner_secondary_highlighted,
           'special_highlighted' => $row->special_highlighted,
+          'order_date' => $row->order_date,
           'computed_date' => $row->computed_date,
           'user_author' => $row->user_author,
           'url_alias' => $row->url_alias,
