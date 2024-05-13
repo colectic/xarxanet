@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function my_migrations_comment_menu() {
+  $items['api/export/comment'] = array(
+    'title' => 'Comments export',
+    'page callback' => 'my_migrations_comment_rest_api',
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+/**
+ * Retrieves all the nodes.
+ */
+function my_migrations_comment_rest_api() {
+
+  // Get all cids of comments
+  if (isset($_GET['import'])) {
+    $cids = [];
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'comment');
+
+    // This optional filter aims to prevent timeouts
+    if (isset($_GET['offset']) && isset($_GET['limit'])) {
+      $offset = $_GET['offset'];
+      $limit = $_GET['limit'];
+      $query->range($offset, $limit);
+    }
+
+    // Set the sort order, optionally
+    if (isset($_GET['sort']) && $_GET['sort'] == 'desc') {
+      $query->propertyOrderBy('cid', 'DESC');
+    }
+
+    if (isset($_GET['sort']) && $_GET['sort'] == 'asc') {
+      $query->propertyOrderBy('cid', 'ASC');
+    }
+
+    $results = $query->execute();
+    // Get the cid of each comment
+    foreach ($results['comment'] as $comment) {
+      array_push($cids, $comment->cid);
+    }
+
+    // Return data in JSON format
+    drupal_json_output($cids);
+  }
+
+  // Get full data object of a comment
+  if (isset($_GET['cid'])) {
+    $comment = comment_load($_GET['cid']);
+    // Return data in JSON format
+    drupal_json_output($comment);
+  }
+}
