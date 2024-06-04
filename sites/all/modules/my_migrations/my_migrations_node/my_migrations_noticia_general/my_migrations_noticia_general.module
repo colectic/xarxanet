@@ -58,7 +58,7 @@ function my_migrations_noticia_general_rest_api() {
     $query = new EntityFieldQuery();
     $query->entityCondition('entity_type', 'node');
     $query->entityCondition('bundle', 'noticia_general');
-    $query->propertyCondition('changed', strtotime(date('2022-05-01')), '>');
+    $query->propertyCondition('changed', strtotime(date('2024-06-01')), '>');
 
     // This optional filter aims to prevent timeouts
     if (isset($_GET['offset']) && isset($_GET['limit'])) {
