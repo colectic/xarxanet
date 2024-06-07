@@ -405,7 +405,7 @@ ksort($financ_nodes);
 				<p>
 					<a href="http://voluntaris.cat/" style="color:white;  font-weight:normal">Federació Catalana del Voluntariat Social</a><br />
 					<a href="https://www.escoltesiguies.cat/" style="color:white;  font-weight:normal">Minyons Escoltes i Guies de Catalunya</a><br />
-					<a href="http://www.tothomweb.com/" style="color:white;  font-weight:normal">TOTHOMweb</a><br />
+					<a href="https://www.tothomweb.com/" style="color:white;  font-weight:normal">TOTHOMweb</a><br />
 				</p>
 			</td></tr>
 		</table>
