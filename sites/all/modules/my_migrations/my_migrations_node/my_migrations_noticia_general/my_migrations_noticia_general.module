@@ -9,6 +9,12 @@ function my_migrations_noticia_general_menu() {
     'page callback' => 'my_migrations_noticia_general_rest_api',
     'access callback' => TRUE,
   );
+  
+  $items['api/v2/export/node/noticia-general'] = array(
+    'title' => 'Noticia general export',
+    'page callback' => 'my_migrations_noticia_general_rest_api_v2',
+    'access callback' => TRUE,
+  );
 
   return $items;
 }
@@ -338,6 +344,90 @@ function my_migrations_noticia_general_rest_api() {
 
     // Return data in JSON format
     drupal_json_output(array_values($data));
+  }
+}
+
+/**
+ * Retrieves all the nodes (v2 version).
+ */
+function my_migrations_noticia_general_rest_api_v2() {
+
+  // Get all nids of content type 'noticia_general'
+  if (isset($_GET['import'])) {
+    $nids = [];
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node');
+    $query->entityCondition('bundle', 'noticia_general');
+
+    // This optional filter aims to prevent timeouts
+    if (isset($_GET['offset']) && isset($_GET['limit'])) {
+      $offset = $_GET['offset'];
+      $limit = $_GET['limit'];
+      $query->range($offset, $limit);
+    }
+
+    // Set the sort order, optionally
+    if (isset($_GET['sort']) && $_GET['sort'] == 'desc') {
+      $query->propertyOrderBy('nid', 'DESC');
+    }
+
+    if (isset($_GET['sort']) && $_GET['sort'] == 'asc') {
+      $query->propertyOrderBy('nid', 'ASC');
+    }
+
+    $results = $query->execute();
+    // Get the nid of each node
+    foreach ($results['node'] as $node) {
+      array_push($nids, $node->nid);
+    }
+
+    // Return data in JSON format
+    drupal_json_output($nids);
+  }
+
+  // Get all nids of content type 'noticia_general' that were updated
+  // from the begining of the development of the new site
+  if (isset($_GET['update'])) {
+    $nids = [];
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node');
+    $query->entityCondition('bundle', 'noticia_general');
+    $query->propertyCondition('changed', strtotime(date('2024-06-01')), '>');
+
+    // This optional filter aims to prevent timeouts
+    if (isset($_GET['offset']) && isset($_GET['limit'])) {
+      $offset = $_GET['offset'];
+      $limit = $_GET['limit'];
+      $query->range($offset, $limit);
+    }
+
+    // Set the sort order, optionally
+    if (isset($_GET['sort']) && $_GET['sort'] == 'desc') {
+      $query->propertyOrderBy('nid', 'DESC');
+    }
+
+    if (isset($_GET['sort']) && $_GET['sort'] == 'asc') {
+      $query->propertyOrderBy('nid', 'ASC');
+    }
+
+    $results = $query->execute();
+    // Get the nid of each node
+    foreach ($results['node'] as $node) {
+      array_push($nids, $node->nid);
+    }
+
+    // Return data in JSON format
+    drupal_json_output($nids);
+  }
+  
+  // Get full data object
+  if (isset($_GET['nid'])) {
+    $node = node_load($_GET['nid']);
+    // Add the node's url alias
+    $url_alias = drupal_get_path_alias('node/' . $_GET['nid']);
+    $node->alias = $url_alias;
+    // Return data in JSON format
+    drupal_json_output($node);
   }
 }
 
