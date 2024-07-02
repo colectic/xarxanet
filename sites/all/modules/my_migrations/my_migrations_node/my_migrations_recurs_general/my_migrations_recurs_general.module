@@ -122,7 +122,7 @@ function my_migrations_recurs_general_rest_api() {
     $query->leftJoin('field_data_field_autoria', 'f32', 'f32.entity_id = f29.field_imatges_fid');
     $query->leftJoin('field_data_field_file_image_alt_text', 'f34', 'f34.entity_id = f29.field_imatges_fid');
     $query->leftJoin('field_data_field_file_image_title_text', 'f35', 'f35.entity_id = f29.field_imatges_fid');
-    $query->leftJoin('field_data_field_etiquetes', 'f33', 'f33.entity_id = n.nid');
+    $query->leftJoin('field_data_field_etiquetes', 'f33', 'f33.entity_id = f29.field_imatges_fid');
     $query->leftJoin('taxonomy_term_data', 'f36', 'f36.tid = f33.field_etiquetes_tid');
     $query->leftJoin('field_data_field_file', 'f38', 'f38.entity_id = n.nid');
     $query->leftJoin('file_managed', 'f39', 'f39.fid = f38.field_file_fid');
@@ -188,7 +188,7 @@ function my_migrations_recurs_general_rest_api() {
     $query->addField('f30', 'uri', 'secondary_img_uri');
     $query->addField('f31', 'field_peu_de_foto_value', 'secondary_img_caption');
     $query->addField('f32', 'field_autoria_value', 'secondary_img_author');
-    $query->addField('f36', 'name', 'secondary_img_tags');
+    $query->addField('f36', 'tid', 'secondary_img_tags');
     $query->addField('f34', 'field_file_image_alt_text_value', 'secondary_img_alt');
     $query->addField('f35', 'field_file_image_title_text_value', 'secondary_img_title');
     $query->addField('f39', 'fid', 'file_fid');
@@ -301,11 +301,34 @@ function my_migrations_recurs_general_rest_api() {
             'author' => $row->secondary_img_author ? $row->secondary_img_author : null,
             'caption_default' => $row->secondary_img_title ? $row->secondary_img_title : null,
             'caption_custom' => $row->secondary_img_caption === '--Peu de foto--' ? null : $row->secondary_img_caption,
-            'tags' => $row->secondary_img_tags ? [$row->secondary_img_tags] : [],
+            'tags' => [],
           ];
+            
+          // Adding tag to the secondary image
+          if ($row->secondary_img_tags && !in_array($row->secondary_img_tags, $item['secondary_images'][$row->secondary_img_fid]['tags'])) {
+            $item['secondary_images'][$row->secondary_img_fid]['tags'][] = $row->secondary_img_tags;
+          }
         }
       }
       else {
+        // Adding additional secondary images
+        if ($row->secondary_img_fid && !array_key_exists($row->secondary_img_fid, $item['secondary_images'])) {
+          $item['secondary_images'][$row->secondary_img_fid] = [
+            'uri' => $row->secondary_img_uri ? file_create_url($row->secondary_img_uri) : null,
+            'filename' => $row->secondary_img_filename ? $row->secondary_img_filename : null,
+            'alt' => $row->secondary_img_alt ? $row->secondary_img_alt : null,
+            'title' => $row->secondary_img_title ? $row->secondary_img_title : null,
+            'author' => $row->secondary_img_author ? $row->secondary_img_author : null,
+            'caption_default' => $row->secondary_img_title ? $row->secondary_img_title : null,
+            'caption_custom' => $row->secondary_img_caption === '--Peu de foto--' ? null : $row->secondary_img_caption,
+          ];
+        }
+        
+        // Adding additional tags to the secondary image
+        if ($row->secondary_img_tags && !in_array($row->secondary_img_tags, $item['secondary_images'][$row->secondary_img_fid]['tags'])) {
+          $item['secondary_images'][$row->secondary_img_fid]['tags'][] = $row->secondary_img_tags;
+        }
+                
         // Adding additional links
         if ($row->link_url && $row->link_title && !array_key_exists($row->link_url, $item['links'])) {
           $item['links'][$row->link_url] = $row->link_title;
@@ -329,20 +352,6 @@ function my_migrations_recurs_general_rest_api() {
         // Adding additional tags
         if ($row->tag_name && !array_key_exists($row->tag_tid, $item['tags'])) {
           $item['tags'][$row->tag_tid] = $row->tag_name;
-        }
-
-        // Adding additional secondary images
-        if ($row->secondary_img_fid && !array_key_exists($row->secondary_img_fid, $item['secondary_images'])) {
-          $item['secondary_images'][$row->secondary_img_fid] = [
-            'uri' => $row->secondary_img_uri ? file_create_url($row->secondary_img_uri) : null,
-            'filename' => $row->secondary_img_filename ? $row->secondary_img_filename : null,
-            'alt' => $row->secondary_img_alt ? $row->secondary_img_alt : null,
-            'title' => $row->secondary_img_title ? $row->secondary_img_title : null,
-            'author' => $row->secondary_img_author ? $row->secondary_img_author : null,
-            'caption_default' => $row->secondary_img_title ? $row->secondary_img_title : null,
-            'caption_custom' => $row->secondary_img_caption === '--Peu de foto--' ? null : $row->secondary_img_caption,
-            'tags' => $row->secondary_img_tags ? [$row->secondary_img_tags] : [],
-          ];
         }
       }
     }
