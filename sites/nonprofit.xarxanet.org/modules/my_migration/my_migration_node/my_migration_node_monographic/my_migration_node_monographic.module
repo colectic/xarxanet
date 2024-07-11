@@ -89,6 +89,9 @@ function my_migration_node_monographic_rest_api() {
   // Get full data object
   if (isset($_GET['nid'])) {
     $node = node_load($_GET['nid']);
+    // Add the node's url alias
+    $url_alias = drupal_get_path_alias('node/' . $_GET['nid']);
+    $node->alias = $url_alias;
     // Return data in JSON format
     drupal_json_output($node);
   }
